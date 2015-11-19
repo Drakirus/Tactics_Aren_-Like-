@@ -65,4 +65,5 @@ int main()
 	initialise_map(map);
 	obstacle(10, map);
 	afficher_map(map);
+	return 0;
 }
