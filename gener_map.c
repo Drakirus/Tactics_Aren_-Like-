@@ -80,12 +80,10 @@ void shadowcasting(int map[i_taille_map][i_taille_map], int i_player_x, int i_pl
 				printf("%f slope min  %f slope max \n", f_slope_min, f_slope_max);
 			  for (cy = i; cy >= 0; cy--) {
 					for (cx = j; cx < i_taille_map; cx++) {
-						if (i_player_x != cx || i_player_x != cy) {
 							f_slope = getSlope((cx), (i_taille_map-1-cy));
 							if((f_slope > f_slope_min) && (f_slope < f_slope_max || (f_slope_max < 0 && cx > i_player_x))){
 								map[cy][cx] = 3;
 							}
-						}
 					}
 				}
 			}
