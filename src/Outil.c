@@ -1,4 +1,4 @@
-#include "Outil.h"
+#include "../include/Outil.h"
 
 #define kuAntiSlashZerO 1 //encombrement du caractère "\0" qui délimite les chaînes de caractères
 #define kcEchappemenT1 -61
@@ -520,7 +520,7 @@ int bConsonnE2(char *sString,int *pnCodeCaractereRg){
 }//bConsonnE2
 
 char *sCouple(int iEntierA,int iEntierB){
-	//rend la chaîne (iEntierA,iEntierB)	
+	//rend la chaîne (iEntierA,iEntierB)
 	char *sCouple=sP(sC3(sEntier(iEntierA),",",sEntier(iEntierB)));
 	OctetGereR(sCouple);
 	return(sCouple);
@@ -579,7 +579,7 @@ char *sEntierAvecSigne(int iEntier){
 }//sEntierAvecSigne
 
 char *sEst(int bAssertion){
-	//rend "est" tel quel,ou négativé avec "n'"..."pas" si bAssertion est faux 
+	//rend "est" tel quel,ou négativé avec "n'"..."pas" si bAssertion est faux
 	#define kuEstLg 3//"est"
 	#define kuNestPasLg 4//"n'est pas"
 	char *sEst=malloc( kuAntiSlashZerO + (bAssertion)? kuEstLg : kuNestPasLg);
@@ -730,13 +730,13 @@ int bMinuscule(char cCaractere){
 }//bMinuscule
 
 int uModulo1(int uDividende,int uDiviseur){
-	//rend le modulo standard à ceci près que le résultat 0 éventuel est remplacé par uDiviseur: uModulo1(12,4)=4 
+	//rend le modulo standard à ceci près que le résultat 0 éventuel est remplacé par uDiviseur: uModulo1(12,4)=4
 	int nModulo;
 	Vrai2(uDividende>0,uDiviseur>0);
 	nModulo=uDividende%uDiviseur;
 	if (nModulo==0)
 		nModulo=uDiviseur;
-	if (0)//ou 1 pr que li+1 soit exécutée 
+	if (0)//ou 1 pr que li+1 soit exécutée
 		seee("uModulo1",uDividende,uDiviseur,nModulo);
 	Croit(1,nModulo,uDiviseur);
 	return(nModulo);
@@ -775,7 +775,7 @@ void OctetGereR(char *sMalloc){
 				yOctetGereR1[nAlloc]=0;
 			}
 			zuOctetGereR=1-zuOctetGereR;//change de demi-espace
-			nOctetGereR1=0;//premier index valide sur le futur demi-espace 
+			nOctetGereR1=0;//premier index valide sur le futur demi-espace
 		}
 	} else {
 		yOctetGereR1[nOctetGereR1++]=(long) sMalloc;
@@ -863,14 +863,14 @@ int bPair(int iEntier){
 
 char *sP(char *sEntreParenthese){
 	//rend sEntreParenthese précédé de "(" et suivi de ")"
-	assert(sEntreParenthese!=0);	
+	assert(sEntreParenthese!=0);
 	char *sP=sC3("(",sEntreParenthese,")");
 	OctetGereR(sP);
 	return(sP);
 }//sP
 
 char *sPas(char *sVerbe,int bNegativer){
-	//rend sVerbe tel quel,ou négativé avec "ne"..."pas" si bNegativer 
+	//rend sVerbe tel quel,ou négativé avec "ne"..."pas" si bNegativer
 	#define kuNeLg 3//"n'" ou "ne "
 	#define kuPasLg 4//" pas"
 	char *sPas=malloc(kuNeLg+strlen(sVerbe)+kuPasLg+kuAntiSlashZerO);
@@ -1036,7 +1036,3 @@ int bWhile(int bExpressionBooleenne){
 	}//Chaque boucle while est donc contrôlée via 1° un appel à While() avant le while et 2° un appel à bWhile() dans l'expression booléenne liée au...
 	return(bExpressionBooleenne);//...while; Appel1("") à la fin du main() vérifie que le contrôle des while est bien séquencé via "assert(ipWhilE>=0)".
 }//bWhile
-
-
-
-
