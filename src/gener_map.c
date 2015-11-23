@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <time.h>
 
-#define i_taille_map 20 //Nous avons convenu que la map sera un carré de taille 10.
+#define i_taille_map 10 //Nous avons convenu que la map sera un carré de taille 10.
 
 void obstacle(int i_chance_obstacle, int map[i_taille_map][i_taille_map]) //Fonction insérant les obstacles dans la map. Les obstacles sont placés aléatoirement dans la map.
 {
@@ -39,30 +39,35 @@ void initialise_map(int map[i_taille_map][i_taille_map]) //Fonction initialisant
 			map[i][j]=0; //0=vide;
 		}
 	}
-	obstacle(5, map);
+	obstacle(10, map);
 }
 
 void afficher_map(int map[i_taille_map][i_taille_map]) //Fonction affichant la map
 {
 	int i,j;
+	printf("0   1   2   3   4   5   6   7   8   9\n");
 	for(i=0;i<i_taille_map;i++)
 	{
 		for(j=0;j<i_taille_map;j++)
 		{
 			if(map[i][j]==0)
-				printf("_ ");
+				printf("_   ");
 			else if(map[i][j]==1)//1 : obstacle
-				printf("* ");
+				printf("*   ");
+			else if(map[i][j]==2)//2 : Guerrier, équipe A
+				printf("G.A ");
+			else if(map[i][j]==3)//3 : Archer, équipe A
+				printf("A.A ");
+			else if(map[i][j]==4)//4 : Mage, équipe A
+				printf("M.A ");
+			else if(map[i][j]==5)//5 : Guerrier, équipe B
+				printf("G.B ");
+			else if(map[i][j]==6)//6 : Archer, équipe B
+				printf("A.B ");
+			else if(map[i][j]==7)//7 : Mage, équipe B
+				printf("M.B ");
 		}
+		printf("%i", i);
 		printf("\n");
 	}
-}
-
-int main()
-{
-	srand(time(NULL));
-	int map[i_taille_map][i_taille_map];
-	initialise_map(map);
-	afficher_map(map);
-	return 0;
 }
