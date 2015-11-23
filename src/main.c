@@ -3,9 +3,8 @@
 #include <time.h>
 #include "Outil.h"
 #include "save.h"
-
-#define i_taille_map 10
-
+#include "placement.h"
+#include "gener_map.h"
 
 int main() {
 	srand(time(NULL));
@@ -18,7 +17,7 @@ int main() {
 		printf("3 - Quitter\n");
 		scanf("%i", &choix_menu);
 		switch(choix_menu){
-			case 1: /*nouvelle partie*/ break;
+			case 1: placement_perso(grille); break; /*Nouvelle Partie*/
 			case 2: charge(grille); break;
 			case 3: break;
 		}

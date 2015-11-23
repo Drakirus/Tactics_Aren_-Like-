@@ -2,9 +2,8 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include "../include/perso.h"
+#include "../include/placement.h"
 #include "../include/gener_map.h"
-
 
 void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place les personnages des différents équipes dans les trois premières et dernières ligne de la map.
 {
@@ -130,14 +129,4 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 		afficher_map(map);
 		b_sortie=1;
 	}
-}
-
-int main()
-{
-	srand(time(NULL));
-	int map[i_taille_map][i_taille_map];
-	initialise_map(map);
-	afficher_map(map);
-	placement_perso(map);
-	return 0;
 }
