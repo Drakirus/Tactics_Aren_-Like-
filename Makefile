@@ -3,7 +3,7 @@ SRCDIR=./src
 INCDIR=./include
 FLAG=-Wall
 BINDIR=./bin
-OBJ=Outil.o
+OBJ=Outil.o save.o placement.o
 
 
 main: $(OBJ)
@@ -13,5 +13,9 @@ main: $(OBJ)
 #	$(CC) -c $(SRCDIR)/main.c $(FLAG) $(SIZE)
 Outil.o: $(SRCDIR)/Outil.c
 	$(CC) -c $(SRCDIR)/Outil.c -I $(INCDIR)
+save.o: $(SRCDIR)/save.c
+	$(CC) -c $(SRCDIR)/save.c -I $(INCDIR)
+placement.o: $(SRCDIR)/placement.c
+	$(CC) -c $(SRCDIR)/placement.c -I $(INCDIR)
 clean:
 	rm -rf $(BINDIR)
