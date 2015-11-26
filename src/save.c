@@ -53,7 +53,8 @@ void save(int mat[i_taille_map][i_taille_map]){
 	fprintf(fic, "\n");
 	/*en_tete();
 	while(!hors_liste()){
-		fprintf("%s", nomdelafonctiondeModira(ec));
+		nomdelafonctiondeModira(chaine)
+		fprintf("%s", chaine);
 		suivant();
 	}*/
 	printf("Partie sauvegardée dans %s\n", nom_fichier);

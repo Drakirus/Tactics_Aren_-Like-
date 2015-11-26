@@ -25,7 +25,8 @@ void action(){
 		switch(action){
 			case 1: printf("Deplacement"); break; /*Fonction déplacement*/
 			case 2: printf("Attaque"); break; /*Fonction Attaque */
-			case 3: printf("Passage de tour") break; /*Remise au max des PAs PMs du soldat en cours et on passe au suivant dans la liste*/
+			case 3: save(grille); break;
+			case 4: printf("Passage de tour") break; /*Remise au max des PAs PMs du soldat en cours et on passe au suivant dans la liste*/
 		}
-	}while(choix_menu != 3 /*|| (PA ec == 00 aa PM ec == 0)*/;
+	}while(choix_menu != 4 /*|| (PA ec == 00 aa PM ec == 0)*/;
 }
