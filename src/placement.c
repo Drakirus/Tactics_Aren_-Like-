@@ -4,6 +4,7 @@
 #include <time.h>
 #include "../include/placement.h"
 #include "../include/gener_map.h"
+#include "../include/listes.h"
 
 void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place les personnages des différents équipes dans les trois premières et dernières ligne de la map.
 {
@@ -17,6 +18,9 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 	int i_nb_mage_B=1;
 	int coord[2];
 	int b_sortie=1; //Condition de sortie
+
+	en_tete(); //On place ec sur l'en tête.
+
 	while(i_nb_perso!=0)
 	{
 		while(b_sortie!=0)
@@ -45,6 +49,7 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				{
 					i_nb_archer_A--;
 					i_nb_perso--;
+					ajout_droit({"Archer",50,50,3,3,[coord[0],coord[1]],'A'});
 					map[coord[0]][coord[1]]=3;
 					b_sortie=0;
 				}
@@ -55,6 +60,7 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				{
 					i_nb_guerrier_A--;
 					i_nb_perso--;
+					ajout_droit({"Guerrier",50,50,3,3,[coord[0],coord[1]],'A'});
 					map[coord[0]][coord[1]]=2;
 					b_sortie=0;
 				}
@@ -65,6 +71,7 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				{
 					i_nb_mage_A--;
 					i_nb_perso--;
+					ajout_droit({"Mage",50,50,3,3,[coord[0],coord[1]],'A'});
 					map[coord[0]][coord[1]]=4;
 					b_sortie=0;
 				}
@@ -101,6 +108,7 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				{
 					i_nb_archer_B--;
 					i_nb_perso--;
+					ajout_droit({"Archer",50,50,3,3,[coord[0],coord[1]],'B'});
 					map[coord[0]][coord[1]]=6;
 					b_sortie=0;
 				}
@@ -111,6 +119,7 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				{
 					i_nb_guerrier_B--;
 					i_nb_perso--;
+					ajout_droit({"Guerrier",50,50,3,3,[coord[0],coord[1]],'B'});
 					map[coord[0]][coord[1]]=5;
 					b_sortie=0;
 				}
@@ -121,6 +130,7 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				{
 					i_nb_mage_B--;
 					i_nb_perso--;
+					ajout_droit({"Mage",50,50,3,3,[coord[0],coord[1]],'B'});
 					map[coord[0]][coord[1]]=7;
 					b_sortie=0;
 				}
