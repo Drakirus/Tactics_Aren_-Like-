@@ -45,6 +45,17 @@ void save(int mat[i_taille_map][i_taille_map]){
 		fprintf(fic, "\n");
     	}
 	fprintf(fic, "\n");
+	en_tete();
+	while(!hors_liste()){
+		fprintf("%s", ec->s_classe);
+		fprintf("%i", ec->i_HP_max);
+		fprintf("%i", ec->i_HP);
+		fprintf("%i", ec->i_PA);
+		fprintf("%i", ec->i_PM);
+		fprintf("%i", ec->coord[0]);
+		fprintf("%i", ec->coord[1]);
+		fprintf("%c", ec->c_team);
+	}
 	printf("Partie sauvegardée dans %s\n", nom_fichier);
 	fclose(fic);
 }

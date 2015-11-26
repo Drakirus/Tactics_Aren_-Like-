@@ -1,5 +1,5 @@
-#include<stdio.h>
-#include<stdlib.h>
+#include <stdio.h>
+#include <stdlib.h>
 #include "perso.h"
 
 typedef struct element
@@ -61,18 +61,18 @@ void suivant(void)
 		ec=ec->suiv;
 }
 
-void valeur_elt(int* v)
+void valeur_elt(t_perso* v)
 /* Renvoie dans e la veleur de l'elt courant */
 {	
 	if(!hors_liste()) 
-		*v=ec->perso;
+		*v = ec;
 }
 
-void modif_elt(int v)
+void modif_elt(t_perso v)
 /* Affecte v à l'elt courant */
 {	
 	if(!hors_liste()) 
-		ec->perso=v;
+		ec = v;
 }
 
 void oter_elt(void)
@@ -90,7 +90,7 @@ void oter_elt(void)
 
 }
 
-void ajout_droit(int v)
+void ajout_droit(t_perso v)
 /* Ajoute v a droite de l'elt courant */
 {	
 	t_element * temp;
@@ -106,7 +106,7 @@ void ajout_droit(int v)
 	}
 }
 
-void ajout_gauche(int v)
+void ajout_gauche(t_perso v)
 /* Ajoute v a gauche de l'elt courant */
 {	
 	t_element * temp;
