@@ -29,6 +29,10 @@ void charge(int grille[i_taille_map][i_taille_map]){
             		fscanf(fic, "%i", &grille[i][j]);
 		}
 	}
+	/*en_tete();
+	while(!hors_liste){
+
+	}*/
 	fclose(fic);
 	afficher_map(grille);
 }
@@ -47,7 +51,11 @@ void save(int mat[i_taille_map][i_taille_map]){
 		fprintf(fic, "\n");
     	}
 	fprintf(fic, "\n");
-
+	/*en_tete();
+	while(!hors_liste()){
+		fprintf("%s", nomdelafonctiondeModira(ec));
+		suivant();
+	}*/
 	printf("Partie sauvegardée dans %s\n", nom_fichier);
 	fclose(fic);
 }
