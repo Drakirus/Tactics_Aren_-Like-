@@ -1,6 +1,7 @@
-#include<stdio.h>
-#include<stdlib.h>
-#include "perso.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include "../include/listes.h"
 
 typedef struct element
 {
@@ -121,3 +122,40 @@ void ajout_gauche(t_perso p)
 		ec=temp;
 	}
 }
+
+void pointeur_perso(t_perso * p_elt)
+{
+	if(!hors_liste()) 
+		p_elt=&(ec->perso);
+}
+
+void afficher_liste()
+{
+	t_perso * p_elt;
+	en_tete();
+	while(!hors_liste())
+	{
+		pointeur_perso(p_elt);
+		printf("%s\n", p_elt->s_classe);
+	}
+}
+
+/*void sauv_perso(char sauv[40])
+{
+	t_perso perso;
+	char i[2];
+	strcat(sauv, valeur_elt(*perso)->s_classe);
+	sprintf(i‚ "%d"‚ valeur_elt(*perso)->i_HP_max);
+	strcat(sauv, " "i);
+	sprintf(i‚ "%d"‚ valeur_elt(*perso)->i_HP);
+	strcat(sauv, " "i);
+	sprintf(i‚ "%d"‚ valeur_elt(*perso)->i_PA);
+	strcat(sauv, " "i);
+	sprintf(i‚ "%d"‚ valeur_elt(*perso)->i_PM);
+	strcat(sauv, " "i);
+	sprintf(i‚ "%d"‚ valeur_elt(*perso)->coord[0]);
+	strcat(sauv, " "i);
+	sprintf(i‚ "%d"‚ valeur_elt(*perso)->coord[1]);
+	strcat(sauv, " "i);
+	strcat(sauv, " "valeur_elt(*perso)->c_team);
+}*/

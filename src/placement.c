@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
+#include <string.h>
 #include "../include/placement.h"
 #include "../include/gener_map.h"
 #include "../include/listes.h"
@@ -18,6 +19,8 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 	int i_nb_mage_B=1;
 	int coord[2];
 	int b_sortie=1; //Condition de sortie
+	char sauv[40];
+	t_perso per;
 
 	en_tete(); //On place ec sur l'en tête.
 
@@ -49,7 +52,8 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				{
 					i_nb_archer_A--;
 					i_nb_perso--;
-					ajout_droit({"Archer",50,50,3,3,[coord[0],coord[1]],'A'});
+					per = {"Archer",50,50,3,3,{coord[0],coord[1]},'A'};
+					ajout_droit(per); //On ajoute à la liste le perso correspondant.
 					map[coord[0]][coord[1]]=3;
 					b_sortie=0;
 				}
@@ -60,7 +64,8 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				{
 					i_nb_guerrier_A--;
 					i_nb_perso--;
-					ajout_droit({"Guerrier",50,50,3,3,[coord[0],coord[1]],'A'});
+					per = {"Guerrier",50,50,3,3,{coord[0],coord[1]},'A'};
+					ajout_droit(per);
 					map[coord[0]][coord[1]]=2;
 					b_sortie=0;
 				}
@@ -71,7 +76,8 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				{
 					i_nb_mage_A--;
 					i_nb_perso--;
-					ajout_droit({"Mage",50,50,3,3,[coord[0],coord[1]],'A'});
+					per = {"Mage",50,50,3,3,{coord[0],coord[1]},'A'};
+					ajout_droit(per);
 					map[coord[0]][coord[1]]=4;
 					b_sortie=0;
 				}
@@ -108,7 +114,8 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				{
 					i_nb_archer_B--;
 					i_nb_perso--;
-					ajout_droit({"Archer",50,50,3,3,[coord[0],coord[1]],'B'});
+					per = {"Archer",50,50,3,3,{coord[0],coord[1]},'B'};
+					ajout_droit(per);
 					map[coord[0]][coord[1]]=6;
 					b_sortie=0;
 				}
@@ -119,7 +126,8 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				{
 					i_nb_guerrier_B--;
 					i_nb_perso--;
-					ajout_droit({"Guerrier",50,50,3,3,[coord[0],coord[1]],'B'});
+					per = {"Guerrier",50,50,3,3,{coord[0],coord[1]},'B'};
+					ajout_droit(per);
 					map[coord[0]][coord[1]]=5;
 					b_sortie=0;
 				}
@@ -130,13 +138,17 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				{
 					i_nb_mage_B--;
 					i_nb_perso--;
-					ajout_droit({"Mage",50,50,3,3,[coord[0],coord[1]],'B'});
+					per = {"Mage",50,50,3,3,{coord[0],coord[1]},'A'};
+					ajout_droit(per);
 					map[coord[0]][coord[1]]=7;
 					b_sortie=0;
 				}
 			}
 		}
+		//sauv_perso(sauv);
+		//printf("%s\n", sauv);
 		afficher_map(map);
+		afficher_liste();
 		b_sortie=1;
 	}
 }
