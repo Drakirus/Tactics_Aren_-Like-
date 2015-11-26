@@ -1,9 +1,10 @@
 #include<stdio.h>
 #include<stdlib.h>
+#include "perso.h"
 
 typedef struct element
 {
-	int valeur;
+	t_perso perso;
 	struct element * prec;
 	struct element * suiv;
 } t_element;
@@ -64,14 +65,14 @@ void valeur_elt(int* v)
 /* Renvoie dans e la veleur de l'elt courant */
 {	
 	if(!hors_liste()) 
-		*v=ec->valeur;
+		*v=ec->perso;
 }
 
 void modif_elt(int v)
 /* Affecte v à l'elt courant */
 {	
 	if(!hors_liste()) 
-		ec->valeur=v;
+		ec->perso=v;
 }
 
 void oter_elt(void)
@@ -98,7 +99,7 @@ void ajout_droit(int v)
 		temp=(t_element*)malloc(sizeof(t_element));
 		temp->prec=ec;
 		temp->suiv=ec->suiv;
-		temp->valeur=v;
+		temp->perso=v;
 		ec->suiv->prec=temp;
 		ec->suiv=temp;
 		ec=temp;
@@ -114,7 +115,7 @@ void ajout_gauche(int v)
 		temp=(t_element*)malloc(sizeof(t_element));
 		temp->suiv=ec;
 		temp->prec=ec->prec;
-		temp->valeur=v;
+		temp->perso=v;
 		ec->prec->suiv=temp;
 		ec->prec=temp;
 		ec=temp;
