@@ -15,4 +15,3 @@ t_perso ensemble_perso[3]=
 	{"Archer",30,30,3,3,[0,0],'A'},
 	{"Mage",20,20,2,2,[0,0],'A'},
 };
-

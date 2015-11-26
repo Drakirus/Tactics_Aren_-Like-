@@ -17,7 +17,7 @@ int main() {
 		printf("3 - Quitter\n");
 		scanf("%i", &choix_menu);
 		switch(choix_menu){
-			case 1: placement_perso(grille); break; /*Nouvelle Partie*/
+			case 1: placement_perso(grille); save(grille); break; /*Nouvelle Partie*/
 			case 2: charge(grille); break;
 			case 3: break;
 		}

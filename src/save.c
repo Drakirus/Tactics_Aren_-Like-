@@ -18,7 +18,7 @@ void charge(int grille[i_taille_map][i_taille_map]){
 	FILE * fic;
 	char nom_fichier[20];
 	do{
-		printf("Quel partie charger ? ");
+		printf("Quelle partie charger ? ");
 		scanf("%s", nom_fichier);
 		fic = fopen(nom_fichier, "r");
 		if(fic == NULL) printf("Mauvais fichier, ");
@@ -29,6 +29,7 @@ void charge(int grille[i_taille_map][i_taille_map]){
 		}
 	}
 	fclose(fic);
+	afficher_map(grille);
 }
 
 void save(int mat[i_taille_map][i_taille_map]){
@@ -45,17 +46,7 @@ void save(int mat[i_taille_map][i_taille_map]){
 		fprintf(fic, "\n");
     	}
 	fprintf(fic, "\n");
-	en_tete();
-	while(!hors_liste()){
-		fprintf("%s", ec->s_classe);
-		fprintf("%i", ec->i_HP_max);
-		fprintf("%i", ec->i_HP);
-		fprintf("%i", ec->i_PA);
-		fprintf("%i", ec->i_PM);
-		fprintf("%i", ec->coord[0]);
-		fprintf("%i", ec->coord[1]);
-		fprintf("%c", ec->c_team);
-	}
+
 	printf("Partie sauvegardée dans %s\n", nom_fichier);
 	fclose(fic);
 }
