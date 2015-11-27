@@ -14,6 +14,5 @@ void afficher_tableau(t_perso tab[6])
 
 void sauv_perso(char sauv[40], t_perso tab[6], int i_position)
 {
-	char i[2];
 	sprintf(sauv, "%s %d %d %d %d %d %d %c",  tab[i_position].s_classe, tab[i_position].i_HP_max, tab[i_position].i_HP, tab[i_position].i_PA, tab[i_position].i_PM, tab[i_position].coord[0], tab[i_position].coord[1], tab[i_position].c_team);
 }
