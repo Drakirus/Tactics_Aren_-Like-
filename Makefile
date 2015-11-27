@@ -3,7 +3,7 @@ SRCDIR=./src
 INCDIR=./include
 FLAG=-Wall
 BINDIR=./bin
-OBJ=Outil.o save.o placement.o gener_map.o
+OBJ=Outil.o save.o placement.o gener_map.o tour.o
 
 main: $(OBJ)
 	test -d $(BINDIR) || mkdir $(BINDIR)
@@ -18,5 +18,7 @@ placement.o: $(SRCDIR)/placement.c
 	$(CC) -c $(SRCDIR)/placement.c -I $(INCDIR)
 gener_map.o: $(SRCDIR)/gener_map.c
 	$(CC) -c $(SRCDIR)/gener_map.c -I $(INCDIR)
+tour.o: $(SRCDIR)/tour.c
+	$(CC) -c $(SRCDIR)/tour.c -I $(INCDIR)
 clean:
 	rm -rf $(BINDIR)
