@@ -5,7 +5,7 @@
 #include "save.h"
 #include "placement.h"
 #include "gener_map.h"
-#include "tour.h";
+#include "tour.h"
 
 int main() {
 	srand(time(NULL));
