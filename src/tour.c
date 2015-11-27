@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include "../include/perso.h"
 
 void tour(t_perso * table, int nb_perso){
 	int i;

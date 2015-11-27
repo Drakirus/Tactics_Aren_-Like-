@@ -20,5 +20,7 @@ gener_map.o: $(SRCDIR)/gener_map.c
 	$(CC) -c $(SRCDIR)/gener_map.c -I $(INCDIR)
 tour.o: $(SRCDIR)/tour.c
 	$(CC) -c $(SRCDIR)/tour.c -I $(INCDIR)
+#tableau.o: $(SRCDIR)/tableau.c
+	#$(CC) -c $(SRCDIR)/tableau.c -I $(INCDIR)
 clean:
 	rm -rf $(BINDIR)
