@@ -10,7 +10,7 @@
 int main() {
 	srand(time(NULL));
 	int grille[i_taille_map][i_taille_map];
-	init_mat(grille);
+	initialise_map(grille);
   	int choix_menu = 0;
 	do{
 		printf("1 - Nouvelle Partie\n");
