@@ -15,7 +15,15 @@ void affiche_map(int map[taille_grille][taille_grille]{
 		printf("\n");
 }
 
-void action(){
+void tour(t_perso * table, int nb_perso){
+	int i;
+	for(i = 0 ; i < nb_perso ; i++){
+		action(table[i]);cd
+	}
+}
+
+
+void action(t_perso perso){
 	int action = 0;
 	do{
 		printf("1 - Deplacement\n");
@@ -28,5 +36,5 @@ void action(){
 			case 3: save(grille); break;
 			case 4: printf("Passage de tour") break; /*Remise au max des PAs PMs du soldat en cours et on passe au suivant dans la liste*/
 		}
-	}while(choix_menu != 4 /*|| (PA ec == 00 aa PM ec == 0)*/;
+	}while(choix_menu != 4);
 }
