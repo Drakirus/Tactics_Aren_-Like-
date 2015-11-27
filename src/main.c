@@ -18,8 +18,8 @@ int main() {
 		printf("3 - Quitter\n");
 		scanf("%i", &choix_menu);
 		switch(choix_menu){
-			case 1: placement_perso(grille); save(grille); break; /*Nouvelle Partie*/
-			case 2: charge(grille); break;
+			case 1: initialise_map(grille); placement_perso(grille); save(grille); break; /*Nouvelle Partie*/
+			case 2: charge(grille); break; /*Charger une partie */
 			case 3: break;
 		}
 	}while(choix_menu != 3);

@@ -108,7 +108,7 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 			}
 		}
 		b_sortie=1;
-		sauv_perso(sauv, tab_perso, i_compteur-1);
+		sauv_perso(sauv, tab_perso[i_compteur-1]);
 		printf("%s\n", sauv);
 		afficher_map(map);
 
@@ -195,7 +195,7 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				}
 			}
 		}
-		sauv_perso(sauv, tab_perso, i_compteur-1);
+		sauv_perso(sauv, tab_perso[i_compteur-1]);
 		printf("%c\n", sauv[1]);
 		afficher_map(map);
 		b_sortie=1;
