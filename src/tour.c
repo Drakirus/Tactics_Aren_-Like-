@@ -18,7 +18,7 @@ void affiche_map(int map[taille_grille][taille_grille]{
 void tour(t_perso * table, int nb_perso){
 	int i;
 	for(i = 0 ; i < nb_perso ; i++){
-		action(table[i]);cd
+		action(table[i]);
 	}
 }
 
