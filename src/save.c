@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../include/placement.h"
+#include "../include/perso.h"
 
 #define i_taille_map 10
 
@@ -14,8 +15,8 @@ void init_mat(int mat[i_taille_map][i_taille_map]){
         }
 }
 
-void charge(int grille[i_taille_map][i_taille_map]){
-	int i, j;
+void charge(int grille[i_taille_map][i_taille_map], t_perso table[]){
+	int i, j, k;
 	FILE * fic;
 	char nom_fichier[20];
 	do{
@@ -29,10 +30,16 @@ void charge(int grille[i_taille_map][i_taille_map]){
             		fscanf(fic, "%i", &grille[i][j]);
 		}
 	}
-	/*en_tete();
-	while(!hors_liste){
-
-	}*/
+	for(k = 0 ; !feof(fic) ; k ++){
+			fscanf(fic, "%s", table[i].s_classe);
+			fscanf(fic, "%i", table[i].i_HP_max);
+			fscanf(fic, "%i", table[i].i_HP);
+			fscanf(fic, "%i", table[i].i_PA);
+			fscanf(fic, "%i", table[i].i_PM);
+			fscanf(fic, "%i", table[i].coord[0]);
+			fscanf(fic, "%i", table[i].coord[1]);
+			fscanf(fic, "%c", table[i].c_team);
+	}
 	fclose(fic);
 	afficher_map(grille);
 }
