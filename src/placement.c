@@ -193,8 +193,8 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				}
 			}
 		}
-		//sauv_perso(sauv);
-		//printf("%s\n", sauv);
+		sauv_perso(sauv, tab_perso, i_compteur);
+		printf("%s\n", sauv);
 		afficher_map(map);
 		b_sortie=1;
 	}
