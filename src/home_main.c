@@ -13,10 +13,16 @@ int main()
 	initialise_map(map);
 	obstacle(10, map);
 
-  printf("%i\n", shoot(map, 0, 0, 9,9));
+
   map[0][0] = 2;
   map[9][9] = 2;
   afficher_map(map);
+	if (shoot(map, 0, 0, 9,9)) {
+		printf("tir impossible \n");
+	}else{
+		printf("tir possible \n");
+	}
+
 	/*while (1) {
 
 			mapdisp[x][y] = 0;
