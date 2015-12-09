@@ -23,4 +23,4 @@ tour.o: $(SRCDIR)/tour.c
 tableau.o: $(SRCDIR)/tableau.c
 	$(CC) -c $(SRCDIR)/tableau.c -I $(INCDIR)
 clean:
-	rm -rf $(BINDIR)
+	rm -rf $(BINDIR) *.o
