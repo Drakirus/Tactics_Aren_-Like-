@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "perso.h"
+#include "../include/perso.h"
 
 void afficher_tableau(t_perso tab[6])
 {
