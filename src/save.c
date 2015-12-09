@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "../include/placement.h"
 #include "../include/perso.h"
+#include "../include/gener_map.h"
 
 #define i_taille_map 10
 
@@ -16,7 +17,7 @@ void init_mat(int mat[i_taille_map][i_taille_map]){
 }
 
 void charge(int grille[i_taille_map][i_taille_map], t_perso table[]){
-	int i, j, k;
+	int i, j/*, k*/;
 	FILE * fic;
 	char nom_fichier[20];
 	do{
@@ -55,7 +56,7 @@ void save(int mat[i_taille_map][i_taille_map]){
          	for(j = 0; j < i_taille_map ; j++){
             		fprintf(fic, "%i ", mat[i][j]);
 		}
-    	} 
+    	}
 	/*en_tete();
 	while(!hors_liste()){
 		nomdelafonctiondeModira(chaine)

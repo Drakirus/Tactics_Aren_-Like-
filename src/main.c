@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "../include/Outil.h"
 #include "../include/save.h"
 #include "../include/placement.h"
 #include "../include/tour.h"

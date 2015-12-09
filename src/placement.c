@@ -2,7 +2,6 @@
 #include <stdlib.h>
 #include <string.h>
 #include <time.h>
-#include <string.h>
 #include "../include/placement.h"
 #include "../include/gener_map.h"
 #include "../include/tableau.h"
@@ -17,21 +16,17 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 	int i_nb_guerrier_B=1;
 	int i_nb_archer_B=1;
 	int i_nb_mage_B=1;
-	int cord[2];
+	int coord[2];
 	int b_sortie=1; //Condition de sortie
-	char sauv[40];
-	t_perso tab_perso[6]; //Contient les données de tous les persos.
 	int i_compteur=0;
-	t_perso per;
-
 	while(i_nb_perso!=0)
 	{
 		while(b_sortie!=0)
 		{
 			printf("\nEquipe A, à vous de placer un personnage : \n"); //La phase de choix de l'équipe A
 			printf("Choisissez les coordonnées : "); 
-			scanf("%i%i", &cord[0], &cord[1]); //Les coordonnées sont comprises entre 0 et 9.
-			if(cord[0]>=0 && cord[0]<=3 && cord[1]>=0 && cord[1]<=9 && map[cord[0]][cord[1]]==0)
+			scanf("%i%i", &coord[0], &coord[1]); //Les coordonnées sont comprises entre 0 et 9.
+			if(coord[0]>=0 && coord[0]<3 && coord[1]>=0 && coord[1]<=9 && map[coord[0]][coord[1]]==0)
 			{
 				b_sortie=0;
 			}
@@ -52,16 +47,8 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				{
 					i_nb_archer_A--;
 					i_nb_perso--;
-					map[cord[0]][cord[1]]=3;
-					strcpy(per.s_classe,"Archer");
-					per.i_HP_max=50;
-					per.i_HP=50;
-					per.i_PA=3;
-					per.i_PM=3;
-					per.coord[0]=cord[0];
-					per.coord[1]=cord[1];
-					per.c_team='A';
-					tab_perso[i_compteur]=per; //On ajoute le perso au tableau.
+					map[coord[0]][coord[1]]=3;
+					creation(tab_perso, i_compteur, "Archer", 'A', coord[0], coord[1]);
 					i_compteur++;
 					b_sortie=0;
 				}
@@ -72,16 +59,8 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				{
 					i_nb_guerrier_A--;
 					i_nb_perso--;
-					map[cord[0]][cord[1]]=2;
-					strcpy(per.s_classe,"Guerrier");
-					per.i_HP_max=50;
-					per.i_HP=50;
-					per.i_PA=3;
-					per.i_PM=3;
-					per.coord[0]=cord[0];
-					per.coord[1]=cord[1];
-					per.c_team='A';
-					tab_perso[i_compteur]=per;
+					map[coord[0]][coord[1]]=2;
+					creation(tab_perso, i_compteur, "Guerrier", 'A', coord[0], coord[1]);
 					i_compteur++;
 					b_sortie=0;
 				}
@@ -92,40 +71,27 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				{
 					i_nb_mage_A--;
 					i_nb_perso--;
-					map[cord[0]][cord[1]]=4;
-					strcpy(per.s_classe,"Mage");
-					per.i_HP_max=50;
-					per.i_HP=50;
-					per.i_PA=3;
-					per.i_PM=3;
-					per.coord[0]=cord[0];
-					per.coord[1]=cord[1];
-					per.c_team='A';
-					tab_perso[i_compteur]=per;
+					map[coord[0]][coord[1]]=4;
+					creation(tab_perso, i_compteur, "Mage", 'A', coord[0], coord[1]);
 					i_compteur++;
 					b_sortie=0;
 				}
 			}
 		}
 		b_sortie=1;
-		sauv_perso(sauv, tab_perso[i_compteur-1]);
-		printf("%s\n", sauv);
 		afficher_map(map);
-
-
 		while(b_sortie!=0)
 		{
 			printf("\nEquipe B, à vous de placer un personnage : \n"); //On passe à la phase de choix de l'équipe B
 			printf("Choisissez les coordonnées : "); 
-			scanf("%i%i", &cord[0], &cord[1]); //Les coordonnées sont comprises entre 0 et 9.
-			if(cord[0]>=7 && cord[0]<=9 && cord[1]>=0 && cord[1]<=9 && map[cord[0]][cord[1]]==0)
+			scanf("%i%i", &coord[0], &coord[1]); //Les coordonnées sont comprises entre 0 et 9.
+			if(coord[0]>=7 && coord[0]<=9 && coord[1]>=0 && coord[1]<=9 && map[coord[0]][coord[1]]==0)
 			{
 				
 				b_sortie=0;
 			}
 		}
 		b_sortie=1;
-
 		while(b_sortie!=0)
 		{
 			printf("Choisissez la classe : \n");
@@ -140,16 +106,8 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				{
 					i_nb_archer_B--;
 					i_nb_perso--;
-					map[cord[0]][cord[1]]=6;
-					strcpy(per.s_classe,"Archer");
-					per.i_HP_max=50;
-					per.i_HP=50;
-					per.i_PA=3;
-					per.i_PM=3;
-					per.coord[0]=cord[0];
-					per.coord[1]=cord[1];
-					per.c_team='B';
-					tab_perso[i_compteur]=per;
+					map[coord[0]][coord[1]]=6;
+					creation(tab_perso, i_compteur, "Archer", 'B', coord[0], coord[1]);
 					i_compteur++;
 					b_sortie=0;
 				}
@@ -160,16 +118,8 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				{
 					i_nb_guerrier_B--;
 					i_nb_perso--;
-					map[cord[0]][cord[1]]=5;
-					strcpy(per.s_classe,"Guerrier");
-					per.i_HP_max=50;
-					per.i_HP=50;
-					per.i_PA=3;
-					per.i_PM=3;
-					per.coord[0]=cord[0];
-					per.coord[1]=cord[1];
-					per.c_team='B';
-					tab_perso[i_compteur]=per;
+					map[coord[0]][coord[1]]=5;
+					creation(tab_perso, i_compteur, "Guerrier", 'B', coord[0], coord[1]);
 					i_compteur++;
 					b_sortie=0;
 				}
@@ -180,25 +130,14 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 				{
 					i_nb_mage_B--;
 					i_nb_perso--;
-					map[cord[0]][cord[1]]=7;
-					strcpy(per.s_classe,"Mage");
-					per.i_HP_max=50;
-					per.i_HP=50;
-					per.i_PA=3;
-					per.i_PM=3;
-					per.coord[0]=cord[0];
-					per.coord[1]=cord[1];
-					per.c_team='B';
-					tab_perso[i_compteur]=per;
+					map[coord[0]][coord[1]]=7;
+					creation(tab_perso, i_compteur, "Mage", 'B', coord[0], coord[1]);
 					i_compteur++;
 					b_sortie=0;
 				}
 			}
 		}
-		sauv_perso(sauv, tab_perso[i_compteur-1]);
-		printf("%c\n", sauv[1]);
 		afficher_map(map);
 		b_sortie=1;
 	}
-	afficher_tableau(tab_perso);
 }

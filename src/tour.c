@@ -1,8 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "perso.h"
-#include "gener_map.h"
+#include "../include/perso.h"
+#include "../include/gener_map.h"
+#include "../include/save.h"
 
 void action(t_perso perso, int grille[i_taille_map][i_taille_map]){
 	int action = 0;
@@ -17,10 +18,10 @@ void action(t_perso perso, int grille[i_taille_map][i_taille_map]){
 			case 2: printf("Attaque\n"); break; /*Fonction Attaque */
 			case 3: printf("Passage de tour\n"); break; /*Remise au max des PAs PMs du soldat en cours et on passe au suivant dans la liste*/
 			case 4: save(grille); break;
-			
 		}
 	}while(action != 4);
 }
+
 
 void tour(t_perso * table, int grille[i_taille_map][i_taille_map], int nb_perso){
 	int i;
