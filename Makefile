@@ -1,24 +1,26 @@
 CC=gcc
-CFLAGS=-g -Wall -lSDLmain -lSDL -lSDL_image -lSDL_ttf -lm
-EXEC=bin/out
-SRC= $(wildcard src/*.c)
-OBJ= $(SRC:.c=.o)
-INC= include/
+SRCDIR=./src
+INCDIR=./include
+FLAG=-Wall
+BINDIR=./bin
+OBJ=Outil.o save.o placement.o gener_map.o tour.o tableau.o
 
-$(EXEC): $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^
-	@echo "\nOn reconstruit $@ a cause de $?"
-
-src/sdl_isometric.o: $(INC)sdl_isometric.h
-#src/display.o: $(INC)display.h $(INC)random.h
-
-%.o: %.c
-	$(CC) -o $@ -c $< $(CFLAGS)
-
+main: $(OBJ)
+	test -d $(BINDIR) || mkdir $(BINDIR)
+	$(CC) -o $(BINDIR)/main $(SRCDIR)/main.c $(OBJ) $(FLAG) -I $(INCDIR)
+#main.o: $(SRCDIR)/main.c
+#	$(CC) -c $(SRCDIR)/main.c $(FLAG) $(SIZE)
+Outil.o: $(SRCDIR)/Outil.c
+	$(CC) -c $(SRCDIR)/Outil.c -I $(INCDIR)
+save.o: $(SRCDIR)/save.c
+	$(CC) -c $(SRCDIR)/save.c -I $(INCDIR)
+placement.o: $(SRCDIR)/placement.c
+	$(CC) -c $(SRCDIR)/placement.c -I $(INCDIR)
+gener_map.o: $(SRCDIR)/gener_map.c
+	$(CC) -c $(SRCDIR)/gener_map.c -I $(INCDIR)
+tour.o: $(SRCDIR)/tour.c
+	$(CC) -c $(SRCDIR)/tour.c -I $(INCDIR)
+tableau.o: $(SRCDIR)/tableau.c
+	$(CC) -c $(SRCDIR)/tableau.c -I $(INCDIR)
 clean:
-	@rm -f $(OBJ)
-
-mrproper: clean
-	@rm -rf $(EXEC)
-
-.PHONY: rien
+	rm -rf $(BINDIR)
