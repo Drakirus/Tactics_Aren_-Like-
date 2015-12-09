@@ -30,7 +30,7 @@ void charge(int grille[i_taille_map][i_taille_map], t_perso table[]){
             		fscanf(fic, "%i", &grille[i][j]);
 		}
 	}
-	for(k = 0 ; !feof(fic) ; k ++){
+	/*for(k = 0 ; !feof(fic) ; k++){
 			fscanf(fic, "%s", table[i].s_classe);
 			fscanf(fic, "%i", table[i].i_HP_max);
 			fscanf(fic, "%i", table[i].i_HP);
@@ -39,7 +39,7 @@ void charge(int grille[i_taille_map][i_taille_map], t_perso table[]){
 			fscanf(fic, "%i", table[i].coord[0]);
 			fscanf(fic, "%i", table[i].coord[1]);
 			fscanf(fic, "%c", table[i].c_team);
-	}
+	}*/
 	fclose(fic);
 	afficher_map(grille);
 }
@@ -55,9 +55,7 @@ void save(int mat[i_taille_map][i_taille_map]){
          	for(j = 0; j < i_taille_map ; j++){
             		fprintf(fic, "%i ", mat[i][j]);
 		}
-		fprintf(fic, "\n");
-    	}
-	fprintf(fic, "\n");
+    	} 
 	/*en_tete();
 	while(!hors_liste()){
 		nomdelafonctiondeModira(chaine)
