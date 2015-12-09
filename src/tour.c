@@ -19,7 +19,7 @@ void action(t_perso perso, int grille[i_taille_map][i_taille_map]){
 			case 3: printf("Passage de tour\n"); break; /*Remise au max des PAs PMs du soldat en cours et on passe au suivant dans la liste*/
 			case 4: save(grille); break;
 		}
-	}while(action != 4);
+	}while(action != 3);
 }
 
 

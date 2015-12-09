@@ -31,16 +31,16 @@ void charge(int grille[i_taille_map][i_taille_map], t_perso table[]){
             		fscanf(fic, "%i", &grille[i][j]);
 		}
 	}
-	/*for(k = 0 ; !feof(fic) ; k++){
+	for(k = 0 ; !feof(fic) ; k++){
 			fscanf(fic, "%s", table[i].s_classe);
-			fscanf(fic, "%i", table[i].i_HP_max);
-			fscanf(fic, "%i", table[i].i_HP);
-			fscanf(fic, "%i", table[i].i_PA);
-			fscanf(fic, "%i", table[i].i_PM);
-			fscanf(fic, "%i", table[i].coord[0]);
-			fscanf(fic, "%i", table[i].coord[1]);
-			fscanf(fic, "%c", table[i].c_team);
-	}*/
+			fscanf(fic, "%i", &table[i].i_HP_max);
+			fscanf(fic, "%i", &table[i].i_HP);
+			fscanf(fic, "%i", &table[i].i_PA);
+			fscanf(fic, "%i", &table[i].i_PM);
+			fscanf(fic, "%i", &table[i].coord[0]);
+			fscanf(fic, "%i", &table[i].coord[1]);
+			fscanf(fic, "%c", &table[i].c_team);
+	}
 	fclose(fic);
 	afficher_map(grille);
 }
@@ -57,12 +57,11 @@ void save(int mat[i_taille_map][i_taille_map]){
             		fprintf(fic, "%i ", mat[i][j]);
 		}
     	}
-	/*en_tete();
-	while(!hors_liste()){
+	while(){
 		nomdelafonctiondeModira(chaine)
 		fprintf("%s", chaine);
 		suivant();
-	}*/
+	}
 	printf("Partie sauvegardée dans %s\n", nom_fichier);
 	fclose(fic);
 }
