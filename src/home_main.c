@@ -6,8 +6,6 @@
 #include "../include\gener_map.h"
 #include "../include\perso_p.h"
 
-
-
 int main()
 {
 	srand(time(NULL));

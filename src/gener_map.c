@@ -46,7 +46,7 @@ void afficher_map(int map[i_taille_map][i_taille_map]) //Fonction affichant la m
 		for(j=0;j<i_taille_map;j++)
 		{
 			if(map[i][j]==0)
-				printf("_   ");
+				printf("    ");
 			else if(map[i][j]==1)//1 : obstacle
 				printf("*   ");
 			else if(map[i][j]==2)//2 : Guerrier, équipe A
