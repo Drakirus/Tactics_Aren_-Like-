@@ -12,6 +12,10 @@ t_perso ensemble_perso[3]=
 	{"Mage",20,20,2,2,{0,0},'A'}
 };
 
+void afficher_perso(t_perso perso){
+	printf("%s %i %i %i %i [%i,%i] %c\n", perso.s_classe, perso.i_HP_max, perso.i_HP, perso.i_PA, perso.i_PM, perso.coord[0], perso.coord[1], perso.c_team);
+}
+
 void creation(t_perso tab_perso[6], int i_position_tableau, char classe[20], char c_team, int x, int y)
 {
 	t_perso per;

@@ -12,7 +12,7 @@ void afficher_tableau(t_perso tab[6])
 	}
 }
 
-void sauv_perso(char sauv[40], t_perso perso)
+void sauv_perso(char * sauv, t_perso perso)
 {
 	sprintf(sauv, "%s %d %d %d %d %d %d %c",  perso.s_classe, perso.i_HP_max, perso.i_HP, perso.i_PA, perso.i_PM, perso.coord[0], perso.coord[1], perso.c_team);
 }
