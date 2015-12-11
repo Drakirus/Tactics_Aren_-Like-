@@ -21,10 +21,10 @@ int main() {
 			case 1: initialise_map();
 					afficher_map();
 					placement_perso();
-					tour(i_taille_tab_perso);
+					tour();
 					break; /*Nouvelle Partie*/
 			case 2: charge();
-					tour(i_taille_tab_perso);
+					tour();
 					break; /*Charger une partie */
 			case 3: 
 					break;
