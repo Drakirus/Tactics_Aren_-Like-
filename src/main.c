@@ -26,7 +26,7 @@ int main() {
 			case 2: charge();
 					tour();
 					break; /*Charger une partie */
-			case 3: 
+			case 3:
 					break;
 		}
 	}while(choix_menu != 3);

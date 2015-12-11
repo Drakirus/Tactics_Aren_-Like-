@@ -1,11 +1,12 @@
 CC=gcc
-CFLAGS=-g -Wall -lm
+CFLAGS=-g -Wall
 EXEC=bin/out
 SRC= $(wildcard src/*.c)
 OBJ= $(SRC:.c=.o)
 INC= include/
 
 $(EXEC): $(OBJ)
+	test -d ./bin || mkdir ./bin
 	$(CC) $(CFLAGS) -o $@ $^
 	@echo "\nOn reconstruit $@ a cause de $?"
 
