@@ -11,8 +11,6 @@
 int main() {
 	srand(time(NULL));
 	system("clear");
-	int grille[i_taille_map][i_taille_map];
-	initialise_map(grille);
   	int choix_menu = 0;
 	do{
 		printf("1 - Nouvelle Partie\n");
@@ -20,13 +18,13 @@ int main() {
 		printf("3 - Quitter\n");
 		scanf("%i", &choix_menu);
 		switch(choix_menu){
-			case 1: initialise_map(grille);
-					afficher_map(grille);
-					placement_perso(grille);
-					tour(grille, 6);
+			case 1: initialise_map();
+					afficher_map();
+					placement_perso();
+					tour(i_taille_tab_perso);
 					break; /*Nouvelle Partie*/
-			case 2: charge(grille);
-					tour(grille, 6);
+			case 2: charge();
+					tour(i_taille_tab_perso);
 					break; /*Charger une partie */
 			case 3: 
 					break;

@@ -8,6 +8,8 @@
 #include "../include/attaque.h"
 #include "../include/tableau.h"
 
+extern int map[i_taille_map][i_taille_map];
+
 /*int victoire(t_perso * table){
 	int i;
 	for(i = 0 ; i < nb_perso ; i++){
@@ -15,7 +17,7 @@
 	}	
 }	*/	
 
-void action(int grille[i_taille_map][i_taille_map], int i_perso_actuel){
+void action(int i_perso_actuel){
 	if(tab_perso[i_perso_actuel].i_HP > 0){
 		afficher_perso(tab_perso[i_perso_actuel]);
 		int action = 0;
@@ -29,20 +31,20 @@ void action(int grille[i_taille_map][i_taille_map], int i_perso_actuel){
 			scanf("%i", &action);
 			switch(action){
 				case 1: printf("Deplacement\n"); break; /*Fonction déplacement*/
-				case 2: attaque(tab_perso[i_perso_actuel], grille); break; /*Fonction Attaque */
+				case 2: attaque(tab_perso[i_perso_actuel]); break; /*Fonction Attaque */
 				case 3: printf("Passage de tour\n"); break; /*Remise au max des PAs PMs du soldat en cours et on passe au suivant dans la liste*/
-				case 4: save(grille); break;
+				case 4: save(); break;
 			}
 		}while(action != 3);
 	}
 }
 
 
-void tour(int grille[i_taille_map][i_taille_map], int nb_perso){
+void tour(int nb_perso){
 	int i_perso_actuel = 0;
 	while(i_perso_actuel < nb_perso){
-		afficher_map(grille);
-		action(grille, i_perso_actuel);
+		afficher_map();
+		action(i_perso_actuel);
 		i_perso_actuel++;
 	}
 }

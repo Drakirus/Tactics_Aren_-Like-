@@ -4,7 +4,9 @@
 #include "../include/tableau.h"
 #include "../include/gener_map.h"
 
-void attaque(t_perso per, int map[i_taille_map][i_taille_map])
+extern int map[i_taille_map][i_taille_map];
+
+void attaque(t_perso per)
 {
 	int b_sortie=0; //Condition de sortie
 	while(b_sortie==0)
@@ -27,7 +29,7 @@ void attaque(t_perso per, int map[i_taille_map][i_taille_map])
 				else
 				{
 					printf("Vous avez infligé 5 points de dégats. \n");
-					int i_pos_perso_attaque=recherche_perso_tab(coord_att[0], coord_att[1], tab_perso); //position du perso attaqué
+					int i_pos_perso_attaque=recherche_perso_tab(coord_att[0], coord_att[1]); //position du perso attaqué
 					augmente_nombre(2, tab_perso[i_pos_perso_attaque], -5);
 					afficher_perso(tab_perso[i_pos_perso_attaque]);
 					b_sortie=1;

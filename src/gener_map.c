@@ -7,7 +7,9 @@
 
 #define i_taille_map 10 //Nous avons convenu que la map sera un carré de taille 10.
 
-void obstacle(int i_chance_obstacle, int map[i_taille_map][i_taille_map]) //Fonction insérant les obstacles dans la map. Les obstacles sont placés aléatoirement dans la map.
+int map[i_taille_map][i_taille_map];
+
+void obstacle(int i_chance_obstacle) //Fonction insérant les obstacles dans la map. Les obstacles sont placés aléatoirement dans la map.
 {
 	int i,j;
 	int c; //c comme condition.
@@ -31,7 +33,7 @@ void obstacle(int i_chance_obstacle, int map[i_taille_map][i_taille_map]) //Fonc
 	}
 }
 
-void initialise_map(int map[i_taille_map][i_taille_map]) //Fonction initialisant la map vide
+void initialise_map() //Fonction initialisant la map vide
 {	int i,j;
 	for(i=0;i<i_taille_map;i++)
 	{
@@ -40,10 +42,10 @@ void initialise_map(int map[i_taille_map][i_taille_map]) //Fonction initialisant
 			map[i][j]=0; //0=vide;
 		}
 	}
-	obstacle(10, map);
+	obstacle(10);
 }
 
-void afficher_map(int map[i_taille_map][i_taille_map]) //Fonction affichant la map
+void afficher_map() //Fonction affichant la map
 {
 	system("clear");
 	int i,j;
