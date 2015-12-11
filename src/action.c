@@ -153,12 +153,7 @@ int **createDistancePath(int init_x, int init_y){
 					setAdjacent(map_path_finding, visited, row, columns, ++actual );
 					row=0;
 					columns=0;
-						// displayBoard(i_taille_map,i_taille_map,map_path_finding);
-						// printf("--------------------------\n" );
-						// afficher_map(visited);
-						// printf("--------------------------\n" );
 			}
-						// printf("%i\n", smallestVisited(map_path_finding, visited));
 		}
 		return map_path_finding;
 }
