@@ -18,7 +18,10 @@ typedef struct
 }t_perso;
 
 void afficher_perso(t_perso perso);
-void creation(t_perso tab_perso[6], int i_position_tableau, char classe[20], char c_team, int x, int y);
+void creation(t_perso perso, char classe[20], char c_team, int x, int y);
+void initialisation_perso(int a, t_perso per);
+void augmente_nombre(int a, t_perso per, int i_montant);
+void change_nombre(int a, t_perso per, int i_montant);
 
 float getSlope(float f_a, float f_b);
 int shoot(int map[i_taille_map][i_taille_map], int i_player_x, int i_player_y, int i_attaque_x, int i_attaque_y);

@@ -12,9 +12,10 @@ $(EXEC): $(OBJ)
 src/main.o: $(INC)gener_map.h $(INC)placement.h $(INC)tableau.h $(INC)tour.h
 src/placement.o: $(INC)gener_map.h $(INC)placement.h $(INC)tableau.h
 src/gener_map.o:
-src/tour.o: $(INC)perso.h $(INC)save.h $(INC)gener_map.h
-src/tableau.o: $(INC)perso.h
+src/tour.o: $(INC)perso.h $(INC)save.h $(INC)gener_map.h $(INC)attaque.h
+src/tableau.o: $(INC)perso.h 
 src/save.o: $(INC)gener_map.h $(INC)placement.h $(INC)tableau.h
+src/attaque.o: $(INC)tableau.h $(INC)gener_map.h
 
 %.o: %.c
 	$(CC) -o $@ -c $< $(CFLAGS)
