@@ -19,6 +19,7 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 	int coord[2];
 	int b_sortie=1; //Condition de sortie
 	int i_compteur=0;
+	t_perso per;
 	while(i_nb_perso!=0)
 	{
 		while(b_sortie!=0)
@@ -48,7 +49,8 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 					i_nb_archer_A--;
 					i_nb_perso--;
 					map[coord[0]][coord[1]]=3;
-					creation(tab_perso, i_compteur, "Archer", 'A', coord[0], coord[1]);
+					creation(per, "Archer", 'A', coord[0], coord[1]);
+					tab_perso[i_compteur]=per; //On ajoute le perso au tableau.
 					i_compteur++;
 					b_sortie=0;
 				}
@@ -60,7 +62,8 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 					i_nb_guerrier_A--;
 					i_nb_perso--;
 					map[coord[0]][coord[1]]=2;
-					creation(tab_perso, i_compteur, "Guerrier", 'A', coord[0], coord[1]);
+					creation(per, "Guerrier", 'A', coord[0], coord[1]);
+					tab_perso[i_compteur]=per;
 					i_compteur++;
 					b_sortie=0;
 				}
@@ -72,7 +75,8 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 					i_nb_mage_A--;
 					i_nb_perso--;
 					map[coord[0]][coord[1]]=4;
-					creation(tab_perso, i_compteur, "Mage", 'A', coord[0], coord[1]);
+					creation(per, "Mage", 'A', coord[0], coord[1]);
+					tab_perso[i_compteur]=per;
 					i_compteur++;
 					b_sortie=0;
 				}
@@ -107,7 +111,8 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 					i_nb_archer_B--;
 					i_nb_perso--;
 					map[coord[0]][coord[1]]=6;
-					creation(tab_perso, i_compteur, "Archer", 'B', coord[0], coord[1]);
+					creation(per, "Archer", 'B', coord[0], coord[1]);
+					tab_perso[i_compteur]=per;
 					i_compteur++;
 					b_sortie=0;
 				}
@@ -119,7 +124,8 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 					i_nb_guerrier_B--;
 					i_nb_perso--;
 					map[coord[0]][coord[1]]=5;
-					creation(tab_perso, i_compteur, "Guerrier", 'B', coord[0], coord[1]);
+					creation(per, "Guerrier", 'B', coord[0], coord[1]);
+					tab_perso[i_compteur]=per;
 					i_compteur++;
 					b_sortie=0;
 				}
@@ -131,7 +137,8 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 					i_nb_mage_B--;
 					i_nb_perso--;
 					map[coord[0]][coord[1]]=7;
-					creation(tab_perso, i_compteur, "Mage", 'B', coord[0], coord[1]);
+					creation(per, "Mage", 'B', coord[0], coord[1]);
+					tab_perso[i_compteur]=per;
 					i_compteur++;
 					b_sortie=0;
 				}

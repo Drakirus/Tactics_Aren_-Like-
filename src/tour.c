@@ -4,6 +4,7 @@
 #include "../include/perso.h"
 #include "../include/gener_map.h"
 #include "../include/save.h"
+#include "../include/attaque.h"
 
 void action(t_perso perso, int grille[i_taille_map][i_taille_map]){
 	int action = 0;
@@ -15,7 +16,7 @@ void action(t_perso perso, int grille[i_taille_map][i_taille_map]){
 		scanf("%i", &action);
 		switch(action){
 			case 1: printf("Deplacement\n"); break; /*Fonction déplacement*/
-			case 2: printf("Attaque\n"); break; /*Fonction Attaque */
+			case 2: attaque(); break; /*Fonction Attaque */
 			case 3: printf("Passage de tour\n"); break; /*Remise au max des PAs PMs du soldat en cours et on passe au suivant dans la liste*/
 			case 4: save(grille); break;
 		}
