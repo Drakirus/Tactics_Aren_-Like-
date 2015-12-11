@@ -1,5 +1,9 @@
-#include "perso.h"
+#ifndef __TOUR_H__
+#define __TOUR_H__
 
-void tour(t_perso * table, int grille[i_taille_map][i_taille_map], int nb_perso);
-void action(t_perso perso, int grille[i_taille_map][i_taille_map]);
+#include "gener_map.h"
 
+void tour(int grille[i_taille_map][i_taille_map], int nb_perso);
+void action(int grille[i_taille_map][i_taille_map], int i_perso_actuel);
+
+#endif

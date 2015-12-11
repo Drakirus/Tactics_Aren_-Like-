@@ -1,7 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "../include/perso.h"
+#include "../include/tableau.h"
+//#include "../include/perso.h"
+
+t_perso tab_perso[6]; //Contient les données de tous les persos.
 
 void afficher_tableau(t_perso tab[6])
 {

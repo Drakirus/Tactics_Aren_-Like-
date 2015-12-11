@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 
 #define i_taille_map 10 //Nous avons convenu que la map sera un carré de taille 10.
 
@@ -44,6 +45,7 @@ void initialise_map(int map[i_taille_map][i_taille_map]) //Fonction initialisant
 
 void afficher_map(int map[i_taille_map][i_taille_map]) //Fonction affichant la map
 {
+	system("clear");
 	int i,j;
 	printf("0   1   2   3   4   5   6   7   8   9\n");
 	for(i=0;i<i_taille_map;i++)

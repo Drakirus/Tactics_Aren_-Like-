@@ -4,7 +4,8 @@
 #include "../include/gener_map.h"
 #include "../include/tableau.h"
 
-#define i_taille_map 10
+extern t_perso tab_perso[6];
+
 
 /* Initialise une matrice à zéro */
 void init_mat(int mat[i_taille_map][i_taille_map]){
@@ -16,7 +17,7 @@ void init_mat(int mat[i_taille_map][i_taille_map]){
         }
 }
 
-void charge(int grille[i_taille_map][i_taille_map], t_perso table[]){
+void charge(int grille[i_taille_map][i_taille_map]){
 	int i, j, k;
 	FILE * fic;
 	char nom_fichier[20];
@@ -58,7 +59,7 @@ void save(int mat[i_taille_map][i_taille_map]){
          	for(j = 0; j < i_taille_map ; j++){
             		fprintf(fic, " %i", mat[i][j]);
 		}
-    	}
+    }
 	for(k = 0 ; k < 6 ; k++){
 		sauv_perso(sauv, tab_perso[k]);
 		fprintf(fic, " %s", sauv);

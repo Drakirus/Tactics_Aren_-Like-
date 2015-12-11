@@ -1,6 +1,10 @@
-#ifndef __map_size__
-#define i_taille_map 10
-#endif
+#ifndef __PERSO_H__
+#define __PERSO_H__
+
+#include "gener_map.h"
+//#ifndef __map_size__
+//#define i_taille_map 10
+//#endif
 
 typedef struct
 {
@@ -18,3 +22,7 @@ void creation(t_perso tab_perso[6], int i_position_tableau, char classe[20], cha
 
 float getSlope(float f_a, float f_b);
 int shoot(int map[i_taille_map][i_taille_map], int i_player_x, int i_player_y, int i_attaque_x, int i_attaque_y);
+
+#endif
+
+

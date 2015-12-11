@@ -5,11 +5,11 @@
 #include "../include/placement.h"
 #include "../include/tour.h"
 #include "../include/gener_map.h"
+#include "../include/tableau.h"
 
 int main() {
 	srand(time(NULL));
 	int grille[i_taille_map][i_taille_map];
-	t_perso tab_perso[6];
 	initialise_map(grille);
   	int choix_menu = 0;
 	do{
@@ -19,14 +19,15 @@ int main() {
 		scanf("%i", &choix_menu);
 		switch(choix_menu){
 			case 1: initialise_map(grille);
-				placement_perso(grille);
-				tour(tab_perso, grille, 6);
-				break; /*Nouvelle Partie*/
+					afficher_map(grille);
+					placement_perso(grille);
+					tour(grille, 6);
+					break; /*Nouvelle Partie*/
 			case 2: charge(grille);
-				tour(tab_perso, grille, 6);
-				break; /*Charger une partie */
+					tour(grille, 6);
+					break; /*Charger une partie */
 			case 3: 
-				break;
+					break;
 		}
 	}while(choix_menu != 3);
 	return 0;
