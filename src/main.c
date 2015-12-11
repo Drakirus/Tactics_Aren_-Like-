@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <unistd.h>
 #include "../include/save.h"
 #include "../include/placement.h"
 #include "../include/tour.h"
@@ -9,6 +10,7 @@
 
 int main() {
 	srand(time(NULL));
+	system("clear");
 	int grille[i_taille_map][i_taille_map];
 	initialise_map(grille);
   	int choix_menu = 0;
