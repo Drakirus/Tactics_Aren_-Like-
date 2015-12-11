@@ -31,7 +31,6 @@ void charge(int grille[i_taille_map][i_taille_map], t_perso table[]){
             		fscanf(fic, "%i", &grille[i][j]);
 		}
 	}
-	printf("Trolololo");
 	for(k = 0 ; !feof(fic) ; k++){
 			fscanf(fic, "%s", tab_perso[k].s_classe);
 			fscanf(fic, "%i", &tab_perso[k].i_HP_max);
@@ -40,11 +39,11 @@ void charge(int grille[i_taille_map][i_taille_map], t_perso table[]){
 			fscanf(fic, "%i", &tab_perso[k].i_PM);
 			fscanf(fic, "%i", &tab_perso[k].coord[0]);
 			fscanf(fic, "%i", &tab_perso[k].coord[1]);
-			fscanf(fic, "%c", &tab_perso[k].c_team);
+			fscanf(fic, " %c ", &tab_perso[k].c_team);
+			afficher_perso(tab_perso[k]);
 	}
 	fclose(fic);
 	afficher_map(grille);
-	afficher_tableau(tab_perso);
 }
 
 void save(int mat[i_taille_map][i_taille_map]){
@@ -57,12 +56,12 @@ void save(int mat[i_taille_map][i_taille_map]){
 	fic = fopen(nom_fichier, "w");
 	for(i = 0; i < i_taille_map ; i++){
          	for(j = 0; j < i_taille_map ; j++){
-            		fprintf(fic, "%i ", mat[i][j]);
+            		fprintf(fic, " %i", mat[i][j]);
 		}
     	}
 	for(k = 0 ; k < 6 ; k++){
 		sauv_perso(sauv, tab_perso[k]);
-		fprintf(fic, "%s ", sauv);
+		fprintf(fic, " %s", sauv);
 	}
 	printf("Partie sauvegardée dans %s\n", nom_fichier);
 	fclose(fic);
