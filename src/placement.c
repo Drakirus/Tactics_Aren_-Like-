@@ -19,7 +19,6 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 	int coord[2];
 	int b_sortie=1; //Condition de sortie
 	int i_compteur=0;
-
 	while(i_nb_perso!=0)
 	{
 		while(b_sortie!=0)
@@ -81,8 +80,6 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 		}
 		b_sortie=1;
 		afficher_map(map);
-
-
 		while(b_sortie!=0)
 		{
 			printf("\nEquipe B, à vous de placer un personnage : \n"); //On passe à la phase de choix de l'équipe B
@@ -95,7 +92,6 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 			}
 		}
 		b_sortie=1;
-
 		while(b_sortie!=0)
 		{
 			printf("Choisissez la classe : \n");
@@ -144,5 +140,4 @@ void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place
 		afficher_map(map);
 		b_sortie=1;
 	}
-	afficher_tableau(tab_perso);
 }

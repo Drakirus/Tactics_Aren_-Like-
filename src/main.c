@@ -1,15 +1,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include "Outil.h"
-#include "save.h"
-#include "placement.h"
-#include "gener_map.h"
-#include "tour.h"
+#include "../include/save.h"
+#include "../include/placement.h"
+#include "../include/tour.h"
+#include "../include/gener_map.h"
 
 int main() {
 	srand(time(NULL));
 	int grille[i_taille_map][i_taille_map];
+	t_perso tab_perso[6];
 	initialise_map(grille);
   	int choix_menu = 0;
 	do{
@@ -18,9 +18,15 @@ int main() {
 		printf("3 - Quitter\n");
 		scanf("%i", &choix_menu);
 		switch(choix_menu){
-			case 1: initialise_map(grille); placement_perso(grille); save(grille); break; /*Nouvelle Partie*/
-			case 2: charge(grille); break; /*Charger une partie */
-			case 3: break;
+			case 1: initialise_map(grille);
+				placement_perso(grille);
+				tour(tab_perso, grille, 6);
+				break; /*Nouvelle Partie*/
+			case 2: charge(grille);
+				tour(tab_perso, grille, 6);
+				break; /*Charger une partie */
+			case 3: 
+				break;
 		}
 	}while(choix_menu != 3);
 	return 0;
