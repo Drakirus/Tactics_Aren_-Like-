@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "../include/placement.h"
-#include "../include/gener_map.h"
+#include "../include/map.h"
 #include "../include/tableau.h"
 
 extern t_perso tab_perso[6];

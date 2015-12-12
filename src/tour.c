@@ -3,9 +3,9 @@
 #include <unistd.h>
 #include "../include/tour.h"
 #include "../include/perso.h"
-#include "../include/gener_map.h"
+#include "../include/map.h"
 #include "../include/save.h"
-#include "../include/attaque.h"
+#include "../include/action.h"
 #include "../include/tableau.h"
 
 extern int map[i_taille_map][i_taille_map];
@@ -13,8 +13,8 @@ extern int map[i_taille_map][i_taille_map];
 /*int victoire(){
 	int i;
 	for(i = 0 ; i < nb_perso ; i++){
-		
-	}	
+
+	}
 }*/
 
 void action(int i_perso_actuel){
@@ -48,4 +48,3 @@ void tour(){
 		i_perso_actuel++;
 	}
 }
-

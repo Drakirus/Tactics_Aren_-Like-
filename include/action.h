@@ -4,7 +4,10 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <time.h>
+#include <string.h>
+
+#include "perso.h"
+
 
 typedef struct pile{
   int row;
@@ -29,3 +32,5 @@ int pop(pile **p, int * r, int * c);
 void push(pile **p, int r, int c);
 
 pile *getPath(int **DistancePath, int i, int j);
+
+void attaque(t_perso per);

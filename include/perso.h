@@ -1,7 +1,7 @@
 #ifndef __PERSO_H__
 #define __PERSO_H__
 
-#include "gener_map.h"
+#include "map.h"
 //#ifndef __map_size__
 //#define i_taille_map 10
 //#endif
@@ -24,5 +24,3 @@ void augmente_nombre(int a, t_perso per, int i_montant);
 void change_nombre(int a, t_perso per, int i_montant);
 
 #endif
-
-

@@ -10,14 +10,13 @@ $(EXEC): $(OBJ)
 	$(CC) $(CFLAGS) -o $@ $^
 	@echo "\nOn reconstruit $@ a cause de $?"
 
-src/main.o: $(INC)gener_map.h $(INC)placement.h $(INC)tableau.h $(INC)tour.h
-src/placement.o: $(INC)gener_map.h $(INC)placement.h $(INC)tableau.h
-src/gener_map.o:
-src/tour.o: $(INC)perso.h $(INC)save.h $(INC)gener_map.h $(INC)attaque.h
+src/main.o: $(INC)map.h $(INC)placement.h $(INC)tableau.h $(INC)tour.h
+src/placement.o: $(INC)map.h $(INC)placement.h $(INC)tableau.h
+src/map.o:
+src/tour.o: $(INC)perso.h $(INC)save.h $(INC)map.h $(INC)action.h
 src/tableau.o: $(INC)perso.h
-src/save.o: $(INC)gener_map.h $(INC)placement.h $(INC)tableau.h
-src/attaque.o: $(INC)tableau.h $(INC)gener_map.h
-src/action.o: $(INC)action.h
+src/save.o: $(INC)map.h $(INC)placement.h $(INC)tableau.h
+src/action.o: $(INC)action.h $(INC)perso.h $(INC)map.h $(INC)tableau.h
 
 %.o: %.c
 	$(CC) -o $@ -c $< $(CFLAGS)
