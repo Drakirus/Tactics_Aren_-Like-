@@ -53,5 +53,5 @@ while (sortir != -1) {
 	sortir = pop(&path, &r, &c);
 	printf("r: %i c: %i\n",r,c );
 }
-
+freeBoard(DistancePath, i_taille_map);
 ```
