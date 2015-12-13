@@ -160,7 +160,7 @@ void setAdjacent(int **mat, int visited[i_taille_map][i_taille_map], int i, int 
 	visited[i][j] = 1;
 		for (dx = (i <= 0 ? 0 : -1); dx <= (i >= i_taille_map-1 ? 0 : 1); dx++)
 			for (dy = (j <= 0 ? 0 : -1); dy <= (j >= i_taille_map-1 ? 0 : 1); dy++)
-				if (visited[dx+i][dy+j] == 0 && abs(dx) != abs(dy) && mat[dx+i][dy+j] == 0) {
+				if (visited[dx+i][dy+j] == 0 && abs(dx) != abs(dy) && mat[dx+i][dy+j] != -1) {
 					mat[dx+i][dy+j] = value;
 					for (cx = -1; cx <= 1; cx++)
 						for (cy = -1; cy <= 1; cy++)
