@@ -15,6 +15,7 @@ extern int map[i_taille_map][i_taille_map];
 void attaque(t_perso per)
 {
 	int b_sortie=0; //Condition de sortie
+	int **DistancePath;
 	while(b_sortie==0)
 	{
 		int coord_att[2]; //Les coordonnées cibles du joueur
@@ -22,7 +23,8 @@ void attaque(t_perso per)
 		{
 			printf("Veuillez rentrer les coordonnées du personnages que vous voulez attaquer : ");
 			scanf("%i%i", &coord_att[0], &coord_att[1]);
-			int **DistancePath = createDistancePath(per.coord[0], per.coord[1]);
+			printf("%i %i\n", per.coord[0], per.coord[1]);
+			DistancePath = createDistancePath(per.coord[0], per.coord[1]);
 			displayBoard(i_taille_map,i_taille_map,DistancePath);
 			if(distanceFrom(coord_att[0], coord_att[1], DistancePath)!=1)
 			{
@@ -216,13 +218,14 @@ void displayBoard(int r, int c, int **arr){ // Display a matrix of size r,c for 
 	int i,j;
 	for (i = 0; i <  r; i++){
 		for (j = 0; j < c; j++){
-			if (arr[i][j] != -1)
-				if(arr[i][j]	>=10)
-					printf("%d ", arr[i][j]);
-				else
-					printf("%d  ", arr[i][j]);
-			else
+			if (arr[i][j] == -1)
 				printf("   ");
+			else
+			if(arr[i][j]	>=10)
+				printf("%d ", arr[i][j]);
+			else
+				printf("%d  ", arr[i][j]);
+
 		}
 		printf("\n" );
 	}
@@ -238,10 +241,10 @@ int **allocateBoard(int r, int c, int from[r][c]){// create a pointer array to a
 
 	for (i = 0; i < r; i++)
 		for (j = 0; j < c; j++){
-			if (from[i][j] == 0)
-				arr[i][j] = from[i][j]; // *(*(arr+i)+j)
-			else
+			if (from[i][j] == 1)
 				arr[i][j]=-1;
+			else
+				arr[i][j] = 0; // *(*(arr+i)+j)
 		}
 	return arr;
 }
