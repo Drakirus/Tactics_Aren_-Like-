@@ -28,6 +28,10 @@ void attaque(t_perso per)
 			{
 				printf("Le guerrier ne peut attaquer si loin!\n");
 			}
+			else if(distanceFrom(coord_att[0], coord_att[1], DistancePath)==0)
+			{
+				printf("Je ne pense pas que vous soyez assez bête pour vous attaquer vous même si?\n");
+			}
 			else
 			{
 				if(map[coord_att[0]][coord_att[1]]==0 || map[coord_att[0]][coord_att[1]]==1) //On vérifie qu'il attaque bien une cible convenable
@@ -42,6 +46,65 @@ void attaque(t_perso per)
 					afficher_perso(tab_perso[i_pos_perso_attaque]);
 					b_sortie=1;
 				}
+			}
+		}
+		else if(strcmp(per.s_classe, "Archer")==0)
+		{
+			printf("Veuillez rentrer les coordonnées du personnages que vous voulez attaquer : ");
+			scanf("%i%i", &coord_att[0], &coord_att[1]);
+			int **DistancePath = createDistancePath(per.coord[0], per.coord[1]);
+			displayBoard(i_taille_map,i_taille_map,DistancePath);
+			if(distanceFrom(coord_att[0], coord_att[1], DistancePath)>3)
+			{
+				printf("L'archer ne peut attaquer si loin!\n");
+			}
+			else if(distanceFrom(coord_att[0], coord_att[1], DistancePath)==0)
+			{
+				printf("Je ne pense pas que vous soyez assez bête pour vous attaquer vous même si?\n");
+			}
+			else
+			{
+				if(map[coord_att[0]][coord_att[1]]==0 || map[coord_att[0]][coord_att[1]]==1) //On vérifie qu'il attaque bien une cible convenable
+				{
+					printf("Il n'y a rien à attaquer\n");
+				}
+				else
+				{
+					printf("Vous avez infligé 4 points de dégats. \n");
+					int i_pos_perso_attaque=recherche_perso_tab(coord_att[0], coord_att[1]); //position du perso attaqué
+					augmente_nombre(2, &tab_perso[i_pos_perso_attaque], -3); //Inflige les points de dégâts au perso
+					afficher_perso(tab_perso[i_pos_perso_attaque]);
+					b_sortie=1;
+				}
+			}
+		}
+		else if(strcmp(per.s_classe, "Mage")==0)
+		{
+			printf("Veuillez rentrer les coordonnées du personnages que vous voulez attaquer : ");
+			scanf("%i%i", &coord_att[0], &coord_att[1]);
+			int **DistancePath = createDistancePath(per.coord[0], per.coord[1]);
+			displayBoard(i_taille_map,i_taille_map,DistancePath);
+			if(distanceFrom(coord_att[0], coord_att[1], DistancePath)>4)
+			{
+				printf("Le mage ne peut attaquer si loin!\n");
+			}
+			else
+			{
+				printf("Vous avez infligé 3 points de dégats. \n");
+				int i_pos_perso_attaque, i, j;
+				for(i=-1;i<2;i++)
+				{
+					for(j=-1;j<2;j++)
+					{
+						if(recherche_perso_tab(coord_att[0]+i,coord_att[1]+j)!=-1) //On regarde s'il y a un perso ou non (recher_perso_tab retourne -1 s'il n'y a personne)
+						{
+							i_pos_perso_attaque=recherche_perso_tab(coord_att[0], coord_att[1]);
+							augmente_nombre(2, &tab_perso[i_pos_perso_attaque], -3);
+							afficher_perso(tab_perso[i_pos_perso_attaque]);
+						}
+					}
+				}
+				b_sortie=1;
 			}
 		}
 	}
