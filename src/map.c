@@ -49,9 +49,10 @@ void afficher_map() //Fonction affichant la map
 {
 	system("clear");
 	int i,j;
-	printf("0   1   2   3   4   5   6   7   8   9\n");
+	printf("  0   1   2   3   4   5   6   7   8   9\n");
 	for(i=0;i<i_taille_map;i++)
 	{
+		printf("%i  ", i);
 		for(j=0;j<i_taille_map;j++)
 		{
 			if(map[i][j]==0)
@@ -71,7 +72,6 @@ void afficher_map() //Fonction affichant la map
 			else if(map[i][j]==7)//7 : Mage, équipe B
 				printf("M.B ");
 		}
-		printf("%i", i);
 		printf("\n");
 	}
 }

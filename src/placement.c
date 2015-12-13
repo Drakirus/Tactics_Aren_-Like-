@@ -3,7 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include "../include/placement.h"
-#include "../include/gener_map.h"
+#include "../include/map.h"
 #include "../include/tableau.h"
 
 extern t_perso tab_perso[6];
@@ -28,7 +28,7 @@ void placement_perso() //Cette fonction place les personnages des différents é
 		while(b_sortie!=0)
 		{
 			printf("\nEquipe A, à vous de placer un personnage : \n"); //La phase de choix de l'équipe A
-			printf("Choisissez les coordonnées : "); 
+			printf("Choisissez les coordonnées : ");
 			scanf("%i%i", &coord[0], &coord[1]); //Les coordonnées sont comprises entre 0 et 9.
 			if(coord[0]>=0 && coord[0]<3 && coord[1]>=0 && coord[1]<=9 && map[coord[0]][coord[1]]==0)
 			{
@@ -90,11 +90,11 @@ void placement_perso() //Cette fonction place les personnages des différents é
 		while(b_sortie!=0)
 		{
 			printf("\nEquipe B, à vous de placer un personnage : \n"); //On passe à la phase de choix de l'équipe B
-			printf("Choisissez les coordonnées : "); 
+			printf("Choisissez les coordonnées : ");
 			scanf("%i%i", &coord[0], &coord[1]); //Les coordonnées sont comprises entre 0 et 9.
 			if(coord[0]>=7 && coord[0]<=9 && coord[1]>=0 && coord[1]<=9 && map[coord[0]][coord[1]]==0)
 			{
-				
+
 				b_sortie=0;
 			}
 		}

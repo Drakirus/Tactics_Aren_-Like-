@@ -5,8 +5,7 @@
 #include "../include/save.h"
 #include "../include/placement.h"
 #include "../include/tour.h"
-#include "../include/gener_map.h"
-#include "../include/tableau.h"
+#include "../include/map.h"
 
 int main() {
 	srand(time(NULL));
@@ -21,12 +20,12 @@ int main() {
 			case 1: initialise_map();
 					afficher_map();
 					placement_perso();
-					tour(i_taille_tab_perso);
+					tour();
 					break; /*Nouvelle Partie*/
 			case 2: charge();
-					tour(i_taille_tab_perso);
+					tour();
 					break; /*Charger une partie */
-			case 3: 
+			case 3:
 					break;
 		}
 	}while(choix_menu != 3);

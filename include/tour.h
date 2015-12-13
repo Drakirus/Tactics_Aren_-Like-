@@ -1,9 +1,9 @@
 #ifndef __TOUR_H__
 #define __TOUR_H__
 
-#include "gener_map.h"
+#include "map.h"
 
-void tour(int nb_perso);
+void tour();
 void action(int i_perso_actuel);
 
 #endif

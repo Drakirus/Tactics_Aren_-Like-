@@ -3,19 +3,19 @@
 #include <unistd.h>
 #include "../include/tour.h"
 #include "../include/perso.h"
-#include "../include/gener_map.h"
+#include "../include/map.h"
 #include "../include/save.h"
-#include "../include/attaque.h"
+#include "../include/action.h"
 #include "../include/tableau.h"
 
 extern int map[i_taille_map][i_taille_map];
 
-/*int victoire(t_perso * table){
+/*int victoire(){
 	int i;
 	for(i = 0 ; i < nb_perso ; i++){
-		
-	}	
-}	*/	
+
+	}
+}*/
 
 void action(int i_perso_actuel){
 	if(tab_perso[i_perso_actuel].i_HP > 0){
@@ -40,12 +40,11 @@ void action(int i_perso_actuel){
 }
 
 
-void tour(int nb_perso){
+void tour(){
 	int i_perso_actuel = 0;
-	while(i_perso_actuel < nb_perso){
+	while(i_perso_actuel < i_taille_tab_perso){
 		afficher_map();
 		action(i_perso_actuel);
 		i_perso_actuel++;
 	}
 }
-
