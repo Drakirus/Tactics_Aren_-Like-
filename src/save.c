@@ -4,7 +4,7 @@
 #include "../include/map.h"
 #include "../include/tableau.h"
 
-extern t_perso tab_perso[6];
+extern t_perso tab_perso[i_taille_tab_perso];
 extern int map[i_taille_map][i_taille_map];
 
 /* Initialise une matrice à zéro

@@ -6,6 +6,7 @@
 
 extern int map[i_taille_map][i_taille_map];
 
+
 t_perso ensemble_perso[3]=
 {
 	{"Guerrier",50,50,3,3,{0,0},'X'},

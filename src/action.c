@@ -25,7 +25,6 @@ void attaque(t_perso per)
 			scanf("%i%i", &coord_att[0], &coord_att[1]);
 			printf("%i %i\n", per.coord[0], per.coord[1]);
 			DistancePath = createDistancePath(per.coord[0], per.coord[1]);
-			displayBoard(i_taille_map,i_taille_map,DistancePath);
 			if(distanceFrom(coord_att[0], coord_att[1], DistancePath)!=1)
 			{
 				printf("Le guerrier ne peut attaquer si loin!\n");
@@ -55,7 +54,6 @@ void attaque(t_perso per)
 			printf("Veuillez rentrer les coordonnées du personnages que vous voulez attaquer : ");
 			scanf("%i%i", &coord_att[0], &coord_att[1]);
 			int **DistancePath = createDistancePath(per.coord[0], per.coord[1]);
-			displayBoard(i_taille_map,i_taille_map,DistancePath);
 			if(distanceFrom(coord_att[0], coord_att[1], DistancePath)>3)
 			{
 				printf("L'archer ne peut attaquer si loin!\n");
@@ -63,6 +61,10 @@ void attaque(t_perso per)
 			else if(distanceFrom(coord_att[0], coord_att[1], DistancePath)==0)
 			{
 				printf("Je ne pense pas que vous soyez assez bête pour vous attaquer vous même si?\n");
+			}
+			else if (shoot(per.coord[0], per.coord[1], coord_att[0], coord_att[1])!=0)
+			{
+				printf("Un obstacle vous empêche d'atteindre votre cible.\n");
 			}
 			else
 			{
@@ -85,7 +87,6 @@ void attaque(t_perso per)
 			printf("Veuillez rentrer les coordonnées du personnages que vous voulez attaquer : ");
 			scanf("%i%i", &coord_att[0], &coord_att[1]);
 			int **DistancePath = createDistancePath(per.coord[0], per.coord[1]);
-			displayBoard(i_taille_map,i_taille_map,DistancePath);
 			if(distanceFrom(coord_att[0], coord_att[1], DistancePath)>4)
 			{
 				printf("Le mage ne peut attaquer si loin!\n");
@@ -100,7 +101,7 @@ void attaque(t_perso per)
 					{
 						if(recherche_perso_tab(coord_att[0]+i,coord_att[1]+j)!=-1) //On regarde s'il y a un perso ou non (recher_perso_tab retourne -1 s'il n'y a personne)
 						{
-							i_pos_perso_attaque=recherche_perso_tab(coord_att[0], coord_att[1]);
+							i_pos_perso_attaque=recherche_perso_tab(coord_att[0]+i, coord_att[1]+j);
 							augmente_nombre(2, &tab_perso[i_pos_perso_attaque], -3);
 							afficher_perso(tab_perso[i_pos_perso_attaque]);
 						}

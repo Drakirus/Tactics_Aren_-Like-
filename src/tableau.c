@@ -2,10 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 #include "../include/tableau.h"
-//#include "../include/perso.h"
-#define i_taille_tab_perso 6
 
 t_perso tab_perso[i_taille_tab_perso]; //Contient les données de tous les persos.
+
 
 void afficher_tableau()
 {
