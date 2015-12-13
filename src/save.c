@@ -5,9 +5,9 @@
 #include "../include/tableau.h"
 
 extern t_perso tab_perso[6];
+extern int map[i_taille_map][i_taille_map];
 
-
-/* Initialise une matrice à zéro */
+/* Initialise une matrice à zéro
 void init_mat(int mat[i_taille_map][i_taille_map]){
 	int i, j;
 	for(i = 0; i < i_taille_map ; i++){
@@ -15,9 +15,9 @@ void init_mat(int mat[i_taille_map][i_taille_map]){
             		mat[i][j] = 0;
             	}
         }
-}
+}*/
 
-void charge(int grille[i_taille_map][i_taille_map]){
+void charge(){
 	int i, j, k;
 	FILE * fic;
 	char nom_fichier[20];
@@ -29,7 +29,7 @@ void charge(int grille[i_taille_map][i_taille_map]){
 	}while(fic == NULL);
 	for(i = 0; i < i_taille_map ; i++){
          	for(j = 0; j < i_taille_map ; j++){
-            		fscanf(fic, "%i", &grille[i][j]);
+            		fscanf(fic, "%i", &map[i][j]);
 		}
 	}
 	for(k = 0 ; !feof(fic) ; k++){
@@ -44,10 +44,10 @@ void charge(int grille[i_taille_map][i_taille_map]){
 			afficher_perso(tab_perso[k]);
 	}
 	fclose(fic);
-	afficher_map(grille);
+	afficher_map();
 }
 
-void save(int mat[i_taille_map][i_taille_map]){
+void save(){
 	int i, j,k;
 	char nom_fichier[20];
 	char sauv[40];
@@ -57,7 +57,7 @@ void save(int mat[i_taille_map][i_taille_map]){
 	fic = fopen(nom_fichier, "w");
 	for(i = 0; i < i_taille_map ; i++){
          	for(j = 0; j < i_taille_map ; j++){
-            		fprintf(fic, " %i", mat[i][j]);
+            		fprintf(fic, " %i", map[i][j]);
 		}
     }
 	for(k = 0 ; k < 6 ; k++){

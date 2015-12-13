@@ -4,6 +4,8 @@
 #include <time.h>
 #include "../include/perso.h"
 
+extern int map[i_taille_map][i_taille_map];
+
 t_perso ensemble_perso[3]=
 {
 	{"Guerrier",50,50,3,3,{0,0},'A'},
@@ -89,7 +91,7 @@ float getSlope(float f_a, float f_b){
 	return f_a/f_b;
 }
 
-int shoot(int map[i_taille_map][i_taille_map], int i_player_y, int i_player_x, int i_attaque_y, int i_attaque_x){
+int shoot(int i_player_y, int i_player_x, int i_attaque_y, int i_attaque_x){
 	int i,j,cx,cy;
 	float f_slope_min, f_slope_max, f_slope;
 	for (i = 0; i < i_taille_map; i++) {

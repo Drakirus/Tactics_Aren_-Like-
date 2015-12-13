@@ -3,8 +3,11 @@
 #include <string.h>
 #include "../include/tableau.h"
 #include "../include/gener_map.h"
+#include "../include/action.h"
 
-void attaque(t_perso per, int map[i_taille_map][i_taille_map])
+extern int map[i_taille_map][i_taille_map];
+
+void attaque(t_perso per)
 {
 	int b_sortie=0; //Condition de sortie
 	while(b_sortie==0)
@@ -14,7 +17,8 @@ void attaque(t_perso per, int map[i_taille_map][i_taille_map])
 		{
 			printf("Veuillez rentrer les coordonnées du personnages que vous voulez attaquer : ");
 			scanf("%i%i", &coord_att[0], &coord_att[1]);
-			if((coord_att[0]!=per.coord[0]+1 || coord_att[0]!=per.coord[0]+1) && (coord_att[1]!=per.coord[1]+1 || coord_att[1]!=per.coord[1]+1))
+			int **DistancePath=**createDistancePath(map, per.coord[0], per.coord[1]);
+			if(distanceFrom(coord_att[0], coord_att[1],DistancePath)>2)
 			{
 				printf("Le guerrier ne peut attaquer si loin!\n");
 			}

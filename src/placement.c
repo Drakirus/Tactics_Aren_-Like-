@@ -7,8 +7,9 @@
 #include "../include/tableau.h"
 
 extern t_perso tab_perso[6];
+extern int map[i_taille_map][i_taille_map];
 
-void placement_perso(int map[i_taille_map][i_taille_map]) //Cette fonction place les personnages des différents équipes dans les trois premières et dernières ligne de la map.
+void placement_perso() //Cette fonction place les personnages des différents équipes dans les trois premières et dernières ligne de la map.
 {
 	char s_classe[20]; //Classe du personnage choisie.
 	int i_nb_perso=6;

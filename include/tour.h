@@ -3,7 +3,7 @@
 
 #include "gener_map.h"
 
-void tour(int grille[i_taille_map][i_taille_map], int nb_perso);
-void action(int grille[i_taille_map][i_taille_map], int i_perso_actuel);
+void tour(int nb_perso);
+void action(int i_perso_actuel);
 
 #endif
