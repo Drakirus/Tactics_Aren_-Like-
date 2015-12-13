@@ -2,9 +2,6 @@
 #define __PERSO_H__
 
 #include "map.h"
-//#ifndef __map_size__
-//#define i_taille_map 10
-//#endif
 
 typedef struct
 {

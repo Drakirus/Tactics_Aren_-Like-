@@ -1,7 +1,3 @@
-#ifndef __map_size__
-#define i_taille_map 10
-#endif
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

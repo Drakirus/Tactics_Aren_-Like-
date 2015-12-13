@@ -10,7 +10,7 @@
 int main() {
 	srand(time(NULL));
 	system("clear");
-  	int choix_menu = 0;
+	int choix_menu = 0;
 	do{
 		printf("1 - Nouvelle Partie\n");
 		printf("2 - Charger une partie\n");
@@ -29,5 +29,4 @@ int main() {
 					break;
 		}
 	}while(choix_menu != 3);
-	return 0;
 }
