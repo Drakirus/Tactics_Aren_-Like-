@@ -22,7 +22,9 @@ void attaque(t_perso per)
 		{
 			printf("Veuillez rentrer les coordonnées du personnages que vous voulez attaquer : ");
 			scanf("%i%i", &coord_att[0], &coord_att[1]);
-			if((coord_att[0]!=per.coord[0]+1 || coord_att[0]!=per.coord[0]+1) && (coord_att[1]!=per.coord[1]+1 || coord_att[1]!=per.coord[1]+1))
+			int **DistancePath = createDistancePath(per.coord[0], per.coord[1]);
+			displayBoard(i_taille_map,i_taille_map,DistancePath);
+			if(distanceFrom(coord_att[0], coord_att[1], DistancePath)!=1)
 			{
 				printf("Le guerrier ne peut attaquer si loin!\n");
 			}
@@ -36,7 +38,7 @@ void attaque(t_perso per)
 				{
 					printf("Vous avez infligé 5 points de dégats. \n");
 					int i_pos_perso_attaque=recherche_perso_tab(coord_att[0], coord_att[1]); //position du perso attaqué
-					augmente_nombre(2, tab_perso[i_pos_perso_attaque], -5);
+					augmente_nombre(2, &tab_perso[i_pos_perso_attaque], -5); //Inflige les points de dégâts au perso
 					afficher_perso(tab_perso[i_pos_perso_attaque]);
 					b_sortie=1;
 				}
@@ -158,7 +160,7 @@ void setAdjacent(int **mat, int visited[i_taille_map][i_taille_map], int i, int 
 	visited[i][j] = 1;
 		for (dx = (i <= 0 ? 0 : -1); dx <= (i >= i_taille_map-1 ? 0 : 1); dx++)
 			for (dy = (j <= 0 ? 0 : -1); dy <= (j >= i_taille_map-1 ? 0 : 1); dy++)
-				if (visited[dx+i][dy+j] == 0 && abs(dx) != abs(dy) && mat[dx+i][dy+j] == 0) {
+				if (visited[dx+i][dy+j] == 0 && abs(dx) != abs(dy) && mat[dx+i][dy+j] != -1) {
 					mat[dx+i][dy+j] = value;
 					for (cx = -1; cx <= 1; cx++)
 						for (cy = -1; cy <= 1; cy++)

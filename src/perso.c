@@ -28,29 +28,29 @@ void initialisation_perso(int a, t_perso per) //On affecte à un t_perso les don
 	per.c_team=ensemble_perso[a].c_team;
 }
 
-void augmente_nombre(int a, t_perso per, int i_montant) //Augmente ou soustrait une valeur numérique d'un perso, 1=i_HP_max, 2=i_HP, 3=i_PA, 4=i_PM, 5=coord[0], 6=coord[1]
+void augmente_nombre(int a, t_perso * per, int i_montant) //Augmente ou soustrait une valeur numérique d'un perso, 1=i_HP_max, 2=i_HP, 3=i_PA, 4=i_PM, 5=coord[0], 6=coord[1]
 {
 	switch(a)
 	{
-		case 1 : per.i_HP_max+=i_montant; break;
-		case 2 : per.i_HP+=i_montant; break;
-		case 3 : per.i_PA+=i_montant; break;
-		case 4 : per.i_PM+=i_montant; break;
-		case 5 : per.coord[0]+=i_montant; break;
-		case 6 : per.coord[1]+=i_montant; break;
+		case 1 : (*per).i_HP_max+=i_montant; break;
+		case 2 : (*per).i_HP+=i_montant; break;
+		case 3 : (*per).i_PA+=i_montant; break;
+		case 4 : (*per).i_PM+=i_montant; break;
+		case 5 : (*per).coord[0]+=i_montant; break;
+		case 6 : (*per).coord[1]+=i_montant; break;
 	}
 }
 
-void change_nombre(int a, t_perso per, int i_montant) //Change une valeur numérique d'un perso, 1=i_HP_max, 2=i_HP, 3=i_PA, 4=i_PM, 5=coord[0], 6=coord[1]
+void change_nombre(int a, t_perso * per, int i_montant) //Change une valeur numérique d'un perso, 1=i_HP_max, 2=i_HP, 3=i_PA, 4=i_PM, 5=coord[0], 6=coord[1]
 {
 	switch(a)
 	{
-		case 1 : per.i_HP_max=i_montant; break;
-		case 2 : per.i_HP=i_montant; break;
-		case 3 : per.i_PA=i_montant; break;
-		case 4 : per.i_PM=i_montant; break;
-		case 5 : per.coord[0]=i_montant; break;
-		case 6 : per.coord[1]=i_montant; break;
+		case 1 : per->i_HP_max=i_montant; break;
+		case 2 : per->i_HP=i_montant; break;
+		case 3 : per->i_PA=i_montant; break;
+		case 4 : per->i_PM=i_montant; break;
+		case 5 : per->coord[0]=i_montant; break;
+		case 6 : per->coord[1]=i_montant; break;
 	}
 }
 
