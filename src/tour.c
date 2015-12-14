@@ -41,7 +41,6 @@ int action(t_perso perso){
 				case 4: save();
 					break;
 			}
-			
 		}while(action != 3 && victoire() == 0);
 	}
 	return victoire(); /*Si une des deux équipes a gagné on renvoie son numéro, renvoie 0 sinon*/
