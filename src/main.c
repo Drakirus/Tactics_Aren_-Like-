@@ -23,10 +23,10 @@ int main() {
 			case 1: initialise_map();
 				afficher_map();
 				placement_perso();
-				tour();
+				partie();
 				break; /*Nouvelle Partie*/
 			case 2:	charge();
-				tour();
+				partie();
 				break; /*Charger une partie */
 			case 3:
 				break;

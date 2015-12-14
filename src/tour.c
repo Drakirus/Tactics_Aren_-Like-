@@ -10,20 +10,20 @@
 
 extern int map[i_taille_map][i_taille_map];
 extern t_perso tab_perso[i_taille_tab_perso];
+int nb_perso[2]; //Stocke le nombre de perso de chaque équipe
 int i_perso_actuel = 0;
 
-/*int victoire(){
-	int i;
-	for(i = 0 ; i < i_taille_tab_perso ; i++){
-		
-	}
-}*/
+int victoire(){
+	if(nb_perso[0] == 0) return 2; /*Vérifie si il reste des personnages de l'équipe 1 renvoie 2 pour signifier que l'équipe 2 a gagné*/
+	else if(nb_perso[1] == 0) return 1; /*Inversement*/
+	else return 0;
+}
 
-void action(int i_perso_actuel){
-	//if(tab_perso[i_perso_actuel].i_HP > 0){
-		afficher_perso(tab_perso[i_perso_actuel]);
+int action(t_perso perso){
+	if(perso.i_HP > 0){
+		afficher_perso(perso);
 		int action = 0;
-		int PA_actuel = tab_perso[i_perso_actuel].i_PA, PM_actuel = tab_perso[i_perso_actuel].i_PM;
+		int PA_actuel = perso.i_PA, PM_actuel = perso.i_PM;
 		printf("%i PA, %i PM\n", PA_actuel, PM_actuel);
 		do{
 			printf("1 - Deplacement\n");
@@ -32,20 +32,37 @@ void action(int i_perso_actuel){
 			printf("4 - Sauvegarder\n");
 			scanf("%i", &action);
 			switch(action){
-				case 1: printf("Deplacement\n"); break; /*Fonction déplacement*/
-				case 2: attaque(tab_perso[i_perso_actuel]); break; /*Fonction Attaque */
-				case 3: printf("Passage de tour\n"); break; /*Remise au max des PAs PMs du soldat en cours et on passe au suivant dans la liste*/
-				case 4: save(); break;
+				case 1: printf("Deplacement\n");/*Fonction déplacement*/
+					break; 
+				case 2: printf("Attaque\n"); /*Fonction Attaque */
+					break; 
+				case 3: printf("Passage de tour\n");
+					break; /*Remise au max des PAs PMs du soldat en cours et on passe au suivant dans la liste*/
+				case 4: save();
+					break;
 			}
-		}while(action != 3);
-	//}
+			
+		}while(action != 3 && victoire() == 0);
+	}
+	return victoire(); /*Si une des deux équipes a gagné on renvoie son numéro, renvoie 0 sinon*/
 }
 
 
-void tour(){
-	while(i_perso_actuel < i_taille_tab_perso){
+int tour(){
+	t_perso perso;
+	int victoire = 0;
+	while(i_perso_actuel < i_taille_tab_perso && victoire == 0){
 		afficher_map();
-		action(i_perso_actuel);
+		victoire = action(perso);
 		i_perso_actuel++;
 	}
+	return victoire;
+}
+
+void partie(){
+	int victoire = 0;
+	while(!victoire){
+		victoire = tour();
+	}
+	printf("Le joueur %i a gagné !", victoire); 
 }

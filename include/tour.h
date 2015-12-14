@@ -2,8 +2,11 @@
 #define __TOUR_H__
 
 #include "map.h"
+#include "perso.h"
 
-void tour();
-void action(int i_perso_actuel);
+int tour();
+int action(t_perso perso);
+void partie();
+int victoire();
 
 #endif
