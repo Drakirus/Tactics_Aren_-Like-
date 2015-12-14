@@ -6,24 +6,32 @@
 #include "../include/map.h"
 #include "../include/tableau.h"
 
-extern t_perso tab_perso[6];
+extern t_perso tab_perso[i_taille_tab_perso];
 extern int map[i_taille_map][i_taille_map];
+
+int tableau_vide(int tab[3]) //Retourne 1 si toutes les cases sont nulles, 0 sinon
+{
+	int i=0;
+	for(i=0;i<3;i++)
+	{
+		if(tab[i]!=0)
+		{
+			return 0;
+		}
+	}
+	return 1;
+}
 
 void placement_perso() //Cette fonction place les personnages des différents équipes dans les trois premières et dernières ligne de la map.
 {
-	char s_classe[20]; //Classe du personnage choisie.
-	int i_nb_perso=6;
-	int i_nb_guerrier_A=1;
-	int i_nb_archer_A=1;
-	int i_nb_mage_A=1;
-	int i_nb_guerrier_B=1;
-	int i_nb_archer_B=1;
-	int i_nb_mage_B=1;
+	int i_classe; //Classe du personnage choisie.
 	int coord[2];
 	int b_sortie=1; //Condition de sortie
 	int i_compteur=0;
+	int tab_perso_ini_A[3]={1,1,1}; //Indique le nombre de perso à créer pour l'équipe A
+	int tab_perso_ini_B[3]={1,1,1};
 	t_perso per;
-	while(i_nb_perso!=0)
+	while(tableau_vide(tab_perso_ini_A)!=1 || tableau_vide(tab_perso_ini_B)!=1)
 	{
 		while(b_sortie!=0)
 		{
@@ -40,17 +48,16 @@ void placement_perso() //Cette fonction place les personnages des différents é
 		while(b_sortie!=0)
 		{
 			printf("Choisissez la classe : \n");
-			printf("- Il reste %i guerriers à placer.\n", i_nb_guerrier_A);
-			printf("- Il reste %i archers à placer.\n", i_nb_archer_A);
-			printf("- Il reste %i mages à placer.\n", i_nb_mage_A);
-			printf("Choisissez la classe du personnage : ");
-			scanf("%s", s_classe); //La classe est donnée par la première lettre de la classe, ou le nom complet.
-			if(strcmp(s_classe,"A")==0 || strcmp(s_classe,"archer")==0 || strcmp(s_classe,"Archer")==0) //Pour l'affichage dans gener_map.c.
+			printf("- Il reste %i guerriers à placer.\n", tab_perso_ini_A[0]);
+			printf("- Il reste %i archers à placer.\n", tab_perso_ini_A[1]);
+			printf("- Il reste %i mages à placer.\n", tab_perso_ini_A[2]);
+			printf("Choisissez la classe du personnage (0 Pour un guerrier, 1 pour un archer, 2 pour un mage) : ");
+			scanf("%i", &i_classe); //0 pour un guerrier, 1 pour un archer, 2 pour un mage
+			if(i_classe==1) //Pour l'affichage dans gener_map.c.
 			{
-				if(i_nb_archer_A!=0)
+				if(tab_perso_ini_A[1]!=0)
 				{
-					i_nb_archer_A--;
-					i_nb_perso--;
+					tab_perso_ini_A[1]--;
 					map[coord[0]][coord[1]]=3;
 					creation(per, "Archer", 'A', coord[0], coord[1]);
 					tab_perso[i_compteur]=per; //On ajoute le perso au tableau.
@@ -58,12 +65,11 @@ void placement_perso() //Cette fonction place les personnages des différents é
 					b_sortie=0;
 				}
 			}
-			else if(strcmp(s_classe,"G")==0 || strcmp(s_classe,"Guerrier")==0|| strcmp(s_classe,"guerrier")==0)
+			else if(i_classe==0)
 			{
-				if(i_nb_guerrier_A!=0)
+				if(tab_perso_ini_A[0]!=0)
 				{
-					i_nb_guerrier_A--;
-					i_nb_perso--;
+					tab_perso_ini_A[0]--;
 					map[coord[0]][coord[1]]=2;
 					creation(per, "Guerrier", 'A', coord[0], coord[1]);
 					tab_perso[i_compteur]=per;
@@ -71,12 +77,11 @@ void placement_perso() //Cette fonction place les personnages des différents é
 					b_sortie=0;
 				}
 			}
-			else if(strcmp(s_classe,"M")==0 || strcmp(s_classe,"Mage")==0 || strcmp(s_classe,"mage")==0)
+			else if(i_classe==2)
 			{
-				if(i_nb_mage_A!=0)
+				if(tab_perso_ini_A[2]!=0)
 				{
-					i_nb_mage_A--;
-					i_nb_perso--;
+					tab_perso_ini_A[2]--;
 					map[coord[0]][coord[1]]=4;
 					creation(per, "Mage", 'A', coord[0], coord[1]);
 					tab_perso[i_compteur]=per;
@@ -102,17 +107,16 @@ void placement_perso() //Cette fonction place les personnages des différents é
 		while(b_sortie!=0)
 		{
 			printf("Choisissez la classe : \n");
-			printf("- Il reste %i guerriers à placer.\n", i_nb_guerrier_B);
-			printf("- Il reste %i archers à placer.\n", i_nb_archer_B);
-			printf("- Il reste %i mages à placer.\n", i_nb_mage_B);
-			printf("Choisissez la classe du personnage : ");
-			scanf("%s", s_classe);
-			if(strcmp(s_classe,"A")==0 || strcmp(s_classe,"archer")==0 || strcmp(s_classe,"Archer")==0)
+			printf("- Il reste %i guerriers à placer.\n", tab_perso_ini_B[0]);
+			printf("- Il reste %i archers à placer.\n", tab_perso_ini_B[1]);
+			printf("- Il reste %i mages à placer.\n", tab_perso_ini_B[2]);
+			printf("Choisissez la classe du personnage (0 Pour un guerrier, 1 pour un archer, 2 pour un mage) : ");
+			scanf("%i", &i_classe); //0 pour un guerrier, 1 pour un archer, 2 pour un mage
+			if(i_classe==1)
 			{
-				if(i_nb_archer_B!=0)
+				if(tab_perso_ini_B[1]!=0)
 				{
-					i_nb_archer_B--;
-					i_nb_perso--;
+					tab_perso_ini_B[1]--;
 					map[coord[0]][coord[1]]=6;
 					creation(per, "Archer", 'B', coord[0], coord[1]);
 					tab_perso[i_compteur]=per;
@@ -120,12 +124,11 @@ void placement_perso() //Cette fonction place les personnages des différents é
 					b_sortie=0;
 				}
 			}
-			else if(strcmp(s_classe,"G")==0 || strcmp(s_classe,"Guerrier")==0|| strcmp(s_classe,"guerrier")==0)
+			else if(i_classe==0)
 			{
-				if(i_nb_guerrier_B!=0)
+				if(tab_perso_ini_B[0]!=0)
 				{
-					i_nb_guerrier_B--;
-					i_nb_perso--;
+					tab_perso_ini_B[0]--;
 					map[coord[0]][coord[1]]=5;
 					creation(per, "Guerrier", 'B', coord[0], coord[1]);
 					tab_perso[i_compteur]=per;
@@ -133,12 +136,11 @@ void placement_perso() //Cette fonction place les personnages des différents é
 					b_sortie=0;
 				}
 			}
-			else if(strcmp(s_classe,"M")==0 || strcmp(s_classe,"Mage")==0 || strcmp(s_classe,"mage")==0)
+			else if(i_classe==2)
 			{
-				if(i_nb_mage_B!=0)
+				if(tab_perso_ini_B[2]!=0)
 				{
-					i_nb_mage_B--;
-					i_nb_perso--;
+					tab_perso_ini_B[2]--;
 					map[coord[0]][coord[1]]=7;
 					creation(per, "Mage", 'B', coord[0], coord[1]);
 					tab_perso[i_compteur]=per;
