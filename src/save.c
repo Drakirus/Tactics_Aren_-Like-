@@ -36,7 +36,6 @@ void charge(){
 			//afficher_perso(tab_perso[k]);
 	}
 	fclose(fic);
-	afficher_map();
 }
 
 void save(){

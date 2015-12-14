@@ -14,8 +14,8 @@ int i_perso_actuel = 0;
 
 /*int victoire(){
 	int i;
-	for(i = 0 ; i < nb_perso ; i++){
-
+	for(i = 0 ; i < i_taille_tab_perso ; i++){
+		
 	}
 }*/
 
@@ -48,5 +48,4 @@ void tour(){
 		action(i_perso_actuel);
 		i_perso_actuel++;
 	}
-	save();
 }
