@@ -149,7 +149,6 @@ void placement_perso() //Cette fonction place les personnages des différents é
 				}
 			}
 		}
-		afficher_map(map);
 		b_sortie=1;
 	}
 }

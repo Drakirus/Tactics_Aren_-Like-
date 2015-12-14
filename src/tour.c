@@ -9,6 +9,8 @@
 #include "../include/tableau.h"
 
 extern int map[i_taille_map][i_taille_map];
+extern t_perso tab_perso[i_taille_tab_perso];
+int i_perso_actuel = 0;
 
 /*int victoire(){
 	int i;
@@ -18,11 +20,11 @@ extern int map[i_taille_map][i_taille_map];
 }*/
 
 void action(int i_perso_actuel){
-	if(tab_perso[i_perso_actuel].i_HP > 0){
+	//if(tab_perso[i_perso_actuel].i_HP > 0){
 		afficher_perso(tab_perso[i_perso_actuel]);
 		int action = 0;
 		int PA_actuel = tab_perso[i_perso_actuel].i_PA, PM_actuel = tab_perso[i_perso_actuel].i_PM;
-		printf("%i, %i\n", PA_actuel, PM_actuel);
+		printf("%i PA, %i PM\n", PA_actuel, PM_actuel);
 		do{
 			printf("1 - Deplacement\n");
 			printf("2 - Attaque\n");
@@ -36,15 +38,15 @@ void action(int i_perso_actuel){
 				case 4: save(); break;
 			}
 		}while(action != 3);
-	}
+	//}
 }
 
 
 void tour(){
-	int i_perso_actuel = 0;
 	while(i_perso_actuel < i_taille_tab_perso){
 		afficher_map();
 		action(i_perso_actuel);
 		i_perso_actuel++;
 	}
+	save();
 }
