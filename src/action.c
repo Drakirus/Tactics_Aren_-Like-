@@ -130,7 +130,7 @@ float getSlope(float f_a, float f_b){ // Basic division function (with check)
 
 int shoot(int i_player_y, int i_player_x, int i_attaque_y, int i_attaque_x){
 	/*
-	* function that calculate if the sight line is obstruct by a obstacle.
+	* function that calculate if the sight line is obstructed by a obstacle.
 	* return 0, if the shoot is possible or 1 if not!
 	*
 	*/
