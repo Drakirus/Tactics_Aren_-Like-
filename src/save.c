@@ -1,6 +1,5 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "../include/placement.h"
 #include "../include/map.h"
 #include "../include/tableau.h"
 

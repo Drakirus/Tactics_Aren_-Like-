@@ -4,8 +4,6 @@
 #include <time.h>
 #include "../include/perso.h"
 
-extern int map[i_taille_map][i_taille_map];
-
 
 t_perso ensemble_perso[3]=
 {

@@ -1,7 +1,6 @@
 #ifndef __PERSO_H__
 #define __PERSO_H__
 
-#include "map.h"
 
 typedef struct
 {
