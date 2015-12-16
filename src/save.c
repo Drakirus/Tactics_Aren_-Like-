@@ -30,35 +30,35 @@ void charge_perso(FILE * fic, t_perso perso){
 }
 
 void charge(){
-	int i, j, k;
-	FILE * fic;
-	char nom_fichier[20];
-	memset (nom_fichier, 0, sizeof (nom_fichier)); /*Permet de vider la chaine*/
-	char temp[15];
-	strcat(nom_fichier, "save/");
-	t_perso temp;
-	do{
-		printf("Quelle partie charger ? ");
-		scanf("%s", temp);
-		strcat(nom_fichier, temp); /*Permet d'obtenir un fichier de nom save/nom_fichier*/
-		fic = fopen(nom_fichier, "r");
-		fscanf(fic, "%i", test1); /*Permet de s'assurer que l'on charge un fichier qui est bien une sauvegarde*/
-		fscanf(fic, "%i", test2);
-		fscanf(fic, "%i", test3);
-		fscanf(fic, "%i", test4);
-		if(fic == NULL || (test1 != CODE1 || test2 != CODE2 || test3 != CODE3 || test4 != CODE4)) printf("Mauvais fichier, ");
-	}while(fic == NULL || (test1 != CODE1 || test2 != CODE2 || test3 != CODE3 || test4 != CODE4)); /*Permet d'éviter le chargement d'un fichier vide/n'existant pas/mauvais*/
-	fscanf(fic, "%i", &i_perso_actuel);
-	for(i = 0; i < i_taille_map ; i++){
-         	for(j = 0; j < i_taille_map ; j++){
-            		fscanf(fic, "%i", &map[i][j]); /*Chargement de la carte*/
-		}
-	}
-	for(k = 0 ; !feof(fic) ; k++){
-			charge_perso(fic, temp);
-			/***********push perso dans liste**********/
-	}
-	fclose(fic);
+	// int i, j, k;
+	// FILE * fic;
+	// char nom_fichier[20];
+	// memset (nom_fichier, 0, sizeof (nom_fichier)); /*Permet de vider la chaine*/
+	// char temp[15];
+	// strcat(nom_fichier, "save/");
+	// t_perso temp;
+	// do{
+	// 	printf("Quelle partie charger ? ");
+	// 	scanf("%s", temp);
+	// 	strcat(nom_fichier, temp); /*Permet d'obtenir un fichier de nom save/nom_fichier*/
+	// 	fic = fopen(nom_fichier, "r");
+	// 	fscanf(fic, "%i", test1); /*Permet de s'assurer que l'on charge un fichier qui est bien une sauvegarde*/
+	// 	fscanf(fic, "%i", test2);
+	// 	fscanf(fic, "%i", test3);
+	// 	fscanf(fic, "%i", test4);
+	// 	if(fic == NULL || (test1 != CODE1 || test2 != CODE2 || test3 != CODE3 || test4 != CODE4)) printf("Mauvais fichier, ");
+	// }while(fic == NULL || (test1 != CODE1 || test2 != CODE2 || test3 != CODE3 || test4 != CODE4)); /*Permet d'éviter le chargement d'un fichier vide/n'existant pas/mauvais*/
+	// fscanf(fic, "%i", &i_perso_actuel);
+	// for(i = 0; i < i_taille_map ; i++){
+  //        	for(j = 0; j < i_taille_map ; j++){
+  //           		fscanf(fic, "%i", &map[i][j]); /*Chargement de la carte*/
+	// 	}
+	// }
+	// for(k = 0 ; !feof(fic) ; k++){
+	// 		charge_perso(fic, temp);
+	// 		/***********push perso dans liste**********/
+	// }
+	// fclose(fic);
 }
 
 void save(){

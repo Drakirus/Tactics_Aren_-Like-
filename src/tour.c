@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
+#include <time.h>
 #include "../include/tour.h"
 #include "../include/perso.h"
 #include "../include/map.h"
@@ -13,6 +14,16 @@ extern t_perso tab_perso[i_taille_tab_perso];
 int nb_perso[2]; //Stocke le nombre de perso de chaque équipe
 int i_perso_actuel = 0;
 
+void delay(int milliseconds){
+    long pause;
+    clock_t now,then;
+
+    pause = milliseconds*(CLOCKS_PER_SEC/1000);
+    now = then = clock();
+    while( (now-then) < pause )
+        now = clock();
+}
+
 int victoire(){
 	if(nb_perso[0] == 0) return 2; /*Vérifie si il reste des personnages de l'équipe 1 renvoie 2 pour signifier que l'équipe 2 a gagné*/
 	else if(nb_perso[1] == 0) return 1; /*Inversement*/
@@ -20,6 +31,9 @@ int victoire(){
 }
 
 int action(t_perso perso){
+	pile *path = NULL; // move personnage
+	int r,c; // move personnage
+	int sortir; // move personnage
 	if(perso.i_HP > 0){
 		afficher_perso(perso);
 		int action = 0;
@@ -32,10 +46,26 @@ int action(t_perso perso){
 			printf("4 - Sauvegarder\n");
 			scanf("%i", &action);
 			switch(action){
-				case 1: printf("Deplacement\n");/*Fonction déplacement*/
-					break; 
+				case 1:
+					path = getMovePerso(&PM_actuel, perso.coord[0], perso.coord[1]);
+					if (path == NULL) {
+						printf("Déplacement imposible\n");
+					}else{
+						sortir = pop(&path, &r, &c);
+						while (sortir != -1) {
+							sortir = pop(&path, &r, &c);
+							// printf("r: %i c: %i\n",r,c );
+							afficher_map();
+							perso.coord[0] = c;
+							perso.coord[1] = r;
+							delay(400);
+
+						}
+						afficher_map();
+					}
+					break;
 				case 2: printf("Attaque\n"); /*Fonction Attaque */
-					break; 
+					break;
 				case 3: printf("Passage de tour\n");
 					break; /*Remise au max des PAs PMs du soldat en cours et on passe au suivant dans la liste*/
 				case 4: save();
@@ -63,5 +93,5 @@ void partie(){
 	while(!victoire){
 		victoire = tour();
 	}
-	printf("Le joueur %i a gagné !", victoire); 
+	printf("Le joueur %i a gagné !", victoire);
 }
