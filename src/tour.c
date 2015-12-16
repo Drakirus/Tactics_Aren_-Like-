@@ -30,10 +30,21 @@ int victoire(){
 	else return 0;
 }
 
+void delay(int milliseconds){
+    long pause;
+    clock_t now,then;
+
+    pause = milliseconds*(CLOCKS_PER_SEC/1000);
+    now = then = clock();
+    while( (now-then) < pause )
+        now = clock();
+}
+
 int action(t_perso perso){
-	pile *path = NULL; // move personnage
+  pile *path = NULL; // move personnage
 	int r,c; // move personnage
 	int sortir; // move personnage
+	int value_perso;
 	if(perso.i_HP > 0){
 		afficher_perso(perso);
 		int action = 0;
@@ -47,22 +58,32 @@ int action(t_perso perso){
 			scanf("%i", &action);
 			switch(action){
 				case 1:
-					path = getMovePerso(&PM_actuel, perso.coord[0], perso.coord[1]);
-					if (path == NULL) {
-						printf("Déplacement imposible\n");
-					}else{
-						sortir = pop(&path, &r, &c);
-						while (sortir != -1) {
-							sortir = pop(&path, &r, &c);
-							// printf("r: %i c: %i\n",r,c );
-							afficher_map();
-							perso.coord[0] = c;
-							perso.coord[1] = r;
-							delay(400);
-
-						}
-						afficher_map();
-					}
+          // printf("%i %i\n",tab_perso[i_perso_actuel].coord[0], tab_perso[i_perso_actuel].coord[1]  );
+  				path = getMovePerso(&PM_actuel, tab_perso[i_perso_actuel].coord[1], tab_perso[i_perso_actuel].coord[0] );
+  				if (path == NULL) {
+  					printf("Déplacement imposible\n");
+  				}else{
+  					sortir = pop(&path, &r, &c);
+  					value_perso = map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]];
+  					afficher_map();
+  					system("clear");
+  					delay(500);
+  					while (sortir != -1) {
+  						if (map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]] == 0 || value_perso ==  map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]]) {
+  							map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]] = 0;
+  						}
+  						sortir = pop(&path, &r, &c);
+  						// printf("r: %i c: %i\n",r,c );
+  						change_nombre(5,&tab_perso[i_perso_actuel], c);
+  						change_nombre(6, &tab_perso[i_perso_actuel], r);
+  						if (map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]] == 0 || value_perso ==  map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]]) {
+  							map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]] = value_perso;
+  						}
+  						system("clear");
+  						afficher_map();
+  						delay(400);
+  					}
+  				}
 					break;
 				case 2: printf("Attaque\n"); /*Fonction Attaque */
 					break;

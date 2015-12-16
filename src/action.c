@@ -21,11 +21,14 @@ pile *getMovePerso(int * PM_tour, int start_r,int start_c){
 	do {
 		printf("Choisissez les coordonnées (x y): ");
 		scanf("%i%i", &coord_r, &coord_c);
-		distanceOfPath = distanceFrom(coord_r, coord_c, DistancePath);
+		if (coord_r < i_taille_map && coord_c < i_taille_map && coord_r>=0 && coord_c>=0) {
+			distanceOfPath = distanceFrom(coord_r, coord_c, DistancePath);
+		}
 	} while(coord_r > i_taille_map || coord_c > i_taille_map || coord_r<0 || coord_c<0 || distanceOfPath > *PM_tour ||  map[coord_r][coord_c] != 0);
 
  if (distanceOfPath>0) {
 	 *PM_tour -=distanceOfPath;
+	//  displayBoard(i_taille_map, i_taille_map,DistancePath);
 	 path = getPath(DistancePath, coord_r, coord_c);
 	 freeBoard(DistancePath, i_taille_map);
 	 return path;
