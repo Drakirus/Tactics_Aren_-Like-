@@ -8,5 +8,6 @@ int tour();
 int action(t_perso perso);
 void partie();
 int victoire();
+void deplacement(int PM_actuel);
 
 #endif
