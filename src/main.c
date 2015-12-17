@@ -7,9 +7,6 @@
 #include "../include/tour.h"
 #include "../include/map.h"
 
-extern int map[i_taille_map][i_taille_map];
-
-
 int main() {
 	srand(time(NULL));
 	system("clear");
@@ -21,15 +18,15 @@ int main() {
 		scanf("%i", &choix_menu);
 		switch(choix_menu){
 			case 1: initialise_map();
-				afficher_map();
-				placement_perso();
-				partie();
-				break; /*Nouvelle Partie*/
+					afficher_map();
+					placement_perso();
+					partie();
+					break; /*Nouvelle Partie*/
 			case 2:	charge();
-				partie();
-				break; /*Charger une partie */
+					partie();
+					break; /*Charger une partie */
 			case 3:
-				break;
+					break;
 		}
 	}while(choix_menu != 3);
 	return 0;
