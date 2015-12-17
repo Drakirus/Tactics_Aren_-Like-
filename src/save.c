@@ -13,8 +13,7 @@ extern t_perso tab_perso[i_taille_tab_perso];
 extern int map[i_taille_map][i_taille_map];
 extern int i_perso_actuel;
 
-void sauv_perso(char * sauv, t_perso perso)
-{
+void sauv_perso(char * sauv, t_perso perso){
 	sprintf(sauv, "%s %d %d %d %d %d %d %c",  perso.s_classe, perso.i_HP_max, perso.i_HP, perso.i_PA, perso.i_PM, perso.coord[0], perso.coord[1], perso.c_team);
 }
 
@@ -55,9 +54,15 @@ void charge(){
 		}
 	}
 	for(k = 0 ; !feof(fic) ; k++){
-			printf("%i", k);
-			charge_perso(fic, tab_perso[k]);
-			afficher_perso(tab_perso[k]);
+		fscanf(fic, "%s", tab_perso[k].s_classe);
+		fscanf(fic, "%i", &tab_perso[k].i_HP_max);
+		fscanf(fic, "%i", &tab_perso[k].i_HP);
+		fscanf(fic, "%i", &tab_perso[k].i_PA);
+		fscanf(fic, "%i", &tab_perso[k].i_PM);
+		fscanf(fic, "%i", &tab_perso[k].coord[0]);
+		fscanf(fic, "%i", &tab_perso[k].coord[1]);
+		fscanf(fic, " %c ", &tab_perso[k].c_team);
+		afficher_perso(tab_perso[k]);
 	}
 	fclose(fic);
 }

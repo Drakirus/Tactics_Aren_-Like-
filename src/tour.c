@@ -17,7 +17,6 @@ int i_perso_actuel = 0;
 void delay(int milliseconds){
     long pause;
     clock_t now,then;
-
     pause = milliseconds*(CLOCKS_PER_SEC/1000);
     now = then = clock();
     while( (now-then) < pause )
@@ -59,10 +58,9 @@ void action(t_perso perso){
 
 
 void tour(){
-	t_perso perso;
 	while(i_perso_actuel < i_taille_tab_perso){
 		afficher_map();
-		action(perso);
+		action(tab_perso[i_perso_actuel]);
 		i_perso_actuel++;
 	}
 }
