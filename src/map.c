@@ -4,9 +4,11 @@
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include "../include/tableau.h"
+#include "../include/map.h"
 
-#define i_taille_map 10 //Nous avons convenu que la map sera un carré de taille 10.
 
+extern t_perso tab_perso[i_taille_tab_perso];
 int map[i_taille_map][i_taille_map];
 
 void obstacle(int i_chance_obstacle) //Fonction insérant les obstacles dans la map. Les obstacles sont placés aléatoirement dans la map.
@@ -55,22 +57,12 @@ void afficher_map() //Fonction affichant la map
 		printf("%i  ", i);
 		for(j=0;j<i_taille_map;j++)
 		{
-			if(map[i][j]==0)
-				printf("_   ");
+			if(recherche_perso_tab(i, j)!=-1)
+				printf("%c.%c", tab_perso[recherche_perso_tab(i, j)].s_classe[0], tab_perso[recherche_perso_tab(i, j)].c_team);
 			else if(map[i][j]==1)//1 : obstacle
 				printf("*   ");
-			else if(map[i][j]==2)//2 : Guerrier, équipe A
-				printf("G.A ");
-			else if(map[i][j]==3)//3 : Archer, équipe A
-				printf("A.A ");
-			else if(map[i][j]==4)//4 : Mage, équipe A
-				printf("M.A ");
-			else if(map[i][j]==5)//5 : Guerrier, équipe B
-				printf("G.B ");
-			else if(map[i][j]==6)//6 : Archer, équipe B
-				printf("A.B ");
-			else if(map[i][j]==7)//7 : Mage, équipe B
-				printf("M.B ");
+			else
+				printf("_   ");
 		}
 		printf("\n");
 	}

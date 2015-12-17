@@ -23,7 +23,6 @@ void attaque(t_perso per)
 		{
 			printf("Veuillez rentrer les coordonnées du personnages que vous voulez attaquer : ");
 			scanf("%i%i", &coord_att[0], &coord_att[1]);
-			printf("%i %i\n", per.coord[0], per.coord[1]);
 			DistancePath = createDistancePath(per.coord[0], per.coord[1]);
 			if(distanceFrom(coord_att[0], coord_att[1], DistancePath)!=1)
 			{
