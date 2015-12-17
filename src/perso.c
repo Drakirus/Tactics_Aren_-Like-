@@ -13,8 +13,14 @@ t_perso ensemble_perso[i_nombre_classe]=
 	{"Mage",20,20,2,2,{0,0},'X'}
 };
 
+/*Sert pour les tests*/
 void afficher_perso(t_perso perso){
 	printf("%s %i/%iHP %i %i [%i,%i] %c\n", perso.s_classe, perso.i_HP, perso.i_HP_max, perso.i_PA, perso.i_PM, perso.coord[0], perso.coord[1], perso.c_team);
+}
+
+/*Affichage dans la console*/
+void affichage_perso(t_perso perso){
+	printf("%s %i/%iHP [%i,%i] \n", perso.s_classe, perso.i_HP, perso.i_HP_max, perso.coord[0], perso.coord[1]);
 }
 
 void initialisation_perso(int a, t_perso * per) //On affecte à un t_perso les données initiales présentes dans ensemble_perso

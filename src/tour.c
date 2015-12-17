@@ -40,7 +40,7 @@ void action(t_perso perso){
 		do{
 			perso_vivant();
 			afficher_map();
-			afficher_perso(perso);
+			affichage_perso(perso);
 			printf("%i PA, %i PM\n", PA_actuel, PM_actuel);
 			printf("1 - Deplacement\n");
 			printf("2 - Attaque\n");
@@ -48,15 +48,14 @@ void action(t_perso perso){
 			printf("4 - Sauvegarder\n");
 			scanf("%i", &action);
 			switch(action){
-				case 1:
-						deplacement(PM_actuel);
-						break;
+				case 1:	deplacement(PM_actuel);
+					break;
 				case 2: attaque(tab_perso[i_perso_actuel]); /*Fonction Attaque */
-						break;
+					break;
 				case 3: printf("Passage de tour\n");
-						break; /*Remise au max des PAs PMs du soldat en cours et on passe au suivant dans la liste*/
+					break; /*Remise au max des PAs PMs du soldat en cours et on passe au suivant dans la liste*/
 				case 4: save();
-						break;
+					break;
 			}
 		}while(action != 3 || victoire());
 	}
@@ -76,5 +75,5 @@ void partie(){
 		tour();
 		i_perso_actuel = 0;
 	}
-	printf("Le joueur %i a gagné !", victoire());
+	printf("Le joueur %i a gagné !\n", victoire());
 }
