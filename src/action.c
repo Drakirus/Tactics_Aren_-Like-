@@ -32,13 +32,11 @@ void deplacement(int * PM_actuel){
 	else{
 		sortir = pop(&path, &r, &c);
 		afficher_map();
-		system("clear");
 		while (sortir != -1) {
 			sortir = pop(&path, &r, &c);
 			// printf("r: %i c: %i\n",r,c );
 			change_nombre(6, &tab_perso[i_perso_actuel], c);
 			change_nombre(5, &tab_perso[i_perso_actuel], r);
-			system("clear");
 			afficher_map();
 			delay(400);
 		}
@@ -168,15 +166,15 @@ void attaque(int * PA_tour){
 
       t_perso persoAttaquer = tab_perso[recherche_perso_tab(coord_r, coord_c)];
       printf("%i\n", persoAttaquer.i_HP);
-      augmente_nombre(1, &persoAttaquer, tmp_att->trait.HP_max);
-      augmente_nombre(2, &persoAttaquer, tmp_att->trait.HP);
-      augmente_nombre(3, &persoAttaquer, tmp_att->trait.PA);
-      augmente_nombre(4, &persoAttaquer, tmp_att->trait.PM);
+      // augmente_nombre(1, &persoAttaquer, tmp_att->trait.HP_max);
+      // augmente_nombre(2, &persoAttaquer, tmp_att->trait.HP);
+      // augmente_nombre(3, &persoAttaquer, tmp_att->trait.PA);
+      // augmente_nombre(4, &persoAttaquer, tmp_att->trait.PM);
+		  persoAttaquer.i_HP += tmp_att->trait.HP;
+	    persoAttaquer.i_HP_max += tmp_att->trait.HP_max;
+      persoAttaquer.i_PA += tmp_att->trait.PA;
+      persoAttaquer.i_PM += tmp_att->trait.PM;
       printf("%i\n", persoAttaquer.i_HP);
-		  // persoAttaquer.i_HP += tmp_att->trait.HP;
-	    // persoAttaquer.i_HP_max += tmp_att->trait.HP_max;
-      // persoAttaquer.i_PA += tmp_att->trait.PA;
-      // persoAttaquer.i_PM += tmp_att->trait.PM;
 
 			int shoot=1;
 
