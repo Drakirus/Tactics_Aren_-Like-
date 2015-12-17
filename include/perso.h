@@ -1,7 +1,7 @@
 #ifndef __PERSO_H__
 #define __PERSO_H__
 
-#define i_nombre_classe 3
+#define i_nombre_classe 5
 
 #include "./list_attack.h"
 

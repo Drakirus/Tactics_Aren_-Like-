@@ -31,9 +31,13 @@ void placement_perso() //Cette fonction place les personnages des différents é
 				printf("\nEquipe A, à vous de placer un personnage : \n"); //La phase de choix de l'équipe A
 				printf("Choisissez les coordonnées : ");
 				scanf("%i%i", &coord[0], &coord[1]); //Les coordonnées sont comprises entre 0 et 9.
-				if(coord[0]>=0 && coord[0]<3 && coord[1]>=0 && coord[1]<=9 && map[coord[0]][coord[1]]==0)
+				if(coord[0]>=0 && coord[0]<3 && coord[1]>=0 && coord[1]<=9 && map[coord[0]][coord[1]]==0 && recherche_perso_tab(coord[0], coord[1])==-1) //On vérifie que les coordonnées sont bonnes
 				{
 					b_sortie=0;
+				}
+				else
+				{
+					printf("Les coordonnées ne sont pas bonnes.\n");
 				}
 			}
 			else
@@ -41,10 +45,14 @@ void placement_perso() //Cette fonction place les personnages des différents é
 				printf("\nEquipe B, à vous de placer un personnage : \n"); //On passe à la phase de choix de l'équipe B
 				printf("Choisissez les coordonnées : ");
 				scanf("%i%i", &coord[0], &coord[1]); //Les coordonnées sont comprises entre 0 et 9.
-				if(coord[0]>=7 && coord[0]<=9 && coord[1]>=0 && coord[1]<=9 && map[coord[0]][coord[1]]==0)
+				if(coord[0]>=7 && coord[0]<=9 && coord[1]>=0 && coord[1]<=9 && recherche_perso_tab(coord[0], coord[1])==-1) //On vérifie aussi qu'il n'y ait personne dans cette case
 				{
 
 					b_sortie=0;
+				}
+				else
+				{
+					printf("Les coordonnées ne sont pas bonnes.\n");
 				}
 			}
 		}
@@ -61,13 +69,20 @@ void placement_perso() //Cette fonction place les personnages des différents é
 			}
 			printf("Choisissez la classe du personnage: ");
 			scanf("%i", &i_classe); //0 pour un guerrier, 1 pour un archer, 2 pour un mage
-			if(i_equipe%2==0)
-				creation(per, i_classe, 'A', coord[0], coord[1]);
+			if(i_classe<0 || i_classe>=i_nombre_classe)
+			{
+				printf("Le nombre de la classe saisi doit être compris entre 0 et %i.\n\n", i_nombre_classe-1);
+			}
 			else
-				creation(per, i_classe, 'B', coord[0], coord[1]);
-			tab_perso[i_compteur]=*per; //On ajoute le perso au tableau.
-			i_compteur++;
-			b_sortie=0;
+			{
+				if(i_equipe%2==0)
+					creation(per, i_classe, 'A', coord[0], coord[1]);
+				else
+					creation(per, i_classe, 'B', coord[0], coord[1]);
+				tab_perso[i_compteur]=*per; //On ajoute le perso au tableau.
+				i_compteur++;
+				b_sortie=0;
+			}
 		}
 		b_sortie=1;
 		i_equipe++;
