@@ -30,11 +30,12 @@ int victoire(){
 	else return 0;
 }
 
-int action(t_perso perso){
+void action(t_perso perso){
 	pile *path = NULL; // move personnage
 	int r,c; // move personnage
 	int sortir; // move personnage
 	int value_perso;
+	printf("......");
 	if(perso.i_HP > 0){
 		afficher_perso(perso);
 		int action = 0;
@@ -48,7 +49,7 @@ int action(t_perso perso){
 			scanf("%i", &action);
 			switch(action){
 				case 1:
-          // printf("%i %i\n",tab_perso[i_perso_actuel].coord[0], tab_perso[i_perso_actuel].coord[1]  );
+          				// printf("%i %i\n",tab_perso[i_perso_actuel].coord[0], tab_perso[i_perso_actuel].coord[1]  );
   						path = getMovePerso(&PM_actuel, tab_perso[i_perso_actuel].coord[1], tab_perso[i_perso_actuel].coord[0] );
   						if (path == NULL) printf("Déplacement imposible\n");
   						else{
@@ -81,27 +82,24 @@ int action(t_perso perso){
 				case 4: save();
 					break;
 			}
-		}while(action != 3 && victoire() == 0);
+		}while(action != 3);
 	}
-	return victoire(); /*Si une des deux équipes a gagné on renvoie son numéro, renvoie 0 sinon*/
 }
 
 
-int tour(){
+void tour(){
 	t_perso perso;
-	int victoire = 0;
-	while(i_perso_actuel < i_taille_tab_perso && victoire == 0){
+	while(i_perso_actuel < i_taille_tab_perso){
 		afficher_map();
-		victoire = action(perso);
+		action(perso);
 		i_perso_actuel++;
 	}
-	return victoire;
 }
 
 void partie(){
 	int victoire = 0;
 	while(!victoire){
-		victoire = tour();
+		tour();
 	}
 	printf("Le joueur %i a gagné !", victoire);
 }

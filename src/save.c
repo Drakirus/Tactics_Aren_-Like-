@@ -55,7 +55,9 @@ void charge(){
 		}
 	}
 	for(k = 0 ; !feof(fic) ; k++){
+			printf("%i", k);
 			charge_perso(fic, tab_perso[k]);
+			afficher_perso(tab_perso[k]);
 	}
 	fclose(fic);
 }

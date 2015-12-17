@@ -4,8 +4,8 @@
 #include "map.h"
 #include "perso.h"
 
-int tour();
-int action(t_perso perso);
+void tour();
+void action(t_perso perso);
 void partie();
 int victoire();
 
