@@ -31,11 +31,6 @@ int victoire(){
 }
 
 void action(t_perso perso){
-	pile *path = NULL; // move personnage
-	int r,c; // move personnage
-	int sortir; // move personnage
-	int value_perso;
-	printf("......");
 	if(perso.i_HP > 0){
 		afficher_perso(perso);
 		int action = 0;
@@ -49,32 +44,8 @@ void action(t_perso perso){
 			scanf("%i", &action);
 			switch(action){
 				case 1:
-          				// printf("%i %i\n",tab_perso[i_perso_actuel].coord[0], tab_perso[i_perso_actuel].coord[1]  );
-  						path = getMovePerso(&PM_actuel, tab_perso[i_perso_actuel].coord[1], tab_perso[i_perso_actuel].coord[0] );
-  						if (path == NULL) printf("Déplacement imposible\n");
-  						else{
-  							sortir = pop(&path, &r, &c);
-  							value_perso = map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]];
-  							afficher_map();
-  							system("clear");
-  							delay(500);
-  						while (sortir != -1) {
-  							if (map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]] == 0 || value_perso ==  map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]]) {
-  							map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]] = 0;
-  						}
-  						sortir = pop(&path, &r, &c);
-  						// printf("r: %i c: %i\n",r,c );
-  						change_nombre(5,&tab_perso[i_perso_actuel], c);
-  						change_nombre(6, &tab_perso[i_perso_actuel], r);
-  						if (map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]] == 0 || value_perso ==  map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]]) {
-  							map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]] = value_perso;
-  						}
-  						system("clear");
-  						afficher_map();
-  						delay(400);
-  					}
-  				}
-					break;
+						deplacement(PM_actuel);
+						break;
 				case 2: printf("Attaque\n"); /*Fonction Attaque */
 					break;
 				case 3: printf("Passage de tour\n");
@@ -102,4 +73,35 @@ void partie(){
 		tour();
 	}
 	printf("Le joueur %i a gagné !", victoire);
+}
+
+void deplacement(int PM_actuel){
+	pile *path = NULL; // move personnage
+	int r,c; // move personnage
+	int sortir; // move personnage
+	int value_perso;
+	path = getMovePerso(&PM_actuel, tab_perso[i_perso_actuel].coord[1], tab_perso[i_perso_actuel].coord[0] );
+	if (path == NULL) printf("Déplacement imposible\n");
+	else{
+		sortir = pop(&path, &r, &c);
+		value_perso = map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]];
+		afficher_map();
+		system("clear");
+		delay(500);
+		while (sortir != -1) {
+			if (map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]] == 0 || value_perso ==  map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]]) {
+				map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]] = 0;
+  			}
+			sortir = pop(&path, &r, &c);
+			// printf("r: %i c: %i\n",r,c );
+			change_nombre(5,&tab_perso[i_perso_actuel], c);
+			change_nombre(6, &tab_perso[i_perso_actuel], r);
+			if (map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]] == 0 || value_perso ==  map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]]) {
+				map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]] = value_perso;
+			}
+			system("clear");
+			afficher_map();
+			delay(400);
+		}
+	}
 }
