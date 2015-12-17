@@ -68,8 +68,10 @@ void afficher_map() //Fonction affichant la map
 				perso[4]= '\0';
 				if(recherche_perso_tab(i,j)==i_perso_actuel)
 					color(red, perso);
-				else
-				printf("%c.%c ", tab_perso[recherche_perso_tab(i, j)].s_classe[0], tab_perso[recherche_perso_tab(i, j)].c_team);
+				else if(tab_perso[recherche_perso_tab(i, j)].c_team=='A')
+					color(blue, perso);
+				else if(tab_perso[recherche_perso_tab(i, j)].c_team=='B')
+					color(green, perso);
 			}
 			else if(map[i][j]==1)//1 : obstacles
 				printf("*   ");
