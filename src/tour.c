@@ -36,7 +36,7 @@ int victoire(){
 
 void actio(t_perso perso){
 	if(perso.i_HP > 0){
-		
+
 		int PA_actuel = perso.i_PA, PM_actuel = perso.i_PM;
 		do{
 			perso_vivant();
@@ -52,7 +52,7 @@ void actio(t_perso perso){
 			switch(action){
 				case 1:	deplacement(PM_actuel);
 					break;
-				case 2: attaque(tab_perso[i_perso_actuel]); /*Fonction Attaque */
+				case 2: attaque(tab_perso[i_perso_actuel], PA_actuel); /*Fonction Attaque */
 					break;
 				case 3: printf("Passage de tour\n");
 					break; /*Remise au max des PAs PMs du soldat en cours et on passe au suivant dans la liste*/

@@ -16,12 +16,12 @@ t_perso ensemble_perso[i_nombre_classe]=
 /*Sert pour les tests*/
 void afficher_perso(t_perso perso){
 	printf("%s %i/%iHP %i %i [%i,%i] %c\n", perso.s_classe, perso.i_HP, perso.i_HP_max, perso.i_PA, perso.i_PM, perso.coord[0], perso.coord[1], perso.c_team);
-	displaylistAttack(perso.att, 0);
 }
 
 /*Affichage dans la console*/
 void affichage_perso(t_perso perso){
 	printf("%s %i/%iHP [%i,%i] \n", perso.s_classe, perso.i_HP, perso.i_HP_max, perso.coord[0], perso.coord[1]);
+	displaylistAttack(perso.att);
 }
 
 void initialisation_perso(int a, t_perso * per) //On affecte à un t_perso les données initiales présentes dans ensemble_perso

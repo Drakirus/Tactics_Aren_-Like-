@@ -34,7 +34,6 @@ int main() {
 			case 1: initialise_map();
 					afficher_map();
 					placement_perso();
-
 					partie();
 					break; /*Nouvelle Partie*/
 			case 2:	charge();

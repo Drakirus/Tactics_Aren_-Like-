@@ -13,9 +13,8 @@ struct list_attack{
 	t_attak * current_attack;
 	struct list_attack *next;
 };
-
+void displaylistAttack(list_attack *perso_att);
 list_attack* creer_liste_attack();
-void displaylistAttack(list_attack *perso_att, int nbatt);
 void pushAttack(list_attack *p, t_attak *new_att);
 int getCountAttack(list_attack *perso_att);
 t_attak *getAttack(list_attack *attack, int nbatt);
