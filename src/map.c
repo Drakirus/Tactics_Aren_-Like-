@@ -6,8 +6,9 @@
 #include <unistd.h>
 #include "../include/tableau.h"
 #include "../include/map.h"
+#include "../include/couleur.h"
 
-
+extern int i_perso_actuel;
 extern t_perso tab_perso[i_taille_tab_perso];
 int map[i_taille_map][i_taille_map];
 
@@ -49,6 +50,7 @@ void initialise_map() //Fonction initialisant la map vide
 
 void afficher_map() //Fonction affichant la map
 {
+	char perso[5];
 	system("clear");
 	int i,j;
 	printf("   0   1   2   3   4   5   6   7   8   9\n");
@@ -58,7 +60,17 @@ void afficher_map() //Fonction affichant la map
 		for(j=0;j<i_taille_map;j++)
 		{
 			if(recherche_perso_tab(i, j)!=-1 && tab_perso[recherche_perso_tab(i, j)].i_HP!=0)
+			{
+				perso[0]=tab_perso[recherche_perso_tab(i, j)].s_classe[0];
+				perso[1]='.';
+				perso[2]=tab_perso[recherche_perso_tab(i, j)].c_team;
+				perso[3]=' ';
+				perso[4]= '\0';
+				if(recherche_perso_tab(i,j)==i_perso_actuel)
+					color(red, perso);
+				else
 				printf("%c.%c ", tab_perso[recherche_perso_tab(i, j)].s_classe[0], tab_perso[recherche_perso_tab(i, j)].c_team);
+			}
 			else if(map[i][j]==1)//1 : obstacles
 				printf("*   ");
 			else

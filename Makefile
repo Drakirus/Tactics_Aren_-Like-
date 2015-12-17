@@ -17,6 +17,7 @@ src/tour.o: $(INC)perso.h $(INC)save.h $(INC)map.h $(INC)action.h
 src/tableau.o: $(INC)perso.h
 src/save.o: $(INC)map.h $(INC)placement.h $(INC)tableau.h
 src/action.o: $(INC)action.h
+src/couleur.o: $(INC)couleur.h
 
 %.o: %.c
 	$(CC) -o $@ -c $< $(CFLAGS)
