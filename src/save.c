@@ -37,7 +37,6 @@ void charge(){
 	memset (nom_fichier, 0, sizeof (nom_fichier)); /*Permet de vider la chaine*/
 	char temp[15];
 	strcat(nom_fichier, "save/");
-	t_perso tempo;
 	do{
 		printf("Quelle partie charger ? ");
 		scanf("%s", temp);
@@ -56,8 +55,7 @@ void charge(){
 		}
 	}
 	for(k = 0 ; !feof(fic) ; k++){
-			charge_perso(fic, tempo);
-			/***********push perso dans liste**********/
+			charge_perso(fic, tab_perso[k]);
 	}
 	fclose(fic);
 }
@@ -75,11 +73,11 @@ void save(){
 	strcat(nom_fichier, temp); /*Permet d'obtenir un fichier de nom save/nom_fichier*/
 	fic = fopen(nom_fichier, "w");
 	fprintf(fic, "%i %i %i %i", CODE1, CODE2, CODE3, CODE4); /*Création d'un code que l'on vérifiera au chargement*/
-	fprintf(fic, "%i", i_perso_actuel); //sauvegarde le moment où l'on est rendu dans le tour
+	fprintf(fic, " %i", i_perso_actuel); //sauvegarde le moment où l'on est rendu dans le tour
 	for(i = 0; i < i_taille_map ; i++){
          	for(j = 0; j < i_taille_map ; j++){
             		fprintf(fic, " %i", map[i][j]); //sauvegarde l'état de la map et le placement des personnages
-		}
+			}
     	}
 	for(k = 0 ; k < 6 ; k++){
 		sauv_perso(sauv, tab_perso[k]);

@@ -16,8 +16,7 @@ int **allocateBoard(int r, int c, int from[r][c]);
 float getSlope(float f_a, float f_b);
 int shoot(int i_player_x, int i_player_y, int i_attaque_x, int i_attaque_y);
 
-void setAdjacent(int **mat, int visited[i_taille_map][i_taille_map], int i, int j, int value);
-int smallestVisited(int **a, int visited[i_taille_map][i_taille_map]);
+int setAdjacent(int **mat, int i, int j, int value);
 int **createDistancePath(int init_x, int init_y);
 void displayBoard(int r, int c, int **arr);
 int **allocateBoard(int r, int c, int from[r][c]);
@@ -29,4 +28,5 @@ void push(pile **p, int r, int c);
 
 pile *getPath(int **DistancePath, int i, int j);
 
+pile *getMovePerso(int * PM_tour, int start_r,int start_c);
 void attaque(t_perso per);
