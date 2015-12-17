@@ -1,6 +1,4 @@
 /**
- * INPUT = .\src \
- *         .\include \
  * \file main.c
  * \brief Programme lançant notre version du jeu Tactics Arena.
  * \author CHAMPION Pierre, LAVILLE Martin, MOK Modira
