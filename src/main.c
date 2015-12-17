@@ -9,9 +9,9 @@
 
 int main() {
 	srand(time(NULL));
-	system("clear");
 	int choix_menu = 0;
 	do{
+		system("clear");
 		printf("1 - Nouvelle Partie\n");
 		printf("2 - Charger une partie\n");
 		printf("3 - Quitter\n");

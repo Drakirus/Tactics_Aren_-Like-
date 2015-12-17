@@ -10,6 +10,7 @@
 #define CODE3 0
 #define CODE4 2
 
+char rep_save[5] = "save/";
 extern t_perso tab_perso[i_taille_tab_perso];
 extern int map[i_taille_map][i_taille_map];
 extern int i_perso_actuel;
@@ -25,10 +26,11 @@ void charge(){
 	char nom_fichier[20];
 	memset (nom_fichier, 0, sizeof (nom_fichier)); /*Permet de s'assurer que la chaine est vide*/
 	char temp[15];
-	strcat(nom_fichier, "save/");
+	strcat(nom_fichier, rep_save);
 	do{
-		printf("Quelle partie charger ? ");
-		DIR * rep = opendir("save/");     
+		printf("Quelle partie charger ?\n");
+		/* Permet de lister les fichiers présents dans "save/" */
+		DIR * rep = opendir(rep_save);     
     		if (rep != NULL){
         		struct dirent * ent;
 			while ((ent = readdir(rep)) != NULL){
@@ -70,7 +72,7 @@ void save(){
 	char nom_fichier[20];
 	memset (nom_fichier, 0, sizeof (nom_fichier)); /*Permet de vider la chaine*/
 	char temp[15];
-	strcat(nom_fichier, "save/");
+	strcat(nom_fichier, rep_save);
 	char sauv[40];
 	printf("Nom de la sauvegarde : ");
 	scanf("%s", temp);

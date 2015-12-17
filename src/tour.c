@@ -13,6 +13,7 @@ extern int map[i_taille_map][i_taille_map];
 extern t_perso tab_perso[i_taille_tab_perso];
 int nb_perso[2]; //Stocke le nombre de perso de chaque équipe
 int i_perso_actuel = 0;
+int action = 0;
 
 /*Compte le nombre de personnage vivant de chaque équipe et le stocke dans un tableau*/
 void perso_vivant(){
@@ -33,9 +34,9 @@ int victoire(){
 	else return 0;
 }
 
-void action(t_perso perso){
+void actio(t_perso perso){
 	if(perso.i_HP > 0){
-		int action = 0;
+		
 		int PA_actuel = perso.i_PA, PM_actuel = perso.i_PM;
 		do{
 			perso_vivant();
@@ -46,6 +47,7 @@ void action(t_perso perso){
 			printf("2 - Attaque\n");
 			printf("3 - Passer\n");
 			printf("4 - Sauvegarder\n");
+			printf("5 - Menu Principal\n");
 			scanf("%i", &action);
 			switch(action){
 				case 1:	deplacement(PM_actuel);
@@ -56,24 +58,27 @@ void action(t_perso perso){
 					break; /*Remise au max des PAs PMs du soldat en cours et on passe au suivant dans la liste*/
 				case 4: save();
 					break;
+				case 5: break;
 			}
-		}while(action != 3 || victoire());
+		}while(action != 3 && action != 5 && !victoire());
 	}
 }
 
 
 void tour(){
-	while(i_perso_actuel < i_taille_tab_perso || victoire()){
-		action(tab_perso[i_perso_actuel]);
+	/*Tant qu'on a pas utilisé tous les persos, que personne n'a gagné et qu'on ne décide pas de retourner au menu principal*/
+	while(i_perso_actuel < i_taille_tab_perso && !victoire() && action != 5){
+		actio(tab_perso[i_perso_actuel]);
 		i_perso_actuel++;
 	}
 }
 
 void partie(){
 	perso_vivant();
-	while(!victoire()){
+	while(!victoire() && action != 5){
 		tour();
 		i_perso_actuel = 0;
 	}
-	printf("Le joueur %i a gagné !\n", victoire());
+	if(action == 5);
+	else printf("Le joueur %i a gagné !\n", victoire());
 }
