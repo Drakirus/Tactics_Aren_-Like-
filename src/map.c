@@ -50,10 +50,10 @@ void initialise_map() //Fonction initialisant la map vide
 
 void afficher_map() //Fonction affichant la map
 {
-	char perso[5];
+	char perso[4];
 	system("clear");
 	int i,j;
-	printf("   0   1   2   3   4   5   6   7   8   9\n");
+	printf("    0   1   2   3   4   5   6   7   8   9\n");
 	for(i=0;i<i_taille_map;i++)
 	{
 		printf("%i  ", i);
@@ -64,19 +64,19 @@ void afficher_map() //Fonction affichant la map
 				perso[0]=tab_perso[recherche_perso_tab(i, j)].s_classe[0];
 				perso[1]='.';
 				perso[2]=tab_perso[recherche_perso_tab(i, j)].c_team;
-				perso[3]=' ';
-				perso[4]= '\0';
+				perso[3]= '\0';
 				if(recherche_perso_tab(i,j)==i_perso_actuel)
-					color(red, perso);
-				else if(tab_perso[recherche_perso_tab(i, j)].c_team=='A')
-					color(blue, perso);
+					color(red, "Screen");
+				if(tab_perso[recherche_perso_tab(i, j)].c_team=='A')
+					color(cyan, perso);
 				else if(tab_perso[recherche_perso_tab(i, j)].c_team=='B')
 					color(green, perso);
+				printf(" ");
 			}
 			else if(map[i][j]==1)//1 : obstacles
-				printf("*   ");
+				printf(" *  ");
 			else
-				printf("_   ");
+				printf(" _  ");
 		}
 		printf("\n");
 	}
