@@ -34,14 +34,14 @@ int victoire(){
 	else return 0;
 }
 
-void actio(t_perso perso){
-	if(perso.i_HP > 0){
+void actio(t_perso *perso){
+	if(perso->i_HP > 0){
 
-		int PA_actuel = perso.i_PA, PM_actuel = perso.i_PM;
+		int PA_actuel = perso->i_PA, PM_actuel = perso->i_PM;
 		do{
 			perso_vivant();
 			afficher_map();
-			affichage_perso(perso);
+			affichage_perso(*perso);
 			printf("%i PA, %i PM\n", PA_actuel, PM_actuel);
 			printf("1 - Deplacement\n");
 			printf("2 - Attaque\n");
@@ -68,7 +68,7 @@ void actio(t_perso perso){
 void tour(){
 	/*Tant qu'on a pas utilisé tous les persos, que personne n'a gagné et qu'on ne décide pas de retourner au menu principal*/
 	while(i_perso_actuel < i_taille_tab_perso && !victoire() && action != 5){
-		actio(tab_perso[i_perso_actuel]);
+		actio(&tab_perso[i_perso_actuel]);
 		i_perso_actuel++;
 	}
 }

@@ -6,7 +6,7 @@
 
 void menu_principal();
 void tour();
-void actio(t_perso perso);
+void actio(t_perso *perso);
 void partie();
 int victoire();
 
