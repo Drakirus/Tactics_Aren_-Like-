@@ -22,11 +22,11 @@ void delay(int milliseconds){
         now = clock();
 }
 
-void deplacement(int PM_actuel){
+void deplacement(int * PM_actuel){
 	pile *path = NULL; // move personnage
 	int r,c; // move personnage
 	int sortir; // move personnage
-	path = getMovePerso(&PM_actuel, tab_perso[i_perso_actuel].coord[0], tab_perso[i_perso_actuel].coord[1] );
+	path = getMovePerso(PM_actuel, tab_perso[i_perso_actuel].coord[0], tab_perso[i_perso_actuel].coord[1] );
 	if (path == NULL) printf("Déplacement imposible\n");
 	else{
 		sortir = pop(&path, &r, &c);

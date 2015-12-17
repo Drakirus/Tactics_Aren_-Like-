@@ -50,9 +50,9 @@ void actio(t_perso perso){
 			printf("5 - Menu Principal\n");
 			scanf("%i", &action);
 			switch(action){
-				case 1:	deplacement(PM_actuel);
+				case 1:	deplacement(&PM_actuel);
 					break;
-				case 2: attaque(tab_perso[i_perso_actuel], PA_actuel); /*Fonction Attaque */
+				case 2: /*attaque(tab_perso[i_perso_actuel], PA_actuel);*/ /*Fonction Attaque */
 					break;
 				case 3: printf("Passage de tour\n");
 					break; /*Remise au max des PAs PMs du soldat en cours et on passe au suivant dans la liste*/

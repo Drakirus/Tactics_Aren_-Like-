@@ -30,8 +30,6 @@ void push(pile **p, int r, int c);
 
 pile *getPath(int **DistancePath, int i, int j);
 
-void deplacement(int PM_actuel);
+void deplacement(int * PM_actuel);
 void delay(int milliseconds);
 pile *getMovePerso(int * PM_tour, int start_r,int start_c);
-void attaque(t_perso per);
-
