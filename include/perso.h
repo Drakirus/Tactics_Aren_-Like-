@@ -3,6 +3,8 @@
 
 #define i_nombre_classe 3
 
+#include "./list_attack.h"
+
 typedef struct
 {
 	char s_classe[20];
@@ -12,6 +14,7 @@ typedef struct
 	int i_PM;
 	int coord[2];
 	char c_team;
+	list_attack * att;	
 }t_perso;
 
 void afficher_perso(t_perso perso);
