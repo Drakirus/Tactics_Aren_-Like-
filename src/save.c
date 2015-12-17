@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <dirent.h>
 #include "../include/placement.h"
 #include "../include/map.h"
 #include "../include/tableau.h"
@@ -28,6 +29,14 @@ void charge(){
 	strcat(nom_fichier, "save/");
 	do{
 		printf("Quelle partie charger ? ");
+		DIR * rep = opendir("save/");     
+    		if (rep != NULL){
+        		struct dirent * ent;
+			while ((ent = readdir(rep)) != NULL){
+            			printf("%s\n", ent->d_name);
+        		}        
+        		closedir(rep);
+    		}
 		scanf("%s", temp);
 		strcat(nom_fichier, temp); /*Permet d'obtenir un fichier de nom save/nom_fichier*/
 		fic = fopen(nom_fichier, "r");
