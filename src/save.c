@@ -30,22 +30,23 @@ void charge_perso(FILE * fic, t_perso perso){
 }
 
 void charge(){
+	int test1 = 0, test2 = 0, test3 = 0, test4 = 0;
 	int i, j, k;
 	FILE * fic;
 	char nom_fichier[20];
 	memset (nom_fichier, 0, sizeof (nom_fichier)); /*Permet de vider la chaine*/
 	char temp[15];
 	strcat(nom_fichier, "save/");
-	t_perso temp;
+	t_perso tempo;
 	do{
 		printf("Quelle partie charger ? ");
 		scanf("%s", temp);
 		strcat(nom_fichier, temp); /*Permet d'obtenir un fichier de nom save/nom_fichier*/
 		fic = fopen(nom_fichier, "r");
-		fscanf(fic, "%i", test1); /*Permet de s'assurer que l'on charge un fichier qui est bien une sauvegarde*/
-		fscanf(fic, "%i", test2);
-		fscanf(fic, "%i", test3);
-		fscanf(fic, "%i", test4);
+		fscanf(fic, "%i", &test1); /*Permet de s'assurer que l'on charge un fichier qui est bien une sauvegarde*/
+		fscanf(fic, "%i", &test2);
+		fscanf(fic, "%i", &test3);
+		fscanf(fic, "%i", &test4);
 		if(fic == NULL || (test1 != CODE1 || test2 != CODE2 || test3 != CODE3 || test4 != CODE4)) printf("Mauvais fichier, ");
 	}while(fic == NULL || (test1 != CODE1 || test2 != CODE2 || test3 != CODE3 || test4 != CODE4)); /*Permet d'éviter le chargement d'un fichier vide/n'existant pas/mauvais*/
 	fscanf(fic, "%i", &i_perso_actuel);
@@ -55,7 +56,7 @@ void charge(){
 		}
 	}
 	for(k = 0 ; !feof(fic) ; k++){
-			charge_perso(fic, temp);
+			charge_perso(fic, tempo);
 			/***********push perso dans liste**********/
 	}
 	fclose(fic);
