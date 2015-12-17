@@ -4,6 +4,7 @@
 #include "../include/tableau.h"
 #include "../include/map.h"
 #include "../include/perso.h"
+#include "../include/list_attack.h"
 extern int map[i_taille_map][i_taille_map];
 extern int i_perso_actuel;
 
@@ -35,7 +36,7 @@ void deplacement(int * PM_actuel){
 		while (sortir != -1) {
 			sortir = pop(&path, &r, &c);
 			// printf("r: %i c: %i\n",r,c );
-			change_nombre(6,&tab_perso[i_perso_actuel], c);
+			change_nombre(6, &tab_perso[i_perso_actuel], c);
 			change_nombre(5, &tab_perso[i_perso_actuel], r);
 			system("clear");
 			afficher_map();
@@ -88,8 +89,8 @@ pile *getMovePerso(int * PM_tour, int start_r,int start_c){
 *	FONCTION D'ATTAQUE
 * ===========================================
 */
-/*
-void attaque(t_perso per, int * PA_tour){
+
+void attaque(int * PA_tour){
 
   if (*PA_tour == 0 ) {
 		printf("plus de PA dispo\n");
@@ -98,11 +99,22 @@ void attaque(t_perso per, int * PA_tour){
 	int sortie=1;
 	int attack=0;
 	int coord_r, coord_c;
-	t_perso *tmp;
+  int map_shadowcasting[i_taille_map][i_taille_map];
 	int i,j;
-	int map_shadowcasting[i_taille_map][i_taille_map];
-	int **DistancePath = createDistancePath(perso->coord_r, perso->coord_c);
-	t_attak * tmp_att =NULL;
+
+	int **DistancePath = createDistancePath( tab_perso[i_perso_actuel].coord[0],  tab_perso[i_perso_actuel].coord[1]);
+  t_attak * tmp_att =NULL;
+
+  do{
+    displaylistAttack(tab_perso[i_perso_actuel].att);
+    printf("Choisissez une attaque  (-1 pour annuler) : ");
+    scanf("%i", &attack);
+
+    if (attack == -1) {
+      return;
+    }
+  }while( attack<1 || attack-1>getCountAttack(tab_perso[i_perso_actuel].att));
+
 	while(sortie!=0){
 		printf("Veuillez rentrer les coordonnées du personnages que vous voulez attaquer (-1 -1 pour annuler) : ");
 		scanf("%i%i", &coord_r, &coord_c);
@@ -111,110 +123,115 @@ void attaque(t_perso per, int * PA_tour){
 			return;
 		}
 
-		for ( i = 0; i < i_taille_map; i++) {
+    for ( i = 0; i < i_taille_map; i++) {
 			for ( j = 0; j < i_taille_map; j++) {
 				map_shadowcasting[i][j] = map[i][j];
 			}
 		}
 
-		shadowcasting(map_shadowcasting, perso->coord_r, perso->coord_c);
+		shadowcasting(map_shadowcasting, tab_perso[i_perso_actuel].coord[0], tab_perso[i_perso_actuel].coord[1]);
+
+    // for ( i = 0; i < i_taille_map; i++) {
+    //   for ( j = 0; j < i_taille_map; j++) {
+    //     printf("%i",map_shadowcasting[i][j] );
+    //   }
+    //   printf("\n" );
+    // }
+
 
 		if (0 != map_shadowcasting[coord_r][coord_c]) {
 			printf("Ligne de vue obstruée\n" );
 		}
+    // displaylistAttack(tab_perso[i_perso_actuel].att);
 
 		if(coord_r>=0 && coord_r<i_taille_map && coord_c>=0 && coord_c<=i_taille_map && !(map_shadowcasting[coord_r][coord_c] != 0)){
-			do{
-				// DistancePath = createDistancePath(perso->coord_r, perso->coord_c);
-				displaylistAttack(perso->att, 0);
-				printf("Choisissez une attaque  (-1 pour annuler) : ");
-				scanf("%i", &attack);
 
-				if (attack == -1) {
-					return;
-				}
-			}while( attack<1 || attack-1>getCountAttack(perso->att));
-			if (*PA_tour < getAttack(perso->att, attack)->cost_PA ) {
+			if (*PA_tour < getAttack(tab_perso[i_perso_actuel].att, attack)->cost_PA ) {
 				printf("plus de PA dispo\n");
 				return;
 			}
-			if (distanceFrom(coord_r, coord_c, DistancePath) < getAttack(perso->att, attack)->range_min) {
+			if (distanceFrom(coord_r, coord_c, DistancePath) < getAttack(tab_perso[i_perso_actuel].att, attack)->range_min) {
 				printf("Sible trop proche\n" );
 				return;
 			}
-			if ( distanceFrom(coord_r, coord_c, DistancePath) > getAttack(perso->att, attack)->range_max) {
+			if ( distanceFrom(coord_r, coord_c, DistancePath) > getAttack(tab_perso[i_perso_actuel].att, attack)->range_max) {
 				printf("Sible trop loin\n" );
 				return;
 			}
-			if (getAttack(perso->att, attack)->only_line == 1 && (coord_r - perso->coord_r != 0 &&  coord_c - perso->coord_c != 0 )) {
+			if (getAttack(tab_perso[i_perso_actuel].att, attack)->only_line == 1 && (coord_r - tab_perso[i_perso_actuel].coord[0] != 0 &&  coord_c - tab_perso[i_perso_actuel].coord[1] != 0 )) {
 				printf("Sible doit sur la même ligne\n" );
 				return;
 			}
-			tmp_att = getAttack(perso->att, attack);
+			tmp_att = getAttack(tab_perso[i_perso_actuel].att, attack);
 			// printf("pv deal %i\n", tmp_att->trait.HP);
+      // displayAttack(tmp_att);
 
-			tmp=isPersoCoord(list_persoA, coord_r, coord_c);
-			if(tmp==NULL){
-				tmp=isPersoCoord(list_persoB, coord_r, coord_c);
-			}
-			if(tmp!=NULL){
-				tmp->HP += tmp_att->trait.HP;
-				tmp->HP_max += tmp_att->trait.HP_max;
-				tmp->PA += tmp_att->trait.PA;
-				tmp->PM += tmp_att->trait.PM;
+      t_perso persoAttaquer = tab_perso[recherche_perso_tab(coord_r, coord_c)];
+      printf("%i\n", persoAttaquer.i_HP);
+      augmente_nombre(1, &persoAttaquer, tmp_att->trait.HP_max);
+      augmente_nombre(2, &persoAttaquer, tmp_att->trait.HP);
+      augmente_nombre(3, &persoAttaquer, tmp_att->trait.PA);
+      augmente_nombre(4, &persoAttaquer, tmp_att->trait.PM);
+      printf("%i\n", persoAttaquer.i_HP);
+		  // persoAttaquer.i_HP += tmp_att->trait.HP;
+	    // persoAttaquer.i_HP_max += tmp_att->trait.HP_max;
+      // persoAttaquer.i_PA += tmp_att->trait.PA;
+      // persoAttaquer.i_PM += tmp_att->trait.PM;
 
-				int shoot=1;
+			int shoot=1;
 
-				int recul_r = tmp_att->trait.coord_r;
-				int recul_c = tmp_att->trait.coord_c;
+			int recul_r = tmp_att->trait.coord_r;
+			int recul_c = tmp_att->trait.coord_c;
 
-				while (shoot) {
-					// printf("%i\n", map[tmp->coord_r - recul_r][tmp->coord_c - recul_c]);
-					// printf("%i\n", map[tmp->coord_r + recul_r][tmp->coord_c + recul_c]);
-					if (tmp->coord_r > perso->coord_r) {
-						if (tmp->coord_r - recul_r >= 0 && tmp->coord_r - recul_r < i_taille_map && map[tmp->coord_r - recul_r][tmp->coord_c ] != 1) {
-							tmp->coord_r -= recul_r;
-							shoot =0;
-						}
-						recul_r++;
-
-					}else
-					if (tmp->coord_c > perso->coord_c) {
-						if (tmp->coord_c - recul_c >= 0 && tmp->coord_c - recul_c < i_taille_map && map[tmp->coord_r ][tmp->coord_c - recul_c] != 1 ) {
-							tmp->coord_c -= recul_c;
-							shoot =0;
-						}
-						recul_c++;
-
+			while (shoot) {
+				// printf("%i\n", map[persoAttaquer.coord[1] - recul_r][persoAttaquer.coord[0] - recul_c]);
+				// printf("%i\n", map[persoAttaquer.coord[1] + recul_r][persoAttaquer.coord[0] + recul_c]);
+				if (persoAttaquer.coord[1] > tab_perso[i_perso_actuel].coord[0]) {
+					if (persoAttaquer.coord[1] - recul_r >= 0 && persoAttaquer.coord[1] - recul_r < i_taille_map && map[persoAttaquer.coord[1] - recul_r][persoAttaquer.coord[0] ] != 1) {
+						persoAttaquer.coord[1] -= recul_r;
+						shoot =0;
 					}
-					if (tmp->coord_r < perso->coord_r  ) {
-						if (tmp->coord_r + recul_r >= 0 && tmp->coord_r + recul_r < i_taille_map && map[tmp->coord_r + recul_r][tmp->coord_c] != 1 ) {
-							tmp->coord_r += recul_r;
-							shoot =0;
-
-						}
-						recul_r++;
-
-					}else
-					if (tmp->coord_c < perso->coord_c ) {
-						if (tmp->coord_c + recul_c >= 0 && tmp->coord_c + recul_c < i_taille_map && map[tmp->coord_r][tmp->coord_c + recul_c] != 1) {
-							tmp->coord_c += recul_c;
-							shoot =0;
-						}
-						recul_c++;
+					recul_r++;
+				}else
+				if (persoAttaquer.coord[0] > tab_perso[i_perso_actuel].coord[1]) {
+					if (persoAttaquer.coord[0] - recul_c >= 0 && persoAttaquer.coord[0] - recul_c < i_taille_map && map[persoAttaquer.coord[1] ][persoAttaquer.coord[0] - recul_c] != 1 ) {
+						persoAttaquer.coord[0] -= recul_c;
+						shoot =0;
 					}
+					recul_c++;
 				}
-				afficher_map(list_persoA,list_persoB);
-				displayPerso(tmp,0);
-				printf("\tSible touchée\n");
+				if (persoAttaquer.coord[1] < tab_perso[i_perso_actuel].coord[0]  ) {
+					if (persoAttaquer.coord[1] + recul_r >= 0 && persoAttaquer.coord[1] + recul_r < i_taille_map && map[persoAttaquer.coord[1] + recul_r][persoAttaquer.coord[0]] != 1 ) {
+						persoAttaquer.coord[1] += recul_r;
+						shoot =0;
+					}
+					recul_r++;
+
+				}else
+				if (persoAttaquer.coord[0] < tab_perso[i_perso_actuel].coord[1] ) {
+					if (persoAttaquer.coord[0] + recul_c >= 0 && persoAttaquer.coord[0] + recul_c < i_taille_map && map[persoAttaquer.coord[1]][persoAttaquer.coord[0] + recul_c] != 1) {
+						persoAttaquer.coord[0] += recul_c;
+						shoot =0;
+					}
+					recul_c++;
+				}
 			}
-			*PA_tour -= tmp_att->cost_PA;
-			sortie = 0;
+
+			// afficher_map(list_persoA,list_persoB);
+			// displayPerso(tmp,0);
+			printf("\tSible touchée\n");
+      sleep(2);
+
+
+	    *PA_tour -= tmp_att->cost_PA;
+      sortie = 0;
 		}
+
 	}
 
+
 }
-*/
+
 
 /*
 * ===========================================
@@ -230,88 +247,112 @@ float getSlope(float f_a, float f_b){ // Basic division function (with check)
 	return f_a/f_b;
 }
 
-int shoot(int i_player_y, int i_player_x, int i_attaque_y, int i_attaque_x){
-	/*
-	* function that calculate if the sight line is obstructed by a obstacle.
-	* return 0, if the shoot is possible or 1 if not!
-	*
-	*/
+void shadowcasting(int matrix[i_taille_map][i_taille_map], int i_player_x, int i_player_y){
 	int i,j,cx,cy;
-	float slope_a, slope_b, slope_actual;
-	for (i = 0; i < i_taille_map; i++)
+	float f_slope_min, f_slope_max, f_slope;
+	for (i = 0; i < i_taille_map; i++) {
 		for (j = 0; j < i_taille_map; j++) {
+			if (matrix[i][j] != 0) {
 
-			if (map[i][j] == 1) {
-				if (i_player_x <= i && i_player_y <= j ) { // bottom right
-					slope_a = getSlope(((i_player_y+0.5)-j) , (i_player_x+0.5)-(i+1));
-					slope_b = getSlope(((i_player_y+0.5)-(j+1)) , (i_player_x+0.5)-i);
-					// printf("\n %.2f slope min %.2f slope max %i i %i j en bas a droite\n", slope_a, slope_b,(j),(i)); // ICI
-					cx = i_attaque_x;
-					cy = i_attaque_y;
-					// printf(" %i:x %i:y", cx,cy);
-					slope_actual = getSlope(((i_player_y)-cx), ((i_player_x)-cy));
-					// printf(" slope %.2f \n",slope_actual);
-					if (cy != i || cx != j)
-						if((slope_actual > slope_a ) && (slope_actual < slope_b || (slope_b < 0) ) ){
-							// printf("slope %f\n", slope_actual);
-							if (map[cy][cx] != 1)
-								return 1;
+				if (i_player_x <= i && i_player_y <= j ) { // en bas a droite
+
+					f_slope_min = getSlope(((i_player_y+0.5)-j)	 , (i_player_x+0.5)-(i+1));
+					f_slope_max = getSlope(((i_player_y+0.5)-(j+1))	 , (i_player_x+0.5)-i);
+					// printf("\n %.2f slope min  %.2f slope max %i i %i j  en bas a droite\n", f_slope_min, f_slope_max,(j),(i));   // ICI
+
+				  for (cy = i; cy < i_taille_map; cy++) {
+						for (cx = j; cx < i_taille_map; cx++) {
+							// printf(" %i:x %i:y", cx,cy);
+							f_slope = getSlope(((i_player_y)-cx), ((i_player_x)-cy));
+							// printf(" slope %.2f \n",f_slope);
+							if (cy != i || cx != j) {
+
+								if((f_slope > f_slope_min ) && (f_slope < f_slope_max || (f_slope_max < 0) )  ){
+									// printf("slope %f\n", f_slope);
+									if (matrix[cy][cx] != 1) {
+										matrix[cy][cx] = 3;
+									}
+								}
+							}
 						}
+					}
 				}
-				if (i_player_x >= i && i_player_y >= j ) { // top left
-					slope_a = getSlope(((i_player_y+0.5)-j) , (i_player_x+0.5)-(i+1));
-					slope_b = getSlope(((i_player_y+0.5)-(j+1)) , (i_player_x+0.5)-i);
-					// printf("\n %.2f slope min %.2f slope max %i i %i j en haut a gauche\n", slope_a, slope_b,(j),(i)); // ICI
-					cx = i_attaque_x;
-					cy = i_attaque_y;
-					// printf(" %i:x %i:y", cx,cy);
-					slope_actual = getSlope(((i_player_y)-cx), ((i_player_x)-cy));
-					// printf(" slope %.2f \n",slope_actual);
-					if (cy != i || cx != j)
-						if((slope_actual < slope_a || (slope_a < 0 ) ) && (slope_actual > slope_b)){
-							// printf("slope %f\n", slope_actual);
-							if (map[cy][cx] != 1)
-								return 1;
+
+				if (i_player_x >= i && i_player_y >= j ) { // en haut a gauche
+
+					f_slope_min = getSlope(((i_player_y+0.5)-j)	 , (i_player_x+0.5)-(i+1));
+					f_slope_max = getSlope(((i_player_y+0.5)-(j+1))	 , (i_player_x+0.5)-i);
+					// printf("\n %.2f slope min  %.2f slope max %i i %i j  en haut a gauche\n", f_slope_min, f_slope_max,(j),(i));   // ICI
+
+					for (cy = i; cy > -1; cy--) {
+						for (cx = j; cx > -1; cx--) {
+							// printf(" %i:x %i:y", cx,cy);
+							f_slope = getSlope(((i_player_y)-cx), ((i_player_x)-cy));
+							// printf(" slope %.2f \n",f_slope);
+							if (cy != i || cx != j) {
+
+								if((f_slope < f_slope_min  || (f_slope_min < 0 ) ) && (f_slope > f_slope_max)){
+									// printf("slope %f\n", f_slope);
+									if (matrix[cy][cx] != 1) {
+										matrix[cy][cx] = 3;
+									}
+								}
+							}
 						}
+					}
 				}
-				if (i_player_x >= i && i_player_y <= j ) { //top right
-					slope_b = getSlope(((i_player_y-0.5)-j) , (i_player_x+0.5)-(i+1));
-					slope_a = getSlope(((i_player_y-0.5)-(j-1)) , (i_player_x+0.5)-i);
-					// printf("\n %.2f slope min %.2f slope max %i i %i j en haut a droite\n", slope_a, slope_b,(j),(i)); // ICI
-					cx = i_attaque_x;
-					cy = i_attaque_y;
-					// printf(" %i:x %i:y", cx,cy);
-					slope_actual = getSlope(((i_player_y)-cx), ((i_player_x)-cy));
-					// printf(" slope %.2f \n",slope_actual);
-					if (cy != i || cx != j)
-						if((slope_actual < slope_a) && (slope_actual > slope_b || (slope_b > 0) )){
-							// printf("slope %f\n", slope_actual);
-							if (map[cy][cx] != 1)
-								return 1;
+
+				if (i_player_x >= i && i_player_y <= j ) { // en haut a droite
+
+					f_slope_max = getSlope(((i_player_y-0.5)-j)	 , (i_player_x+0.5)-(i+1));
+					f_slope_min = getSlope(((i_player_y-0.5)-(j-1))	 , (i_player_x+0.5)-i);
+					// printf("\n %.2f slope min  %.2f slope max %i i %i j  en haut a droite\n", f_slope_min, f_slope_max,(j),(i));   // ICI
+					for (cy = i; cy > -1; cy--) {
+						for (cx = j; cx < i_taille_map; cx++) {
+							// printf(" %i:x %i:y", cx,cy);
+							f_slope = getSlope(((i_player_y)-cx), ((i_player_x)-cy));
+							// printf(" slope %.2f \n",f_slope);
+							if (cy != i || cx != j) {
+
+								if((f_slope < f_slope_min) && (f_slope > f_slope_max || (f_slope_max > 0) )){
+									// printf("slope %f\n", f_slope);
+									if (matrix[cy][cx] != 1) {
+										matrix[cy][cx] = 3;
+									}
+								}
+							}
 						}
+					}
 				}
-				if (i_player_x <= i && i_player_y >= j ) { // bottom left
-					slope_b = getSlope(((i_player_y+0.5)-j) , (i_player_x-0.5)-(i-1));
-					slope_a = getSlope(((i_player_y+0.5)-(j+1)) , (i_player_x-0.5)-i);
-					// printf("\n %.2f slope min %.2f slope max %i i %i j en bas a gauche \n", slope_a, slope_b,(j),(i)); // ICI
-					cx = i_attaque_x;
-					cy = i_attaque_y;
-					// printf(" %i:x %i:y", cx,cy);
-					slope_actual = getSlope(((i_player_y)-cx), ((i_player_x)-cy));
-					// printf(" slope %.2f \n",slope_actual);
-					if (cy != i || cx != j)
-						if((slope_actual < slope_a ) && (slope_actual > slope_b || (slope_b > 0) )){
-							// printf("slope %f\n", slope_actual);
-							if (map[cy][cx] != 1)
-								return 1;
+
+				if (i_player_x <= i && i_player_y >= j ) { // en bas a gauche
+
+					f_slope_max = getSlope(((i_player_y+0.5)-j)	 , (i_player_x-0.5)-(i-1));
+					f_slope_min = getSlope(((i_player_y+0.5)-(j+1))	 , (i_player_x-0.5)-i);
+					// printf("\n %.2f slope min  %.2f slope max %i i %i j  en bas a gauche \n", f_slope_min, f_slope_max,(j),(i));   // ICI
+
+					for (cy = i; cy < i_taille_map; cy++) {
+						for (cx = j; cx > -1; cx--) {
+							// printf(" %i:x %i:y", cx,cy);
+							f_slope = getSlope(((i_player_y)-cx), ((i_player_x)-cy));
+							// printf(" slope %.2f \n",f_slope);
+							if (cy != i || cx != j) {
+
+								if((f_slope < f_slope_min ) && (f_slope > f_slope_max || (f_slope_max > 0) )){
+									// printf("slope %f\n", f_slope);
+									if (matrix[cy][cx] != 1) {
+										matrix[cy][cx] = 3;
+									}
+								}
+							}
 						}
+					}
 				}
 
 			}
 		}
-	return 0;
+	}
 }
-
 /*
 * ===========================================
 *	FONCTION PATHFINDING
