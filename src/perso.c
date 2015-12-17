@@ -10,7 +10,9 @@ t_perso ensemble_perso[i_nombre_classe]=
 {
 	{"Guerrier",50,50,3,3,{0,0},'X'},
 	{"Archer",30,30,3,3,{0,0},'X'},
-	{"Mage",20,20,2,2,{0,0},'X'}
+	{"Mage",20,20,2,2,{0,0},'X'},
+	{"Voleur",30,30,4,3,{0,0},'X'},
+	{"Dovakhiin",150,150,20,20,{0,0},'X'}
 };
 
 void afficher_perso(t_perso perso){
