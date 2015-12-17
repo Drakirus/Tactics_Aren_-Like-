@@ -4,8 +4,9 @@
 #include "map.h"
 #include "perso.h"
 
+void menu_principal();
 void tour();
-void action(t_perso perso);
+void actio(t_perso perso);
 void partie();
 int victoire();
 

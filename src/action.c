@@ -22,11 +22,11 @@ void delay(int milliseconds){
         now = clock();
 }
 
-void deplacement(int PM_actuel){
+void deplacement(int * PM_actuel){
 	pile *path = NULL; // move personnage
 	int r,c; // move personnage
 	int sortir; // move personnage
-	path = getMovePerso(&PM_actuel, tab_perso[i_perso_actuel].coord[0], tab_perso[i_perso_actuel].coord[1] );
+	path = getMovePerso(PM_actuel, tab_perso[i_perso_actuel].coord[0], tab_perso[i_perso_actuel].coord[1] );
 	if (path == NULL) printf("Déplacement imposible\n");
 	else{
 		sortir = pop(&path, &r, &c);
@@ -88,106 +88,133 @@ pile *getMovePerso(int * PM_tour, int start_r,int start_c){
 *	FONCTION D'ATTAQUE
 * ===========================================
 */
-void attaque(t_perso per)
-{
-	int b_sortie=0; //Condition de sortie
-	int **DistancePath;
-	while(b_sortie==0)
-	{
-		int coord_att[2]; //Les coordonnées cibles du joueur
-		if(strcmp(per.s_classe, "Guerrier")==0)
-		{
-			printf("Veuillez rentrer les coordonnées du personnages que vous voulez attaquer : ");
-			scanf("%i%i", &coord_att[0], &coord_att[1]);
-			DistancePath = createDistancePath(per.coord[0], per.coord[1]);
-			if(distanceFrom(coord_att[0], coord_att[1], DistancePath)!=1)
-			{
-				printf("Le guerrier ne peut attaquer si loin!\n");
-			}
-			else if(distanceFrom(coord_att[0], coord_att[1], DistancePath)==0)
-			{
-				printf("Je ne pense pas que vous soyez assez bête pour vous attaquer vous même si?\n");
-			}
-			else
-			{
-				if(map[coord_att[0]][coord_att[1]]==0 || map[coord_att[0]][coord_att[1]]==1) //On vérifie qu'il attaque bien une cible convenable
-				{
-					printf("Il n'y a rien à attaquer\n");
-				}
-				else
-				{
-					printf("Vous avez infligé 5 points de dégats. \n");
-					int i_pos_perso_attaque=recherche_perso_tab(coord_att[0], coord_att[1]); //position du perso attaqué
-					augmente_nombre(2, &tab_perso[i_pos_perso_attaque], -5); //Inflige les points de dégâts au perso
-					afficher_perso(tab_perso[i_pos_perso_attaque]);
-					b_sortie=1;
-				}
+/*
+void attaque(t_perso per, int * PA_tour){
+
+  if (*PA_tour == 0 ) {
+		printf("plus de PA dispo\n");
+		return;
+	}
+	int sortie=1;
+	int attack=0;
+	int coord_r, coord_c;
+	t_perso *tmp;
+	int i,j;
+	int map_shadowcasting[i_taille_map][i_taille_map];
+	int **DistancePath = createDistancePath(perso->coord_r, perso->coord_c);
+	t_attak * tmp_att =NULL;
+	while(sortie!=0){
+		printf("Veuillez rentrer les coordonnées du personnages que vous voulez attaquer (-1 -1 pour annuler) : ");
+		scanf("%i%i", &coord_r, &coord_c);
+
+		if (coord_r == -1 || coord_c == -1) {
+			return;
+		}
+
+		for ( i = 0; i < i_taille_map; i++) {
+			for ( j = 0; j < i_taille_map; j++) {
+				map_shadowcasting[i][j] = map[i][j];
 			}
 		}
-		else if(strcmp(per.s_classe, "Archer")==0)
-		{
-			printf("Veuillez rentrer les coordonnées du personnages que vous voulez attaquer : ");
-			scanf("%i%i", &coord_att[0], &coord_att[1]);
-			int **DistancePath = createDistancePath(per.coord[0], per.coord[1]);
-			if(distanceFrom(coord_att[0], coord_att[1], DistancePath)>3)
-			{
-				printf("L'archer ne peut attaquer si loin!\n");
-			}
-			else if(distanceFrom(coord_att[0], coord_att[1], DistancePath)==0)
-			{
-				printf("Je ne pense pas que vous soyez assez bête pour vous attaquer vous même si?\n");
-			}
-			else if (shoot(per.coord[0], per.coord[1], coord_att[0], coord_att[1])!=0)
-			{
-				printf("Un obstacle vous empêche d'atteindre votre cible.\n");
-			}
-			else
-			{
-				if(map[coord_att[0]][coord_att[1]]==0 || map[coord_att[0]][coord_att[1]]==1) //On vérifie qu'il attaque bien une cible convenable
-				{
-					printf("Il n'y a rien à attaquer\n");
-				}
-				else
-				{
-					printf("Vous avez infligé 4 points de dégats. \n");
-					int i_pos_perso_attaque=recherche_perso_tab(coord_att[0], coord_att[1]); //position du perso attaqué
-					augmente_nombre(2, &tab_perso[i_pos_perso_attaque], -3); //Inflige les points de dégâts au perso
-					afficher_perso(tab_perso[i_pos_perso_attaque]);
-					b_sortie=1;
-				}
-			}
+
+		shadowcasting(map_shadowcasting, perso->coord_r, perso->coord_c);
+
+		if (0 != map_shadowcasting[coord_r][coord_c]) {
+			printf("Ligne de vue obstruée\n" );
 		}
-		else if(strcmp(per.s_classe, "Mage")==0)
-		{
-			printf("Veuillez rentrer les coordonnées du personnages que vous voulez attaquer : ");
-			scanf("%i%i", &coord_att[0], &coord_att[1]);
-			int **DistancePath = createDistancePath(per.coord[0], per.coord[1]);
-			if(distanceFrom(coord_att[0], coord_att[1], DistancePath)>4)
-			{
-				printf("Le mage ne peut attaquer si loin!\n");
+
+		if(coord_r>=0 && coord_r<i_taille_map && coord_c>=0 && coord_c<=i_taille_map && !(map_shadowcasting[coord_r][coord_c] != 0)){
+			do{
+				// DistancePath = createDistancePath(perso->coord_r, perso->coord_c);
+				displaylistAttack(perso->att, 0);
+				printf("Choisissez une attaque  (-1 pour annuler) : ");
+				scanf("%i", &attack);
+
+				if (attack == -1) {
+					return;
+				}
+			}while( attack<1 || attack-1>getCountAttack(perso->att));
+			if (*PA_tour < getAttack(perso->att, attack)->cost_PA ) {
+				printf("plus de PA dispo\n");
+				return;
 			}
-			else
-			{
-				printf("Vous avez infligé 3 points de dégats. \n");
-				int i_pos_perso_attaque, i, j;
-				for(i=-1;i<2;i++)
-				{
-					for(j=-1;j<2;j++)
-					{
-						if(recherche_perso_tab(coord_att[0]+i,coord_att[1]+j)!=-1) //On regarde s'il y a un perso ou non (recher_perso_tab retourne -1 s'il n'y a personne)
-						{
-							i_pos_perso_attaque=recherche_perso_tab(coord_att[0]+i, coord_att[1]+j);
-							augmente_nombre(2, &tab_perso[i_pos_perso_attaque], -3);
-							afficher_perso(tab_perso[i_pos_perso_attaque]);
+			if (distanceFrom(coord_r, coord_c, DistancePath) < getAttack(perso->att, attack)->range_min) {
+				printf("Sible trop proche\n" );
+				return;
+			}
+			if ( distanceFrom(coord_r, coord_c, DistancePath) > getAttack(perso->att, attack)->range_max) {
+				printf("Sible trop loin\n" );
+				return;
+			}
+			if (getAttack(perso->att, attack)->only_line == 1 && (coord_r - perso->coord_r != 0 &&  coord_c - perso->coord_c != 0 )) {
+				printf("Sible doit sur la même ligne\n" );
+				return;
+			}
+			tmp_att = getAttack(perso->att, attack);
+			// printf("pv deal %i\n", tmp_att->trait.HP);
+
+			tmp=isPersoCoord(list_persoA, coord_r, coord_c);
+			if(tmp==NULL){
+				tmp=isPersoCoord(list_persoB, coord_r, coord_c);
+			}
+			if(tmp!=NULL){
+				tmp->HP += tmp_att->trait.HP;
+				tmp->HP_max += tmp_att->trait.HP_max;
+				tmp->PA += tmp_att->trait.PA;
+				tmp->PM += tmp_att->trait.PM;
+
+				int shoot=1;
+
+				int recul_r = tmp_att->trait.coord_r;
+				int recul_c = tmp_att->trait.coord_c;
+
+				while (shoot) {
+					// printf("%i\n", map[tmp->coord_r - recul_r][tmp->coord_c - recul_c]);
+					// printf("%i\n", map[tmp->coord_r + recul_r][tmp->coord_c + recul_c]);
+					if (tmp->coord_r > perso->coord_r) {
+						if (tmp->coord_r - recul_r >= 0 && tmp->coord_r - recul_r < i_taille_map && map[tmp->coord_r - recul_r][tmp->coord_c ] != 1) {
+							tmp->coord_r -= recul_r;
+							shoot =0;
 						}
+						recul_r++;
+
+					}else
+					if (tmp->coord_c > perso->coord_c) {
+						if (tmp->coord_c - recul_c >= 0 && tmp->coord_c - recul_c < i_taille_map && map[tmp->coord_r ][tmp->coord_c - recul_c] != 1 ) {
+							tmp->coord_c -= recul_c;
+							shoot =0;
+						}
+						recul_c++;
+
+					}
+					if (tmp->coord_r < perso->coord_r  ) {
+						if (tmp->coord_r + recul_r >= 0 && tmp->coord_r + recul_r < i_taille_map && map[tmp->coord_r + recul_r][tmp->coord_c] != 1 ) {
+							tmp->coord_r += recul_r;
+							shoot =0;
+
+						}
+						recul_r++;
+
+					}else
+					if (tmp->coord_c < perso->coord_c ) {
+						if (tmp->coord_c + recul_c >= 0 && tmp->coord_c + recul_c < i_taille_map && map[tmp->coord_r][tmp->coord_c + recul_c] != 1) {
+							tmp->coord_c += recul_c;
+							shoot =0;
+						}
+						recul_c++;
 					}
 				}
-				b_sortie=1;
+				afficher_map(list_persoA,list_persoB);
+				displayPerso(tmp,0);
+				printf("\tSible touchée\n");
 			}
+			*PA_tour -= tmp_att->cost_PA;
+			sortie = 0;
 		}
 	}
-}
 
+}
+*/
 
 /*
 * ===========================================

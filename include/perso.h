@@ -19,6 +19,7 @@ typedef struct
 }t_perso;
 
 void afficher_perso(t_perso perso);
+void affichage_perso(t_perso perso);
 void creation(t_perso * per, int i_classe, char c_team, int x, int y);
 void initialisation_perso(int a, t_perso * per);
 void augmente_nombre(int a, t_perso * per, int i_montant);

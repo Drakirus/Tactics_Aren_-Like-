@@ -34,9 +34,9 @@ int main() {
 
 
 	srand(time(NULL));
-	system("clear");
 	int choix_menu = 0;
 	do{
+		system("clear");
 		printf("1 - Nouvelle Partie\n");
 		printf("2 - Charger une partie\n");
 		printf("3 - Quitter\n");
@@ -45,7 +45,6 @@ int main() {
 			case 1: initialise_map();
 					afficher_map();
 					placement_perso();
-
 					partie();
 					break; /*Nouvelle Partie*/
 			case 2:	charge();

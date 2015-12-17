@@ -6,25 +6,23 @@
 #include "../include/list_attack.h"
 
 
-void displaylistAttack(list_attack *perso_att, int nbatt){
+void displaylistAttack(list_attack *perso_att){
   list_attack *tmp = perso_att;
   int actual = 1;
 
-if(!tmp){
-  fprintf(stderr, "pas d'attack ..\n");
-}
+  if(!tmp){
+    fprintf(stderr, "pas d'attack ..\n");
+  }
 
   while(tmp != NULL){
 
-    if (actual == nbatt || nbatt == 0) {
+    if(tmp->current_attack != NULL){
       printf("\n    %i - ",actual);
-      if(tmp->current_attack != NULL) displayAttack(tmp->current_attack);
-      tmp = tmp->next;
+      displayAttack(tmp->current_attack);
+      printf("\n");
     }
+    tmp = tmp->next;
     actual++;
-    if ((tmp != NULL) && nbatt != 0 ) {
-      tmp =tmp->next;
-    }
   }
 }
 

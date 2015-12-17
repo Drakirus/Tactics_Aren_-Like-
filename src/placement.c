@@ -29,7 +29,7 @@ void placement_perso() //Cette fonction place les personnages des différents é
 			if(i_equipe%2==0)
 			{
 				printf("\nEquipe A, à vous de placer un personnage : \n"); //La phase de choix de l'équipe A
-				printf("Choisissez les coordonnées : ");
+				printf("Choisissez les coordonnées (ligne entre 0 et 2 et colonne entre 0 et 9): ");
 				scanf("%i%i", &coord[0], &coord[1]); //Les coordonnées sont comprises entre 0 et 9.
 				if(coord[0]>=0 && coord[0]<3 && coord[1]>=0 && coord[1]<=9 && map[coord[0]][coord[1]]==0 && recherche_perso_tab(coord[0], coord[1])==-1) //On vérifie que les coordonnées sont bonnes
 				{
@@ -43,7 +43,7 @@ void placement_perso() //Cette fonction place les personnages des différents é
 			else
 			{
 				printf("\nEquipe B, à vous de placer un personnage : \n"); //On passe à la phase de choix de l'équipe B
-				printf("Choisissez les coordonnées : ");
+				printf("Choisissez les coordonnées (ligne entre 7 et 9 et colonne entre 0 et 9): ");
 				scanf("%i%i", &coord[0], &coord[1]); //Les coordonnées sont comprises entre 0 et 9.
 				if(coord[0]>=7 && coord[0]<=9 && coord[1]>=0 && coord[1]<=9 && recherche_perso_tab(coord[0], coord[1])==-1) //On vérifie aussi qu'il n'y ait personne dans cette case
 				{
