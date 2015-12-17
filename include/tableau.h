@@ -8,5 +8,5 @@ t_perso tab_perso[i_taille_tab_perso]; //Contient les données de tous les perso
 
 void afficher_tableau();
 int recherche_perso_tab(int x, int y);
-
+void init_tab_perso(t_perso tab_perso[i_taille_tab_perso]);
 #endif

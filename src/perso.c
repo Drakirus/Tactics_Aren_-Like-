@@ -54,7 +54,7 @@ void change_nombre(int a, t_perso * per, int i_montant) //Change une valeur num�
 	}
 }
 
-void creation(t_perso * per, int i_classe, char c_team, int x, int y)
+void creation(t_perso * per, int i_classe, char c_team, int x, int y) //On change juste les coordonnées et l'équipe du personnage.
 {
 	initialisation_perso(i_classe, per);
 	per->coord[0]=x;
