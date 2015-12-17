@@ -3,6 +3,7 @@
 #include <string.h>
 #include <time.h>
 #include "../include/perso.h"
+#include "../include/list_attack.h"
 
 
 t_perso ensemble_perso[i_nombre_classe]=
