@@ -17,23 +17,12 @@ void sauv_perso(char * sauv, t_perso perso){
 	sprintf(sauv, "%s %d %d %d %d %d %d %c",  perso.s_classe, perso.i_HP_max, perso.i_HP, perso.i_PA, perso.i_PM, perso.coord[0], perso.coord[1], perso.c_team);
 }
 
-void charge_perso(FILE * fic, t_perso perso){
-	fscanf(fic, "%s", perso.s_classe);
-	fscanf(fic, "%i", &perso.i_HP_max);
-	fscanf(fic, "%i", &perso.i_HP);
-	fscanf(fic, "%i", &perso.i_PA);
-	fscanf(fic, "%i", &perso.i_PM);
-	fscanf(fic, "%i", &perso.coord[0]);
-	fscanf(fic, "%i", &perso.coord[1]);
-	fscanf(fic, " %c ", &perso.c_team);
-}
-
 void charge(){
 	int test1 = 0, test2 = 0, test3 = 0, test4 = 0;
 	int i, j, k;
 	FILE * fic;
 	char nom_fichier[20];
-	memset (nom_fichier, 0, sizeof (nom_fichier)); /*Permet de vider la chaine*/
+	memset (nom_fichier, 0, sizeof (nom_fichier)); /*Permet de s'assurer que la chaine est vide*/
 	char temp[15];
 	strcat(nom_fichier, "save/");
 	do{
@@ -62,7 +51,6 @@ void charge(){
 		fscanf(fic, "%i", &tab_perso[k].coord[0]);
 		fscanf(fic, "%i", &tab_perso[k].coord[1]);
 		fscanf(fic, " %c ", &tab_perso[k].c_team);
-		afficher_perso(tab_perso[k]);
 	}
 	fclose(fic);
 }

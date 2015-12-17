@@ -5,11 +5,53 @@
 #include "../include/map.h"
 #include "../include/perso.h"
 extern int map[i_taille_map][i_taille_map];
+extern int i_perso_actuel;
+
 /*
 * ===========================================
 *	FONCTION DE DÉPLACEMENT
 * ===========================================
 */
+
+void delay(int milliseconds){
+    long pause;
+    clock_t now,then;
+    pause = milliseconds*(CLOCKS_PER_SEC/1000);
+    now = then = clock();
+    while( (now-then) < pause )
+        now = clock();
+}
+
+void deplacement(int PM_actuel){
+	pile *path = NULL; // move personnage
+	int r,c; // move personnage
+	int sortir; // move personnage
+	int value_perso;
+	path = getMovePerso(&PM_actuel, tab_perso[i_perso_actuel].coord[1], tab_perso[i_perso_actuel].coord[0] );
+	if (path == NULL) printf("Déplacement imposible\n");
+	else{
+		sortir = pop(&path, &r, &c);
+		value_perso = map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]];
+		afficher_map();
+		system("clear");
+		while (sortir != -1) {
+			if (map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]] == 0 || value_perso ==  map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]]) {
+				map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]] = 0;
+  			}
+			sortir = pop(&path, &r, &c);
+			// printf("r: %i c: %i\n",r,c );
+			change_nombre(5,&tab_perso[i_perso_actuel], c);
+			change_nombre(6, &tab_perso[i_perso_actuel], r);
+			if (map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]] == 0 || value_perso ==  map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]]) {
+				map[tab_perso[i_perso_actuel].coord[1]][ tab_perso[i_perso_actuel].coord[0]] = value_perso;
+			}
+			system("clear");
+			afficher_map();
+			delay(400);
+		}
+	}
+}
+
 pile *getMovePerso(int * PM_tour, int start_r,int start_c){
 	if (*PM_tour == 0) {
 		return NULL;
@@ -410,3 +452,4 @@ pile *getPath(int **DistancePath, int i, int j){
     *p = tmp;       /* The pointer points to the last element. */
 		return 1;
 }
+
