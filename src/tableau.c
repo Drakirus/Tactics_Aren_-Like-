@@ -27,19 +27,19 @@ int recherche_perso_tab(int x, int y) //A partir de coordonnées, on retourne la
 	return -1;
 }
 
-void init_tab_perso(t_perso tab_perso[i_taille_tab_perso])
+void init_tab_perso(t_perso tab_perso[i_taille_tab_perso]) //On initialise le tableau contenant les personnages, cela évite qu'on retrouve n'importe quoi dedans.
 {
 	int i;
 	for(i=0;i<i_taille_tab_perso;i++)
 	{
-		strcpy(tab_perso[i_taille_tab_perso].s_classe,"");
-		tab_perso[i_taille_tab_perso].i_HP_max=0;
-		tab_perso[i_taille_tab_perso].i_HP=0;
-		tab_perso[i_taille_tab_perso].i_PA=0;
-		tab_perso[i_taille_tab_perso].i_PM=0;
-		tab_perso[i_taille_tab_perso].coord[0]=0;
-		tab_perso[i_taille_tab_perso].coord[1]=0;
-		tab_perso[i_taille_tab_perso].c_team=' ';
+		strcpy(tab_perso[i].s_classe,"");
+		tab_perso[i].i_HP_max=-1;
+		tab_perso[i].i_HP=-1;
+		tab_perso[i].i_PA=-1;
+		tab_perso[i].i_PM=-1;
+		tab_perso[i].coord[0]=-1;
+		tab_perso[i].coord[1]=-1;
+		tab_perso[i].c_team=' ';
 
 	}
 }
