@@ -57,9 +57,9 @@ void afficher_map() //Fonction affichant la map
 		printf("%i  ", i);
 		for(j=0;j<i_taille_map;j++)
 		{
-			if(recherche_perso_tab(i, j)!=-1)
+			if(recherche_perso_tab(i, j)!=-1 && tab_perso[recherche_perso_tab(i, j)].i_HP!=0)
 				printf("%c.%c ", tab_perso[recherche_perso_tab(i, j)].s_classe[0], tab_perso[recherche_perso_tab(i, j)].c_team);
-			else if(map[i][j]==1)//1 : obstacle
+			else if(map[i][j]==1)//1 : obstacles
 				printf("*   ");
 			else
 				printf("_   ");

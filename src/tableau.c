@@ -5,7 +5,6 @@
 
 t_perso tab_perso[i_taille_tab_perso]; //Contient les données de tous les persos.
 
-
 void afficher_tableau()
 {
 	int i;
@@ -16,7 +15,7 @@ void afficher_tableau()
 }
 
 
-int recherche_perso_tab(int x, int y) //A partir de coordonnées, on retourne la position du perso correspondant au coordonnées. Retourne -1 s'il n'y a personne
+int recherche_perso_tab(int x, int y) //A partir de coordonnées, on retourne la position du perso dans le tableau correspondant au coordonnées. Retourne -1 s'il n'y a personne
 {	int i;
 	for(i=0; i<i_taille_tab_perso; i++)
 	{
@@ -26,4 +25,21 @@ int recherche_perso_tab(int x, int y) //A partir de coordonnées, on retourne la
 		}
 	}
 	return -1;
+}
+
+void init_tab_perso(t_perso tab_perso[i_taille_tab_perso])
+{
+	int i;
+	for(i=0;i<i_taille_tab_perso;i++)
+	{
+		strcpy(tab_perso[i_taille_tab_perso].s_classe,"");
+		tab_perso[i_taille_tab_perso].i_HP_max=0;
+		tab_perso[i_taille_tab_perso].i_HP=0;
+		tab_perso[i_taille_tab_perso].i_PA=0;
+		tab_perso[i_taille_tab_perso].i_PM=0;
+		tab_perso[i_taille_tab_perso].coord[0]=0;
+		tab_perso[i_taille_tab_perso].coord[1]=0;
+		tab_perso[i_taille_tab_perso].c_team=' ';
+
+	}
 }
