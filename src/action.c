@@ -19,10 +19,16 @@ pile *getMovePerso(int * PM_tour, int start_r,int start_c){
 	int **DistancePath = createDistancePath(start_r, start_c);
 	int distanceOfPath;
 	do {
-		printf("Choisissez les coordonnées (x y): ");
+		printf("Choisissez les coordonnées (x y) (-1 -1 pour annuler): ");
 		scanf("%i%i", &coord_r, &coord_c);
+		if (coord_r == -1 || coord_c == -1) {
+			return NULL;
+		}
 		if (coord_r < i_taille_map && coord_c < i_taille_map && coord_r>=0 && coord_c>=0) {
 			distanceOfPath = distanceFrom(coord_r, coord_c, DistancePath);
+		}
+		if ( distanceOfPath > *PM_tour) {
+			printf("\n trop loin\n");
 		}
 	} while(coord_r > i_taille_map || coord_c > i_taille_map || coord_r<0 || coord_c<0 || distanceOfPath > *PM_tour ||  map[coord_r][coord_c] != 0);
 
