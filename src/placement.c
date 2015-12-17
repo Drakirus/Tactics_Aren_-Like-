@@ -65,7 +65,7 @@ void placement_perso() //Cette fonction place les personnages des différents é
 			printf("Vous pouvez placer un : 0 - %s\n", ensemble_perso[0].s_classe);
 			for(i=1;i<i_nombre_classe;i++)
 			{
-				printf("\t\t\t\t\t%i - %s\n",i, ensemble_perso[i].s_classe);
+				printf("\t\t\t%i - %s\n",i, ensemble_perso[i].s_classe);
 			}
 			printf("Choisissez la classe du personnage: ");
 			scanf("%i", &i_classe); //0 pour un guerrier, 1 pour un archer, 2 pour un mage
