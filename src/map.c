@@ -62,8 +62,8 @@ void afficher_map() //Fonction affichant la map
 			if(recherche_perso_tab(i, j)!=-1 && tab_perso[recherche_perso_tab(i, j)].i_HP!=0)
 			{
 				perso[0]=tab_perso[recherche_perso_tab(i, j)].s_classe[0];
-				perso[1]='.';
-				perso[2]=tab_perso[recherche_perso_tab(i, j)].c_team;
+				perso[1]=tab_perso[recherche_perso_tab(i, j)].s_classe[1];
+				perso[2]=tab_perso[recherche_perso_tab(i, j)].s_classe[2];
 				perso[3]= '\0';
 				if(recherche_perso_tab(i,j)==i_perso_actuel)
 					color(red, "Screen");
