@@ -4,6 +4,7 @@
 #define i_nombre_classe 3
 
 #include "./list_attack.h"
+#include "../include/list_attack.h"
 
 typedef struct
 {
@@ -14,7 +15,7 @@ typedef struct
 	int i_PM;
 	int coord[2];
 	char c_team;
-	list_attack * att;	
+	list_attack * att;
 }t_perso;
 
 void afficher_perso(t_perso perso);
@@ -23,5 +24,6 @@ void initialisation_perso(int a, t_perso * per);
 void augmente_nombre(int a, t_perso * per, int i_montant);
 void change_nombre(int a, t_perso * per, int i_montant);
 int est_mort(t_perso perso);
+int init_attack(t_perso *per);
 
 #endif

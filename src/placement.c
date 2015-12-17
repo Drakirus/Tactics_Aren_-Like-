@@ -43,7 +43,6 @@ void placement_perso() //Cette fonction place les personnages des différents é
 				scanf("%i%i", &coord[0], &coord[1]); //Les coordonnées sont comprises entre 0 et 9.
 				if(coord[0]>=7 && coord[0]<=9 && coord[1]>=0 && coord[1]<=9 && map[coord[0]][coord[1]]==0)
 				{
-
 					b_sortie=0;
 				}
 			}

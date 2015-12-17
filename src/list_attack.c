@@ -9,11 +9,17 @@
 void displaylistAttack(list_attack *perso_att, int nbatt){
   list_attack *tmp = perso_att;
   int actual = 1;
+
+if(!tmp){
+  fprintf(stderr, "pas d'attack ..\n");
+}
+
   while(tmp != NULL){
+
     if (actual == nbatt || nbatt == 0) {
       printf("\n    %i - ",actual);
-      displayAttack(tmp->current_attack);
-      tmp =tmp->next;
+      if(tmp->current_attack != NULL) displayAttack(tmp->current_attack);
+      tmp = tmp->next;
     }
     actual++;
     if ((tmp != NULL) && nbatt != 0 ) {
@@ -22,12 +28,22 @@ void displaylistAttack(list_attack *perso_att, int nbatt){
   }
 }
 
-void pushAttack(list_attack **p, t_attak *new_att){
+list_attack* creer_liste_attack(){
   list_attack *tmp = malloc(sizeof(list_attack));
-  if(!tmp) exit(EXIT_FAILURE);     /* If the allocation failed. */
-  tmp->current_attack = new_att;
-  tmp->next = *p;
-  *p = tmp;
+  if(!tmp)
+    exit(EXIT_FAILURE);     /* If the allocation failed. */
+  tmp->current_attack = NULL;
+  return tmp;
+}
+
+void pushAttack(list_attack *p, t_attak *new_att){
+  if(p!=NULL) {
+    while(p->current_attack != NULL) {
+      p = p->next;
+    }
+    p->current_attack = new_att;
+    p->next = creer_liste_attack();
+  }
 }
 
 int getCountAttack(list_attack *perso_att){
