@@ -5,8 +5,43 @@
 #include "../include/map.h"
 #include "../include/perso.h"
 extern int map[i_taille_map][i_taille_map];
+/*
+* ===========================================
+*	FONCTION DE DÉPLACEMENT
+* ===========================================
+*/
+pile *getMovePerso(int * PM_tour, int start_r,int start_c){
+	if (*PM_tour == 0) {
+		return NULL;
+	}
+	int coord_r,coord_c;
+	pile *path;
+	int **DistancePath = createDistancePath(start_r, start_c);
+	int distanceOfPath;
+	do {
+		printf("Choisissez les coordonnées (x y) (-1 -1 pour annuler): ");
+		scanf("%i%i", &coord_r, &coord_c);
+		if (coord_r == -1 || coord_c == -1) {
+			return NULL;
+		}
+		if (coord_r < i_taille_map && coord_c < i_taille_map && coord_r>=0 && coord_c>=0) {
+			distanceOfPath = distanceFrom(coord_r, coord_c, DistancePath);
+		}
+		if ( distanceOfPath > *PM_tour) {
+			printf("\n trop loin\n");
+		}
+	} while(coord_r > i_taille_map || coord_c > i_taille_map || coord_r<0 || coord_c<0 || distanceOfPath > *PM_tour ||  map[coord_r][coord_c] != 0);
 
-
+ if (distanceOfPath>0) {
+	 *PM_tour -=distanceOfPath;
+	//  displayBoard(i_taille_map, i_taille_map,DistancePath);
+	 path = getPath(DistancePath, coord_r, coord_c);
+	 freeBoard(DistancePath, i_taille_map);
+	 return path;
+ }
+ freeBoard(DistancePath, i_taille_map);
+ return NULL;
+}
 /*
 * ===========================================
 *	FONCTION D'ATTAQUE
@@ -129,7 +164,7 @@ float getSlope(float f_a, float f_b){ // Basic division function (with check)
 
 int shoot(int i_player_y, int i_player_x, int i_attaque_y, int i_attaque_x){
 	/*
-	* function that calculate if the sight line is obstruct by a obstacle.
+	* function that calculate if the sight line is obstructed by a obstacle.
 	* return 0, if the shoot is possible or 1 if not!
 	*
 	*/
@@ -216,64 +251,61 @@ int shoot(int i_player_y, int i_player_x, int i_attaque_y, int i_attaque_x){
 * ===========================================
 */
 
-void setAdjacent(int **mat, int visited[i_taille_map][i_taille_map], int i, int j, int value) {
+int setAdjacent(int **mat, int i, int j, int value) {
 	/*
 	* setAdjacent is a function call by (only) *createDistancePath*, it takes a *X* and *Y* coordinates, and print *value* to here direct neighbor.
-	* *mat* is the output matix. This function check if it can place a neighbor or not (overflow), and if the new neighbor can have other(exemple : the corner).
+	* *mat* is the output matix. This function checks if it can place a neighbor or not (overflow), and if the new neighbor can have other(exemple : the corner).
 	*/
-	int dx,dy, cx,cy;
-	visited[i][j] = 1;
+	int dx,dy;
+	int nbUpdate = 0;
 		for (dx = (i <= 0 ? 0 : -1); dx <= (i >= i_taille_map-1 ? 0 : 1); dx++)
-			for (dy = (j <= 0 ? 0 : -1); dy <= (j >= i_taille_map-1 ? 0 : 1); dy++)
-				if (visited[dx+i][dy+j] == 0 && abs(dx) != abs(dy) && mat[dx+i][dy+j] != -1) {
+			for (dy = (j <= 0 ? 0 : -1); dy <= (j >= i_taille_map-1 ? 0 : 1); dy++){
+				// printf("coord adja %i %i\n",dx+i,dy+j );
+				if (abs(dx) != abs(dy) && mat[dx+i][dy+j] == -1) {
 					mat[dx+i][dy+j] = value;
-					for (cx = -1; cx <= 1; cx++)
-						for (cy = -1; cy <= 1; cy++)
-							if (dy+j+cy>=0 && dx+i+cx>=0 && dy+j+cy<i_taille_map && dx+i+cx<i_taille_map)
-								if (mat[dx+i+cx][dy+j+cy] == 0 ){
-									visited[dx+i][dy+j] = 2;
-									cx = cy = 2; // sortir des boucles
-								}
+					nbUpdate++;
 				}
+			}
+	return nbUpdate;
 }
 
-int smallestVisited(int **a, int visited[i_taille_map][i_taille_map]){
-	/*
-	* *smallestVisited* return the number of the smallest cells in the matix *a*.
-	* THIS number need to be one of the following batch of *setAdjacent* (visited == 2)
-	*/
-	int i,j;
-	 int small=9999;
-	 for(i=0;i<i_taille_map;i++)
-	 	for(j=0;j<i_taille_map;j++)
-			if(a[i][j]<small && visited[i][j] == 2)
-				small=a[i][j];
-	 return small;
-
-}
 
 int **createDistancePath(int init_x, int init_y){
 	/*
 	* *createDistancePath* return a matrix fill of distances, the center point have *init_x* and *init_y* coordinate.
 	* if the matrix return have for one coordinate a value of 0 it mean that the cells is unreachable, (surrender by obstacle or stand on it)
 	*/
-	int r=i_taille_map, c=i_taille_map;
-	int **map_path_finding =allocateBoard(r,c,map);
+	int **map_path_finding =allocateBoard(i_taille_map,i_taille_map,map);
 
-	int visited[i_taille_map][i_taille_map] = {{0}};
+	int row=0, columns=0, actual=0, nbUpdate = 1;
 
-	int row=0, columns=0, actual=0;
-	visited[init_x][init_y] = 2;
+	map_path_finding[init_x][init_y] = 0;
 
+	// init mat : point de départ = valeur_actuelle
+	// displayBoard(i_taille_map,i_taille_map,map_path_finding);
+
+
+	// tant que cible non atteinte ou matrice pas pleine
+while(nbUpdate != 0){
+	nbUpdate = 0;
+	// parcours de la matrice
 	for ( row=0; row<i_taille_map; row++)
 			for( columns=0; columns<i_taille_map; columns++){
-				actual = map_path_finding[row][columns];
-				if (visited[row][columns] == 2 && (actual == smallestVisited(map_path_finding, visited))) {   // need to check if the actual coordinate are the next one to have neighbor
-					setAdjacent(map_path_finding, visited, row, columns, ++actual );
-					row=0;
-					columns=0;
-			}
+
+	// si case = valeur_actuelle
+				if (map_path_finding[row][columns] == actual) {
+					// fprintf(stderr, "%i == %i",map_path_finding[row][columns],  actual);
+					// case_adjacente = vleur_actuelle +1
+					nbUpdate += setAdjacent(map_path_finding, row, columns, actual+1);
+
+					// displayBoard(i_taille_map,i_taille_map,map_path_finding);
+					// printf("\n");
+
+				}
 		}
+			// fprintf(stderr, "update %i\n", nbUpdate);
+			actual++;
+	}
 		return map_path_finding;
 }
 
@@ -281,13 +313,13 @@ void displayBoard(int r, int c, int **arr){ // Display a matrix of size r,c for 
 	int i,j;
 	for (i = 0; i <  r; i++){
 		for (j = 0; j < c; j++){
-			if (arr[i][j] == -1)
+			if (arr[i][j] == -2)
 				printf("   ");
 			else
 			if(arr[i][j]	>=10)
-				printf("%d ", arr[i][j]);
+				printf("%2d ", arr[i][j]);
 			else
-				printf("%d  ", arr[i][j]);
+				printf("%2d ", arr[i][j]);
 
 		}
 		printf("\n" );
@@ -305,9 +337,9 @@ int **allocateBoard(int r, int c, int from[r][c]){// create a pointer array to a
 	for (i = 0; i < r; i++)
 		for (j = 0; j < c; j++){
 			if (from[i][j] == 1)
-				arr[i][j]=-1;
+				arr[i][j]=-2;
 			else
-				arr[i][j] = 0; // *(*(arr+i)+j)
+				arr[i][j] = -1; // *(*(arr+i)+j)
 		}
 	return arr;
 }
@@ -335,21 +367,19 @@ pile *getPath(int **DistancePath, int i, int j){
 	int dx,dy;
 	int actual = DistancePath[i][j];
 	actual--;
+	push(&path, i, j);
 	while(DistancePath[i][j] != 0){
 		for (dx = (i <= 0 ? 0 : -1); dx <= (i >= i_taille_map-1 ? 0 : 1); dx++)
 			for (dy = (j <= 0 ? 0 : -1); dy <= (j >= i_taille_map-1 ? 0 : 1); dy++){
 
-				// printf("%i %i\n",dx+i, dy+j);
 				actual = DistancePath[i][j];
 				actual--;
 				if (abs(dx) != abs(dy) && actual == DistancePath[dx+i][dy+j]) {
-					// DistancePath[dx+i][dy+j] = value;
 					i = dx+i;
 					j = dy+j;
 					dx = 2;
 					dy = 2;
 					push(&path, i, j);
-					// printf("%i %i\n",i, j );
 				}
 			}
 	}
@@ -380,9 +410,3 @@ pile *getPath(int **DistancePath, int i, int j){
     *p = tmp;       /* The pointer points to the last element. */
 		return 1;
 }
-/*
-*
-* ===========================================
-* AUTRE ...
-* ===========================================
-*/

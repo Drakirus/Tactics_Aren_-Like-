@@ -62,4 +62,8 @@ void creation(t_perso * per, int i_classe, char c_team, int x, int y)
 	per->c_team=c_team;
 }
 
-
+/*retourne 1 si le le personnage est mort, 0 sinon */
+int est_mort(t_perso perso){
+	if(perso.i_HP == 0) return 1;
+	else return 0;
+}
