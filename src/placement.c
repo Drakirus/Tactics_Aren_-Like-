@@ -47,7 +47,6 @@ void placement_perso() //Cette fonction place les personnages des différents é
 				scanf("%i%i", &coord[0], &coord[1]); //Les coordonnées sont comprises entre 0 et 9.
 				if(coord[0]>=7 && coord[0]<=9 && coord[1]>=0 && coord[1]<=9 && recherche_perso_tab(coord[0], coord[1])==-1) //On vérifie aussi qu'il n'y ait personne dans cette case
 				{
-
 					b_sortie=0;
 				}
 				else

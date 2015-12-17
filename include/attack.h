@@ -1,6 +1,11 @@
 #ifndef _ATTACK_H_
 #define _ATTACK_H_
 
+#include <stdarg.h>
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
 typedef struct attak t_attak;
 typedef struct list_caract t_list_caract;
 

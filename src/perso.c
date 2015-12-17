@@ -3,21 +3,20 @@
 #include <string.h>
 #include <time.h>
 #include "../include/perso.h"
-#include "../include/list_attack.h"
-
 
 t_perso ensemble_perso[i_nombre_classe]=
 {
-	{"Guerrier",50,50,3,3,{0,0},'X'},
-	{"Archer",30,30,3,3,{0,0},'X'},
-	{"Mage",20,20,2,2,{0,0},'X'},
-	{"Voleur",30,30,4,3,{0,0},'X'},
-	{"Dovakhiin",150,150,20,20,{0,0},'X'}
+	{"Guerrier",50,50,3,3,{0,0},'X', NULL},
+	{"Archer",30,30,3,3,{0,0},'X', NULL},
+	{"Mage",20,20,2,2,{0,0},'X', NULL},
+	{"Voleur",30,30,4,3,{0,0},'X', NULL},
+	{"Dovakhiin",150,150,20,20,{0,0},'X', NULL}
 };
 
 /*Sert pour les tests*/
 void afficher_perso(t_perso perso){
 	printf("%s %i/%iHP %i %i [%i,%i] %c\n", perso.s_classe, perso.i_HP, perso.i_HP_max, perso.i_PA, perso.i_PM, perso.coord[0], perso.coord[1], perso.c_team);
+	displaylistAttack(perso.att, 0);
 }
 
 /*Affichage dans la console*/
@@ -35,6 +34,23 @@ void initialisation_perso(int a, t_perso * per) //On affecte à un t_perso les d
 	per->coord[0]=ensemble_perso[a].coord[0];
 	per->coord[1]=ensemble_perso[a].coord[1];
 	per->c_team=ensemble_perso[a].c_team;
+
+	init_attack(per);
+}
+// attention : il faut que le perso passe en param ait sa classe de correctement fixee
+int init_attack(t_perso *per){
+	per->att = creer_liste_attack();
+	if(per->s_classe[0] == 'G'){ //guerrier
+		pushAttack(per->att, createAttack("Coup d'épée", 1, 0, 3, 1, 0, 1, "HP", -5));// copie d'une attack par defaut d'un guerrier
+	}else if(per->s_classe[0] == 'A'){ //guerrier
+		pushAttack(per->att, createAttack("Tir à l'arc", 5, 2, 3, 1, 0, 3, "HP", -3,"coord_r",-2,"coord_c",-2));// copie d'une attack par defaut d'un archer
+	}else if(per->s_classe[0] == 'M'){ //guerrier
+		pushAttack(per->att, createAttack("Boule De Feu", 3, 0, 4, 3, 1, 1, "HP", -2));// copie d'une attack par defaut d'un mage
+		pushAttack(per->att,createAttack("Sort de Soin", 3, 0, 2, 1, 0, 1, "HP", 2));
+	}else{
+		return 0;
+	}
+	return 1;
 }
 
 void augmente_nombre(int a, t_perso * per, int i_montant) //Augmente ou soustrait une valeur numérique d'un perso, 1=i_HP_max, 2=i_HP, 3=i_PA, 4=i_PM, 5=coord[0], 6=coord[1]
