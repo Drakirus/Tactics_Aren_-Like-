@@ -1,3 +1,15 @@
+/**
+ * INPUT = .\src \
+ *         .\include \
+ * \file main.c
+ * \brief Programme lançant notre version du jeu Tactics Arena.
+ * \author CHAMPION Pierre, LAVILLE Martin, MOK Modira
+ * \version 0.1
+ * \date 6 septembre 2007
+ *
+ *
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -7,7 +19,6 @@
 #include "../include/tour.h"
 #include "../include/map.h"
 //#include "../include/list_attack.h"
-
 
 /*list_attack * attakGuerrier = NULL; // on les regroupe dans une liste
 list_attack * attakArcher = NULL; // on les regroupe dans une liste
