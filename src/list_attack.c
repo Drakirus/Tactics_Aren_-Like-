@@ -14,7 +14,6 @@
 #include <unistd.h>
 #include <stdarg.h>
 #include "../include/list_attack.h"
-
 /**
  * \fn void displaylistAttack(list_attack *perso_att)
  * \param perso_att

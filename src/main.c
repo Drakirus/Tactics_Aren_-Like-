@@ -16,7 +16,7 @@
 #include "../include/placement.h"
 #include "../include/tour.h"
 #include "../include/map.h"
-//#include "../include/list_attack.h"
+#include "../include/tableau.h"
 
 
 /**
@@ -48,5 +48,6 @@ int main() {
 					break;
 		}
 	}while(choix_menu != 3);
+	freeAllListAttack();
 	return 0;
 }

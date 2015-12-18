@@ -111,10 +111,10 @@ void afficher_map() //Fonction affichant la map
 
 /**
  * \fn afficher_map_accessible(int **DistancePath, int map_shadowcasting[i_taille_map][i_taille_map],int range_max, int range_min )
- * \param int **DistancePath
- * \param int map_shadowcasting[i_taille_map][i_taille_map]
- * \param int range_max
- * \param int range_min
+ * \param int **DistancePath matrice indiquant les distance
+ * \param int map_shadowcasting[i_taille_map][i_taille_map] matrice indiquant si une case est  atteignable ou non
+ * \param int range_max pas de coloration après cette valeur
+ * \param int range_min pas de coloration avent cette valeur
  * \brief Affiche la carte dans la console et indique les cases accessible lors d'un tir ou déplacement
  *
  */

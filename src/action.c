@@ -27,9 +27,9 @@ extern int i_perso_actuel;
 
 /**
  * \fn void delay(int milliseconds)
- * \param milliseconds
+ * \param milliseconds temps en milliseconds
  * \return
- * \brief
+ * \brief delay est utilisé pour suspendre l'exécution d'un programme pendant un temps déterminé
  *
  */
 void delay(int milliseconds){
@@ -207,22 +207,22 @@ void attaque(int * PA_tour){
 
     if(coord_r>=0 && coord_r<=i_taille_map && coord_c>=0 && coord_c<=i_taille_map && !(map_shadowcasting[coord_r][coord_c] != 0)){
 
-      if (*PA_tour < getAttack(tab_perso[i_perso_actuel].att, attack)->cost_PA ) {
+      if (*PA_tour < tmp_att->cost_PA ) {
         printf("plus de PA dispo\n");
         delay(1200);
         return;
       }
-      if (distanceFrom(coord_r, coord_c, DistancePath) < getAttack(tab_perso[i_perso_actuel].att, attack)->range_min) {
+      if (distanceFrom(coord_r, coord_c, DistancePath) < tmp_att->range_min) {
         printf("Cible trop proche\n" );
         delay(1200);
         return;
       }
-      if ( distanceFrom(coord_r, coord_c, DistancePath) > getAttack(tab_perso[i_perso_actuel].att, attack)->range_max) {
+      if ( distanceFrom(coord_r, coord_c, DistancePath) > tmp_att->range_max) {
         printf("Cible trop loin\n" );
         delay(1200);
         return;
       }
-      if (getAttack(tab_perso[i_perso_actuel].att, attack)->only_line == 1 &&
+      if (tmp_att->only_line == 1 &&
       (coord_r - tab_perso[i_perso_actuel].coord[0] != 0 &&  coord_c - tab_perso[i_perso_actuel].coord[1] != 0 )) {
         printf("Cible doit sur la même ligne\n" );
         delay(1200);
