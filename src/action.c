@@ -101,7 +101,8 @@ void attaque(int * PA_tour){
   int i,j;
   int splashRange = 0;
   int dx,dy;
-  int shoot;
+  int shoot_c;
+  int shoot_r;
   int **DistancePath = createDistancePath( tab_perso[i_perso_actuel].coord[0],  tab_perso[i_perso_actuel].coord[1]);
   t_attak * tmp_att =NULL;
   int recul_r;
@@ -133,12 +134,12 @@ void attaque(int * PA_tour){
     return;
   }
 
-  for ( i = 0; i < i_taille_map ; i++) {
-    for ( j = 0; j < i_taille_map ; j++) {
-      printf("%i ",map_shadowcasting[i][j] );
-    }
-    printf("\n" );
-  }
+  // for ( i = 0; i < i_taille_map ; i++) {
+  //   for ( j = 0; j < i_taille_map ; j++) {
+  //     printf("%i ",map_shadowcasting[i][j] );
+  //   }
+  //   printf("\n" );
+  // }
   while(sortie!=0){
     printf("Veuillez rentrer les coordonnées du personnages que vous voulez attaquer (-1 -1 pour annuler) : ");
     scanf("%i%i", &coord_r, &coord_c);
@@ -228,46 +229,47 @@ void attaque(int * PA_tour){
 
             printf("\tCible touchée\n");
 
-            shoot=1;
+            shoot_c=1;
+            shoot_r=1;
 
             recul_r = tmp_att->trait.coord_r;
             recul_c = tmp_att->trait.coord_c;
 
-            while (shoot && coord_r != tab_perso[i_perso_actuel].coord[0] &&  coord_c != tab_perso[i_perso_actuel].coord[1]) {
-              printf("%i %i\n",recul_r,recul_c  );
+            while (shoot_c== 1 && shoot_r== 1) {
+              printf("recul ?%i %i\n",recul_r,recul_c  );
               if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] > tab_perso[i_perso_actuel].coord[0]) {
                 if (recul_r >= 0 &&  recul_r < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] - recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] ] != 1) {
-                  augmente_nombre(6, &tab_perso[recherche_perso_tab(coord_r, coord_c)], recul_r );
-                  shoot =0;
+                  shoot_r =0;
+                }else{
+                  recul_r++;
                 }
-                recul_r++;
               }else
               if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] > tab_perso[i_perso_actuel].coord[1]) {
                 if ( recul_c >= 0 &&  recul_c < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] ][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_c] != 1 ) {
-                  tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] -= recul_c;
-                  augmente_nombre(5, &tab_perso[recherche_perso_tab(coord_r, coord_c)], recul_c );
-                  shoot =0;
+                  shoot_c=0;
+                }else{
+                  recul_c++;
                 }
-                recul_c++;
               }
               if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] < tab_perso[i_perso_actuel].coord[0]  ) {
                 if (recul_r >= 0 &&  recul_r < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] + recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0]] != 1 ) {
-                  augmente_nombre(6, &tab_perso[recherche_perso_tab(coord_r, coord_c)], recul_r );
-                  shoot =0;
+                  shoot_r =0;
+                }else{
+                  recul_r++;
                 }
-                recul_r++;
 
               }else
               if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] < tab_perso[i_perso_actuel].coord[1] ) {
                 if ( recul_c >= 0 &&  recul_c < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1]][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] + recul_c] != 1) {
-                  augmente_nombre(5, &tab_perso[recherche_perso_tab(coord_r, coord_c)], recul_c );
-                  shoot =0;
+                  shoot_c=0;
+                }else{
+                  recul_c++;
                 }
-                recul_c++;
               }
             }
-            afficher_perso(tab_perso[recherche_perso_tab(coord_r, coord_c)]);
-            printf("recul sur %i(prioritaire) ou %i\n",recul_r,recul_c );
+            augmente_nombre( 5 , &tab_perso[recherche_perso_tab(coord_r, coord_c)] , recul_r );
+            augmente_nombre( 6 , &tab_perso[recherche_perso_tab(coord_r, coord_c)] , recul_c );
+            printf("recul sur %i %i\n", recul_r , recul_c );
           }
 
         }
