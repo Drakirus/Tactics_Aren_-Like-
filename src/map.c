@@ -132,7 +132,8 @@ void afficher_map_accessible(int **DistancePath, int map_shadowcasting[i_taille_
 		{
 			if (DistancePath[i][j] <= range_max && DistancePath[i][j] >= range_min && map_shadowcasting[i][j] == 0) {
 				if (ligne == 1) {
-					if ((j - r_start == 0  || i - c_start == 0)) {
+					if (( r_start == i || c_start == j)) {
+						// fprintf(stderr, "%i == %i / %i == %i\n",r_start, i , c_start , j );
 						color(cyan, "Screen");
 					}
 				}
@@ -160,6 +161,7 @@ void afficher_map_accessible(int **DistancePath, int map_shadowcasting[i_taille_
 				printf(" *  ");
 			else
 				printf(" _  ");
+			color(reinit, "Screen");
 		}
 		printf("\n");
 	}
