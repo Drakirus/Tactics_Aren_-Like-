@@ -93,7 +93,7 @@ pile *getMovePerso(int * PM_tour, int start_r,int start_c){
     for(j = 0 ; j < i_taille_map ; j ++)
        map_shadowcasting[i][j] = 0;
 
-  afficher_map_accessible(DistancePath, map_shadowcasting, range_max, range_min, 0,0,0);
+  afficher_map_accessible(DistancePath, map_shadowcasting, range_max, range_min, 0,0,0); // les trois 0 à la fin sont présent si un jour, un personnage n'est capable de ce déplacer uniquement sur les lignes
   do {
     printf("Choisissez les coordonnées (x y) (-1 -1 pour annuler): ");
     scanf("%i%i", &coord_r, &coord_c);
@@ -330,7 +330,7 @@ void attaque(int * PA_tour){
 
     }
   }
-  delay(1500);
+  delay(2500);
   *PA_tour -= tmp_att->cost_PA;
   freeBoard(DistancePath, i_taille_map);
 }

@@ -40,8 +40,6 @@ void displayAttack(t_attak * att){
 		printf("\n\tChange les P de mouvement à + %i ",att->trait.PM);
 	if (att->trait.coord_r != 0 || att->trait.coord_c != 0)
 		printf("\n\tFait reculer le perso de %ix%i ",att->trait.coord_r, att->trait.coord_c);
-	if (att->trait.team != -1)
-		printf("\n\tChange le perso dans l'équipe %i ",att->trait.team);
   printf("\n");
 }
 
@@ -85,7 +83,6 @@ t_attak *createAttack(
 	newAttak->trait.PM=0;
 	newAttak->trait.coord_r=0;
 	newAttak->trait.coord_c=0;
-	newAttak->trait.team=-1;
 
 	va_list trait;
 	num_trait+=num_trait;
@@ -126,14 +123,7 @@ t_attak *createAttack(
 				if (strcmp(tmp, "coord_c") == 0) {
 					tmp_value = va_arg(trait, int);
 					newAttak->trait.coord_c = tmp_value;
-				}else
-
-				if (strcmp(tmp, "team") == 0) {
-					tmp_value = va_arg(trait, int);
-					newAttak->trait.team = tmp_value;
-				}
-
-				else{
+				}else{
 					tmp_value = va_arg(trait, int);
 				}
 
