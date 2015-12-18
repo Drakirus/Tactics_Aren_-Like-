@@ -27,10 +27,9 @@ extern int i_perso_actuel;
 
 /**
  * \fn void sauv_perso(char * sauv, t_perso perso)
- * \param sauv
- * \param perso
- * \return
- * \brief
+ * \param sauv Chaine de caractère où l'on sauvegarde les caractéristiques d'un personnage
+ * \param perso Personnage en question
+ * \brief Sauvegarde dans une chaine de caractère les caractéristiques d'un personnage
  *
  */
 void sauv_perso(char * sauv, t_perso perso){
@@ -40,8 +39,7 @@ void sauv_perso(char * sauv, t_perso perso){
 
 /**
  * \fn void charge()
- * \return
- * \brief
+ * \brief Charge un fichier qui est demandé à l'utilisateur. Ce fichier contiendra une sauvegarde.
  *
  */
 void charge(){
@@ -88,15 +86,13 @@ void charge(){
 		fscanf(fic, "%i", &tab_perso[k].coord[1]);
 		fscanf(fic, " %c ", &tab_perso[k].c_team);
 		init_attack(&tab_perso[k]);
-		//charger les attack du perso
 	}
 	fclose(fic);
 }
 
 /**
  * \fn void save()
- * \return
- * \brief
+ * \brief Sauvegarde dans un fichier toutes les informations nécessaires au bont déroulement de la partie
  *
  */
 void save(){

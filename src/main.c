@@ -21,12 +21,10 @@
 
 /**
  * \fn int main()
- *	\brief lance le jeu
- *
+ * \brief Menu principal, donne accès au lancement de la partie et au chargement.
  *
  */
 int main() {
-
 	srand(time(NULL));
 	int choix_menu = 0;
 	do{
