@@ -104,7 +104,8 @@ void attaque(int * PA_tour){
   int shoot;
 	int **DistancePath = createDistancePath( tab_perso[i_perso_actuel].coord[0],  tab_perso[i_perso_actuel].coord[1]);
   t_attak * tmp_att =NULL;
-  t_perso persoAttaquer;
+  t_perso * persoAttaquer;
+  persoAttaquer=malloc(sizeof(t_perso));
   int recul_r;
   int recul_c;
 
@@ -140,6 +141,7 @@ void attaque(int * PA_tour){
 		if (coord_r == -1 || coord_c == -1) {
 			return;
 		}
+		
     if (coord_r>=0 && coord_r<=i_taille_map && coord_c>=0 && coord_c<=i_taille_map) {
       if (0 != map_shadowcasting[coord_r][coord_c]) {
         printf("Ligne de vue obstruée\n" );
@@ -172,8 +174,8 @@ void attaque(int * PA_tour){
 			}
 			tmp_att = getAttack(tab_perso[i_perso_actuel].att, attack);
       splashRange = (tmp_att->splash_range)-1;
-        for (dx = -splashRange; dx < splashRange; dx++) {
-          for (dy = -splashRange; dy < splashRange; dy++) {
+        for (dx = -splashRange; dx <= splashRange; dx++) {
+          for (dy = -splashRange; dy <= splashRange; dy++) {
             if (splashRange == 0) {
               dy = 0;
               dy = 0;
@@ -182,13 +184,12 @@ void attaque(int * PA_tour){
             if (coord_r+dx>=0 && coord_c+dy>=0 && coord_r+dx<i_taille_map && coord_c+dy<i_taille_map) {
               coord_r = coord_r+dx;
               coord_c = coord_c+dy;
-              persoAttaquer = tab_perso[recherche_perso_tab(coord_r, coord_c)];
+              *persoAttaquer = tab_perso[recherche_perso_tab(coord_r, coord_c)];
               if (recherche_perso_tab(coord_r, coord_c) != -1) {
-
-                augmente_nombre(1, &persoAttaquer, tmp_att->trait.HP_max );
-                augmente_nombre(2, &tab_perso[recherche_perso_tab(coord_r, coord_c)], tmp_att->trait.HP );
-                augmente_nombre(3, &persoAttaquer, tmp_att->trait.PA );
-                augmente_nombre(4, &persoAttaquer, tmp_att->trait.PM );
+                augmente_nombre(1, persoAttaquer, tmp_att->trait.HP_max );
+                augmente_nombre(2, persoAttaquer, tmp_att->trait.HP );
+                augmente_nombre(3, persoAttaquer, tmp_att->trait.PA );
+                augmente_nombre(4, persoAttaquer, tmp_att->trait.PM );
 
                 shoot=1;
 
@@ -196,32 +197,32 @@ void attaque(int * PA_tour){
                 recul_c = tmp_att->trait.coord_c;
 
                 while (shoot && coord_r != tab_perso[i_perso_actuel].coord[0] &&  coord_c != tab_perso[i_perso_actuel].coord[1]) {
-                  if (persoAttaquer.coord[1] > tab_perso[i_perso_actuel].coord[0]) {
-                    if (persoAttaquer.coord[1] - recul_r >= 0 && persoAttaquer.coord[1] - recul_r < i_taille_map && map[persoAttaquer.coord[1] - recul_r][persoAttaquer.coord[0] ] != 1) {
-                      augmente_nombre(6, &persoAttaquer, recul_r );
+                  if (persoAttaquer->coord[1] > tab_perso[i_perso_actuel].coord[0]) {
+                    if (persoAttaquer->coord[1] - recul_r >= 0 && persoAttaquer->coord[1] - recul_r < i_taille_map && map[persoAttaquer->coord[1] - recul_r][persoAttaquer->coord[0] ] != 1) {
+                      augmente_nombre(6, persoAttaquer, recul_r );
                       shoot =0;
                     }
                     recul_r++;
                   }else
-                  if (persoAttaquer.coord[0] > tab_perso[i_perso_actuel].coord[1]) {
-                    if (persoAttaquer.coord[0] - recul_c >= 0 && persoAttaquer.coord[0] - recul_c < i_taille_map && map[persoAttaquer.coord[1] ][persoAttaquer.coord[0] - recul_c] != 1 ) {
-                      persoAttaquer.coord[0] -= recul_c;
-                      augmente_nombre(5, &persoAttaquer, recul_c );
+                  if (persoAttaquer->coord[0] > tab_perso[i_perso_actuel].coord[1]) {
+                    if (persoAttaquer->coord[0] - recul_c >= 0 && persoAttaquer->coord[0] - recul_c < i_taille_map && map[persoAttaquer->coord[1] ][persoAttaquer->coord[0] - recul_c] != 1 ) {
+                      persoAttaquer->coord[0] -= recul_c;
+                      augmente_nombre(5, persoAttaquer, recul_c );
                       shoot =0;
                     }
                     recul_c++;
                   }
-                  if (persoAttaquer.coord[1] < tab_perso[i_perso_actuel].coord[0]  ) {
-                    if (persoAttaquer.coord[1] + recul_r >= 0 && persoAttaquer.coord[1] + recul_r < i_taille_map && map[persoAttaquer.coord[1] + recul_r][persoAttaquer.coord[0]] != 1 ) {
-                      augmente_nombre(6, &persoAttaquer, recul_r );
+                  if (persoAttaquer->coord[1] < tab_perso[i_perso_actuel].coord[0]  ) {
+                    if (persoAttaquer->coord[1] + recul_r >= 0 && persoAttaquer->coord[1] + recul_r < i_taille_map && map[persoAttaquer->coord[1] + recul_r][persoAttaquer->coord[0]] != 1 ) {
+                      augmente_nombre(6, persoAttaquer, recul_r );
                       shoot =0;
                     }
                     recul_r++;
 
                   }else
-                  if (persoAttaquer.coord[0] < tab_perso[i_perso_actuel].coord[1] ) {
-                    if (persoAttaquer.coord[0] + recul_c >= 0 && persoAttaquer.coord[0] + recul_c < i_taille_map && map[persoAttaquer.coord[1]][persoAttaquer.coord[0] + recul_c] != 1) {
-                      augmente_nombre(5, &persoAttaquer, recul_c );
+                  if (persoAttaquer->coord[0] < tab_perso[i_perso_actuel].coord[1] ) {
+                    if (persoAttaquer->coord[0] + recul_c >= 0 && persoAttaquer->coord[0] + recul_c < i_taille_map && map[persoAttaquer->coord[1]][persoAttaquer->coord[0] + recul_c] != 1) {
+                      augmente_nombre(5, persoAttaquer, recul_c );
                       shoot =0;
                     }
                     recul_c++;
@@ -229,7 +230,7 @@ void attaque(int * PA_tour){
                 }
 
                 printf("\tSible touchée\n");
-                afficher_perso(persoAttaquer);
+                afficher_perso(*persoAttaquer);
                 delay(1250);
               }
 
