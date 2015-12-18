@@ -93,7 +93,7 @@ pile *getMovePerso(int * PM_tour, int start_r,int start_c){
     for(j = 0 ; j < i_taille_map ; j ++)
        map_shadowcasting[i][j] = 0;
 
-  afficher_map_accessible(DistancePath, map_shadowcasting, range_max, range_min);
+  afficher_map_accessible(DistancePath, map_shadowcasting, range_max, range_min, 0,0,0);
   do {
     printf("Choisissez les coordonnées (x y) (-1 -1 pour annuler): ");
     scanf("%i%i", &coord_r, &coord_c);
@@ -159,6 +159,7 @@ void attaque(int * PA_tour){
   int HP;
   int range_max;
   int range_min;
+  int ligne;
   do{
     displaylistAttack(tab_perso[i_perso_actuel].att);
     printf("Choisissez une attaque entre (-1 pour annuler) : ");
@@ -185,7 +186,8 @@ void attaque(int * PA_tour){
   }
   range_max = tmp_att->range_max;
   range_min = tmp_att->range_min;
-  afficher_map_accessible(DistancePath, map_shadowcasting, range_max, range_min);
+  ligne = tmp_att->only_line;
+  afficher_map_accessible(DistancePath, map_shadowcasting, range_max, range_min, ligne , tab_perso[i_perso_actuel].coord[0] , tab_perso[i_perso_actuel].coord[1] );
 
 
   while(sortie!=0){
@@ -234,7 +236,7 @@ void attaque(int * PA_tour){
         dy = 0;
         for (dx = -splashRange; dx <= splashRange; dx++) {
           for (dy = -splashRange; dy <= splashRange; dy++){
-            printf("looking for player in %i %i\n",coord_r+dx,coord_c+dy );
+            // printf("looking for player in %i %i\n",coord_r+dx,coord_c+dy );
             if (coord_r+dx>=0 && coord_c+dy>=0 && coord_r+dx<i_taille_map && coord_c+dy<i_taille_map) {
               if (recherche_perso_tab(coord_r+dx, coord_c+dy) != -1) {
 
@@ -243,7 +245,7 @@ void attaque(int * PA_tour){
                 if (HP>0) {
                   while (tab_perso[recherche_perso_tab(coord_r+dx, coord_c+dy)].i_HP_max < HP + tab_perso[recherche_perso_tab(coord_r+dx, coord_c+dy)].i_HP ) {
                     HP--;
-                    printf("%i \n",HP );
+                    // printf("%i \n",HP );
                   }
                 }
 
@@ -258,7 +260,7 @@ void attaque(int * PA_tour){
         }
       }else{
 
-        printf("looking for player in %i %i\n",coord_r,coord_c );
+        // printf("looking for player in %i %i\n",coord_r,coord_c );
         if (coord_r>=0 && coord_c>=0 && coord_r<i_taille_map && coord_c<i_taille_map) {
           if (recherche_perso_tab(coord_r, coord_c) != -1) {
 
@@ -267,7 +269,7 @@ void attaque(int * PA_tour){
             if (HP>0) {
               while (tab_perso[recherche_perso_tab(coord_r, coord_c)].i_HP_max < HP + tab_perso[recherche_perso_tab(coord_r, coord_c)].i_HP ) {
                 HP--;
-                printf("%i \n",HP );
+                // printf("%i \n",HP );
               }
             }
 
@@ -283,8 +285,8 @@ void attaque(int * PA_tour){
     				recul_c = tmp_att->trait.coord_c;
 
     				while (shoot) {
-    					printf("%i\n", map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] - recul_c]);
-    					printf("%i\n", map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] + recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] + recul_c]);
+    					// printf("%i\n", map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] - recul_c]);
+    					// printf("%i\n", map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] + recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] + recul_c]);
     					if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] > tab_perso[i_perso_actuel].coord[0]) {
     						if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_r >= 0 && tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_r < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] ] != 1) {
 

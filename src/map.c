@@ -118,7 +118,7 @@ void afficher_map() //Fonction affichant la map
  * \brief Affiche la carte dans la console et indique les cases accessible lors d'un tir ou déplacement
  *
  */
-void afficher_map_accessible(int **DistancePath, int map_shadowcasting[i_taille_map][i_taille_map],int range_max, int range_min ) //Fonction affichant la map
+void afficher_map_accessible(int **DistancePath, int map_shadowcasting[i_taille_map][i_taille_map],int range_max, int range_min , int ligne, int r_start, int c_start) //Fonction affichant la map
 {
 	char perso[4]; //Pour le changement de couleur
 	system("clear");
@@ -126,11 +126,19 @@ void afficher_map_accessible(int **DistancePath, int map_shadowcasting[i_taille_
 	printf("    0   1   2   3   4   5   6   7   8   9\n");
 	for(i=0;i<i_taille_map;i++)
 	{
+		color(reinit, "Screen");
 		printf("%i  ", i);
 		for(j=0;j<i_taille_map;j++)
 		{
 			if (DistancePath[i][j] <= range_max && DistancePath[i][j] >= range_min && map_shadowcasting[i][j] == 0) {
+				if (ligne == 1) {
+					if ((j - r_start == 0  || i - c_start == 0)) {
+						color(cyan, "Screen");
+					}
+				}
+				else {
 					color(cyan, "Screen");
+				}
 			}else{
 				color(reinit, "Screen");
 			}
