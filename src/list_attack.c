@@ -47,10 +47,10 @@ void pushAttack(list_attack *p, t_attak *new_att){
 int getCountAttack(list_attack *perso_att){
   list_attack *tmp = perso_att;
   int actual = 1;
-  while(tmp != NULL){
+  while(tmp->current_attack != NULL){
     tmp =tmp->next;
     actual++;
-    if (tmp != NULL)  {
+    if (tmp->current_attack != NULL)  {
       tmp =tmp->next;
     }
   }

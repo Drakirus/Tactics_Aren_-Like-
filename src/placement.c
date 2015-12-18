@@ -22,7 +22,7 @@ void placement_perso() //Cette fonction place les personnages des différents é
 	t_perso * per;
 	per=malloc(sizeof(t_perso));
 	int i_equipe=0; //0 pour l'équipe A et 1 pour l'équipe B
-	while(i_nb_perso<6) //Ici on veut 6 personnages en tout.
+	while(i_nb_perso<3) //Ici on veut 6 personnages en tout.
 	{
 		while(b_sortie!=0)
 		{
