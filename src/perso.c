@@ -14,6 +14,9 @@
 #include <time.h>
 #include "../include/perso.h"
 
+/**
+ * \def Les personnages que l'on a créé
+ **/ 
 t_perso ensemble_perso[i_nombre_classe]=
 {// "perso_name" / HP_max / HP / Points d'action / Points de mouvement / ligne / colonnes / team / placé ou pas / LISTE de ses attaques
 	{"Guerrier",50,50,3,3,{0,0},'X', NULL},
@@ -25,10 +28,9 @@ t_perso ensemble_perso[i_nombre_classe]=
 
 /*Sert pour les tests*/
 /**
- * \fn void afficher_perso(t_perso perso
- * \param perso
- * \return
- * \brief
+ * \fn void afficher_perso(t_perso perso)
+ * \param perso Le perso que l'on veut afficher
+ * \brief Affiche le personnage avec toutes ses caractéristiques dans la console
  *
  */
 void afficher_perso(t_perso perso){
@@ -38,9 +40,8 @@ void afficher_perso(t_perso perso){
 /*Affichage dans la console*/
 /**
  * \fn void affichage_perso(t_perso perso)
- * \param perso
- * \return
- * \brief
+ * \param perso Le personnage que l'on veut affciher
+ * \brief Affiche le personnage avec le nom de sa classe, ses HP, HP maximum et ses coordonnées.
  *
  */
 void affichage_perso(t_perso perso){
@@ -50,10 +51,9 @@ void affichage_perso(t_perso perso){
 
 /**
  * \fn void initialisation_perso(int a, t_perso * per)
- * \param a
- * \param per
- * \return
- * \brief
+ * \param a Ce paramètre permet de savoir à quel personnage on doit initialiser le personnage en question
+ * \param per Le personnagne qui est normalement vide.
+ * \brief Le personnage en paramètre a maintenant les caractéristiques du personnage de la classe que désigne a.
  *
  */
 void initialisation_perso(int a, t_perso * per) //On affecte à un t_perso les données initiales présentes dans ensemble_perso
@@ -99,11 +99,10 @@ int init_attack(t_perso *per){
 
 /**
  * \fn void augmente_nombre(int a, t_perso * per, int i_montant)
- * \param a
- * \param per
- * \param i_montant
- * \return
- * \brief
+ * \param a Ce paramètre indique quelle caractéristique du personnage on désire modifier
+ * \param per Le personnage que l'on souhaite modifier
+ * \param i_montant De combien le paramètre a change
+ * \brief On ajoute à la caractèristique le montant du paramètre i_montant
  *
  */
 void augmente_nombre(int a, t_perso * per, int i_montant) //Augmente ou soustrait une valeur numérique d'un perso, 1=i_HP_max, 2=i_HP, 3=i_PA, 4=i_PM, 5=coord[0], 6=coord[1]
@@ -121,11 +120,10 @@ void augmente_nombre(int a, t_perso * per, int i_montant) //Augmente ou soustrai
 
 /**
  * \fn void change_nombre(int a, t_perso * per, int i_montant)
- * \param a
- * \param per
- * \param i_montant
- * \return
- * \brief
+ * \param a Ce paramètre indique quelle caractéristique du personnage on désire modifier
+ * \param per Le personnage que l'on souhaite modifier
+ * \param i_montant De combien le paramètre a change
+ * \brief On ajoute pas, on change la caractéristiques par le paramètre i_montant
  *
  */
 void change_nombre(int a, t_perso * per, int i_montant) //Change une valeur numérique d'un perso, 1=i_HP_max, 2=i_HP, 3=i_PA, 4=i_PM, 5=coord[0], 6=coord[1]
@@ -143,13 +141,12 @@ void change_nombre(int a, t_perso * per, int i_montant) //Change une valeur num�
 
 /**
  * \fn void creation(t_perso * per, int i_classe, char c_team, int x, int y)
- * \param per
- * \param i_classe
- * \param c_team
- * \param x
- * \param y
- * \return
- * \brief
+ * \param per Le personnage que l'on souhaite créer
+ * \param i_classe La classe du personnage
+ * \param c_team Son équipe
+ * \param x Sa coordonnée en abscisse
+ * \param y Sa coordonnée en ordonnée
+ * \brief On prendre normalement en paramètre un personnage vide, auquel on ajoute son placement dans la carte, son équipe et sa clase
  *
  */
 void creation(t_perso * per, int i_classe, char c_team, int x, int y) //On change juste les coordonnées et l'équipe du personnage.
@@ -162,9 +159,10 @@ void creation(t_perso * per, int i_classe, char c_team, int x, int y) //On chang
 
 /**
  * \fn int est_mort(t_perso perso)
- * \param perso
- * \return
- * \brief
+ * \param perso Le personnage en question
+ * \return 1 si le personnage est mort
+ * \return 0 si le personnage est vivant
+ * \brief Permet de savoir si un personnage est mort ou non.
  *
  */
 /*retourne 1 si le le personnage est mort, 0 sinon */

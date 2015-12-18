@@ -23,8 +23,7 @@ extern int map[i_taille_map][i_taille_map];
 
 /**
  * \fn void placement_perso()
- * \return
- * \brief
+ * \brief Permet de placer les personnages dans la carte.
  *
  */
 void placement_perso() //Cette fonction place les personnages des différents équipes dans les trois premières et dernières ligne de la map.

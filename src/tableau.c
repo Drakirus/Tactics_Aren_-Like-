@@ -17,8 +17,7 @@ t_perso tab_perso[i_taille_tab_perso]; //Contient les données de tous les perso
 
 /**
  * \fn void afficher_tableau()
- * \return
- * \brief
+ * \brief On affiche le tableau contenant tous les personnages
  *
  */
 void afficher_tableau()
@@ -33,13 +32,14 @@ void afficher_tableau()
 
 /**
  * \fn int recherche_perso_tab(int x, int y)
- * \param x
- * \param y
- * \return
- * \brief
+ * \param x coordonée en abscisse
+ * \param y coordonnée en ordonnée
+ * \return -1 s'il n'y a personne dans ces coordonées
+ * \return i la place du tableau dans lequel le personnage est
+ * \brief A partir de coordonnées, on retourne la position du perso dans le tableau correspondant au coordonnées.
  *
  */
-int recherche_perso_tab(int x, int y) //A partir de coordonnées, on retourne la position du perso dans le tableau correspondant au coordonnées. Retourne -1 s'il n'y a personne
+int recherche_perso_tab(int x, int y)
 {	int i;
 	for(i=0; i<i_taille_tab_perso; i++)
 	{
@@ -53,12 +53,11 @@ int recherche_perso_tab(int x, int y) //A partir de coordonnées, on retourne la
 
 /**
  * \fn void init_tab_perso(t_perso tab_perso[i_taille_tab_perso])
- * \param tab_perso
- * \return
- * \brief
+ * \param tab_perso Le tableau à initialiser
+ * \brief On initialise le tableau contenant les personnages, cela évite qu'on retrouve n'importe quoi dedans.
  *
  */
-void init_tab_perso(t_perso tab_perso[i_taille_tab_perso]) //On initialise le tableau contenant les personnages, cela évite qu'on retrouve n'importe quoi dedans.
+void init_tab_perso(t_perso tab_perso[i_taille_tab_perso])
 {
 	int i;
 	for(i=0;i<i_taille_tab_perso;i++)
