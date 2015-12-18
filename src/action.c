@@ -99,19 +99,40 @@ void attaque(int * PA_tour){
 	int coord_r, coord_c;
   int map_shadowcasting[i_taille_map][i_taille_map];
 	int i,j;
-
+  int splashRange = 0;
+  int dx,dy;
+  int shoot;
 	int **DistancePath = createDistancePath( tab_perso[i_perso_actuel].coord[0],  tab_perso[i_perso_actuel].coord[1]);
   t_attak * tmp_att =NULL;
+  t_perso persoAttaquer;
+  int recul_r;
+  int recul_c;
 
   do{
     displaylistAttack(tab_perso[i_perso_actuel].att);
     printf("Choisissez une attaque  (-1 pour annuler) : ");
     scanf("%i", &attack);
 
-    if (attack == -1) {
+    if (attack == -1 || getCountAttack(tab_perso[i_perso_actuel].att) == 0) {
       return;
     }
-  }while( attack<1 || attack-1>getCountAttack(tab_perso[i_perso_actuel].att));
+  // printf("%i\n", getCountAttack(tab_perso[i_perso_actuel].att));
+}while( attack<1 || attack>getCountAttack(tab_perso[i_perso_actuel].att));
+
+  for ( i = 0; i < i_taille_map; i++) {
+    for ( j = 0; j < i_taille_map; j++) {
+      map_shadowcasting[i][j] = map[i][j];
+    }
+  }
+
+  shadowcasting(map_shadowcasting, tab_perso[i_perso_actuel].coord[0], tab_perso[i_perso_actuel].coord[1]);
+
+  // for ( i = 0; i < i_taille_map; i++) {
+  //   for ( j = 0; j < i_taille_map; j++) {
+  //     printf("%i",map_shadowcasting[i][j] );
+  //   }
+  //   printf("\n" );
+  // }
 
 	while(sortie!=0){
 		printf("Veuillez rentrer les coordonnées du personnages que vous voulez attaquer (-1 -1 pour annuler) : ");
@@ -120,114 +141,105 @@ void attaque(int * PA_tour){
 		if (coord_r == -1 || coord_c == -1) {
 			return;
 		}
-
-    for ( i = 0; i < i_taille_map; i++) {
-			for ( j = 0; j < i_taille_map; j++) {
-				map_shadowcasting[i][j] = map[i][j];
-			}
-		}
-
-		shadowcasting(map_shadowcasting, tab_perso[i_perso_actuel].coord[0], tab_perso[i_perso_actuel].coord[1]);
-
-    // for ( i = 0; i < i_taille_map; i++) {
-    //   for ( j = 0; j < i_taille_map; j++) {
-    //     printf("%i",map_shadowcasting[i][j] );
-    //   }
-    //   printf("\n" );
-    // }
-
-
-		if (0 != map_shadowcasting[coord_r][coord_c]) {
-			printf("Ligne de vue obstruée\n" );
-		}
+    if (coord_r>=0 && coord_r<=i_taille_map && coord_c>=0 && coord_c<=i_taille_map) {
+      if (0 != map_shadowcasting[coord_r][coord_c]) {
+        printf("Ligne de vue obstruée\n" );
+      }
+    }
     // displaylistAttack(tab_perso[i_perso_actuel].att);
 
-		if(coord_r>=0 && coord_r<i_taille_map && coord_c>=0 && coord_c<=i_taille_map && !(map_shadowcasting[coord_r][coord_c] != 0)){
+		if(coord_r>=0 && coord_r<=i_taille_map && coord_c>=0 && coord_c<=i_taille_map && !(map_shadowcasting[coord_r][coord_c] != 0)){
 
 			if (*PA_tour < getAttack(tab_perso[i_perso_actuel].att, attack)->cost_PA ) {
 				printf("plus de PA dispo\n");
+        delay(2000);
 				return;
 			}
 			if (distanceFrom(coord_r, coord_c, DistancePath) < getAttack(tab_perso[i_perso_actuel].att, attack)->range_min) {
 				printf("Sible trop proche\n" );
+        delay(2000);
 				return;
 			}
 			if ( distanceFrom(coord_r, coord_c, DistancePath) > getAttack(tab_perso[i_perso_actuel].att, attack)->range_max) {
 				printf("Sible trop loin\n" );
+        delay(2000);
 				return;
 			}
-			if (getAttack(tab_perso[i_perso_actuel].att, attack)->only_line == 1 && (coord_r - tab_perso[i_perso_actuel].coord[0] != 0 &&  coord_c - tab_perso[i_perso_actuel].coord[1] != 0 )) {
+			if (getAttack(tab_perso[i_perso_actuel].att, attack)->only_line == 1 &&
+      (coord_r - tab_perso[i_perso_actuel].coord[0] != 0 &&  coord_c - tab_perso[i_perso_actuel].coord[1] != 0 )) {
 				printf("Sible doit sur la même ligne\n" );
+        delay(2000);
 				return;
 			}
 			tmp_att = getAttack(tab_perso[i_perso_actuel].att, attack);
-			// printf("pv deal %i\n", tmp_att->trait.HP);
-      // displayAttack(tmp_att);
+      splashRange = tmp_att->splash_range;
+      if (splashRange > 1) {
+        for (dx = -splashRange; dx < splashRange; dx++) {
+          for (dy = -splashRange; dy < splashRange; dy++) {
+            printf("%i %i\n",coord_r+dx,coord_c+dy );
+            if (coord_r+dx>=0 && coord_c+dy>=0 && coord_r+dx<i_taille_map && coord_c+dy<i_taille_map) {
+              coord_r = coord_r+dx;
+              coord_c = coord_c+dy;
+              persoAttaquer = tab_perso[recherche_perso_tab(coord_r, coord_c)];
+              if (recherche_perso_tab(coord_r, coord_c) != -1) {
 
-      t_perso persoAttaquer = tab_perso[recherche_perso_tab(coord_r, coord_c)];
-      printf("%i\n", persoAttaquer.i_HP);
-      // augmente_nombre(1, &persoAttaquer, tmp_att->trait.HP_max);
-      // augmente_nombre(2, &persoAttaquer, tmp_att->trait.HP);
-      // augmente_nombre(3, &persoAttaquer, tmp_att->trait.PA);
-      // augmente_nombre(4, &persoAttaquer, tmp_att->trait.PM);
-		  persoAttaquer.i_HP += tmp_att->trait.HP;
-	    persoAttaquer.i_HP_max += tmp_att->trait.HP_max;
-      persoAttaquer.i_PA += tmp_att->trait.PA;
-      persoAttaquer.i_PM += tmp_att->trait.PM;
-      printf("%i\n", persoAttaquer.i_HP);
+                persoAttaquer.i_HP += tmp_att->trait.HP;
+                persoAttaquer.i_HP_max += tmp_att->trait.HP_max;
+                persoAttaquer.i_PA += tmp_att->trait.PA;
+                persoAttaquer.i_PM += tmp_att->trait.PM;
 
-			int shoot=1;
+                shoot=1;
 
-			int recul_r = tmp_att->trait.coord_r;
-			int recul_c = tmp_att->trait.coord_c;
+                recul_r = tmp_att->trait.coord_r;
+                recul_c = tmp_att->trait.coord_c;
 
-			while (shoot) {
-				// printf("%i\n", map[persoAttaquer.coord[1] - recul_r][persoAttaquer.coord[0] - recul_c]);
-				// printf("%i\n", map[persoAttaquer.coord[1] + recul_r][persoAttaquer.coord[0] + recul_c]);
-				if (persoAttaquer.coord[1] > tab_perso[i_perso_actuel].coord[0]) {
-					if (persoAttaquer.coord[1] - recul_r >= 0 && persoAttaquer.coord[1] - recul_r < i_taille_map && map[persoAttaquer.coord[1] - recul_r][persoAttaquer.coord[0] ] != 1) {
-						persoAttaquer.coord[1] -= recul_r;
-						shoot =0;
-					}
-					recul_r++;
-				}else
-				if (persoAttaquer.coord[0] > tab_perso[i_perso_actuel].coord[1]) {
-					if (persoAttaquer.coord[0] - recul_c >= 0 && persoAttaquer.coord[0] - recul_c < i_taille_map && map[persoAttaquer.coord[1] ][persoAttaquer.coord[0] - recul_c] != 1 ) {
-						persoAttaquer.coord[0] -= recul_c;
-						shoot =0;
-					}
-					recul_c++;
-				}
-				if (persoAttaquer.coord[1] < tab_perso[i_perso_actuel].coord[0]  ) {
-					if (persoAttaquer.coord[1] + recul_r >= 0 && persoAttaquer.coord[1] + recul_r < i_taille_map && map[persoAttaquer.coord[1] + recul_r][persoAttaquer.coord[0]] != 1 ) {
-						persoAttaquer.coord[1] += recul_r;
-						shoot =0;
-					}
-					recul_r++;
+                while (shoot && coord_r != tab_perso[i_perso_actuel].coord[0] &&  coord_c != tab_perso[i_perso_actuel].coord[1]) {
+                  if (persoAttaquer.coord[1] > tab_perso[i_perso_actuel].coord[0]) {
+                    if (persoAttaquer.coord[1] - recul_r >= 0 && persoAttaquer.coord[1] - recul_r < i_taille_map && map[persoAttaquer.coord[1] - recul_r][persoAttaquer.coord[0] ] != 1) {
+                      persoAttaquer.coord[1] -= recul_r;
+                      shoot =0;
+                    }
+                    recul_r++;
+                  }else
+                  if (persoAttaquer.coord[0] > tab_perso[i_perso_actuel].coord[1]) {
+                    if (persoAttaquer.coord[0] - recul_c >= 0 && persoAttaquer.coord[0] - recul_c < i_taille_map && map[persoAttaquer.coord[1] ][persoAttaquer.coord[0] - recul_c] != 1 ) {
+                      persoAttaquer.coord[0] -= recul_c;
+                      shoot =0;
+                    }
+                    recul_c++;
+                  }
+                  if (persoAttaquer.coord[1] < tab_perso[i_perso_actuel].coord[0]  ) {
+                    if (persoAttaquer.coord[1] + recul_r >= 0 && persoAttaquer.coord[1] + recul_r < i_taille_map && map[persoAttaquer.coord[1] + recul_r][persoAttaquer.coord[0]] != 1 ) {
+                      persoAttaquer.coord[1] += recul_r;
+                      shoot =0;
+                    }
+                    recul_r++;
 
-				}else
-				if (persoAttaquer.coord[0] < tab_perso[i_perso_actuel].coord[1] ) {
-					if (persoAttaquer.coord[0] + recul_c >= 0 && persoAttaquer.coord[0] + recul_c < i_taille_map && map[persoAttaquer.coord[1]][persoAttaquer.coord[0] + recul_c] != 1) {
-						persoAttaquer.coord[0] += recul_c;
-						shoot =0;
-					}
-					recul_c++;
-				}
-			}
+                  }else
+                  if (persoAttaquer.coord[0] < tab_perso[i_perso_actuel].coord[1] ) {
+                    if (persoAttaquer.coord[0] + recul_c >= 0 && persoAttaquer.coord[0] + recul_c < i_taille_map && map[persoAttaquer.coord[1]][persoAttaquer.coord[0] + recul_c] != 1) {
+                      persoAttaquer.coord[0] += recul_c;
+                      shoot =0;
+                    }
+                    recul_c++;
+                  }
+                }
 
-			// afficher_map(list_persoA,list_persoB);
-			// displayPerso(tmp,0);
-			printf("\tSible touchée\n");
-      sleep(2);
+                printf("\tSible touchée\n");
+                afficher_perso(persoAttaquer);
+                delay(1250);
+              }
 
+            }
+          }
+        }
+      }
 
-	    *PA_tour -= tmp_att->cost_PA;
-      sortie = 0;
-		}
-
+    }
+    *PA_tour -= tmp_att->cost_PA;
+    sortie = 0;
+    freeBoard(DistancePath, i_taille_map);
 	}
-
-
 }
 
 

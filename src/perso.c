@@ -43,7 +43,7 @@ int init_attack(t_perso *per){
 	if(per->s_classe[0] == 'G'){ //guerrier
 		pushAttack(per->att, createAttack("Coup d'épée", 1, 0, 3, 1, 0, 1, "HP", -5));// copie d'une attack par defaut d'un guerrier
 	}else if(per->s_classe[0] == 'A'){ //guerrier
-		pushAttack(per->att, createAttack("Tir à l'arc", 5, 2, 3, 1, 0, 3, "HP", -3,"coord_r",-2,"coord_c",-2));// copie d'une attack par defaut d'un archer
+		pushAttack(per->att, createAttack("Tir à l'arc", 5, 2, 3, 2, 0, 3, "HP", -3,"coord_r",-2,"coord_c",-2));// copie d'une attack par defaut d'un archer
 	}else if(per->s_classe[0] == 'M'){ //guerrier
 		pushAttack(per->att, createAttack("Boule De Feu", 3, 0, 4, 3, 1, 1, "HP", -2));// copie d'une attack par defaut d'un mage
 		pushAttack(per->att,createAttack("Sort de Soin", 3, 0, 2, 1, 0, 1, "HP", 2));
