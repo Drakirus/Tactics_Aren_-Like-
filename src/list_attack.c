@@ -14,7 +14,7 @@ void displaylistAttack(list_attack *perso_att){
     fprintf(stderr, "pas d'attack ..\n");
   }
 
-  while(tmp != NULL){
+  while(tmp->current_attack != NULL){
 
     if(tmp->current_attack != NULL){
       printf("\n    %i - ",actual);
