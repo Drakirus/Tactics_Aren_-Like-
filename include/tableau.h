@@ -2,7 +2,7 @@
 #define __TABLEAU_H__
 
 #include "perso.h"
-#define i_taille_tab_perso 6
+#define i_taille_tab_perso 10
 
 t_perso tab_perso[i_taille_tab_perso]; //Contient les données de tous les persos.
 
