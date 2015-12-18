@@ -54,7 +54,7 @@ int getCountAttack(list_attack *perso_att){
       tmp =tmp->next;
     }
   }
-  return actual-1;
+  return actual;
 }
 
 t_attak *getAttack(list_attack *attack, int nbatt){

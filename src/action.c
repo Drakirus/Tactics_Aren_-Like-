@@ -114,9 +114,9 @@ void attaque(int * PA_tour){
     if (attack == -1 || getCountAttack(tab_perso[i_perso_actuel].att) == 0) {
       return;
     }
-  // printf("%i\n", getCountAttack(tab_perso[i_perso_actuel].att));
+  printf("%i\n", getCountAttack(tab_perso[i_perso_actuel].att));
 }while( attack<1 || attack>getCountAttack(tab_perso[i_perso_actuel].att));
-
+printf("ghsirejgsolrejgmssg");
 
   for ( i = 0; i < i_taille_map; i++) {
     for ( j = 0; j < i_taille_map; j++) {
@@ -150,23 +150,23 @@ void attaque(int * PA_tour){
 		if(coord_r>=0 && coord_r<=i_taille_map && coord_c>=0 && coord_c<=i_taille_map && !(map_shadowcasting[coord_r][coord_c] != 0)){
 
 			if (*PA_tour < getAttack(tab_perso[i_perso_actuel].att, attack)->cost_PA ) {
-				printf("plus de PA dispo\n");
+				printf("Plus de PA dispo\n");
         delay(2000);
 				return;
 			}
 			if (distanceFrom(coord_r, coord_c, DistancePath) < getAttack(tab_perso[i_perso_actuel].att, attack)->range_min) {
-				printf("Sible trop proche\n" );
+				printf("Cible trop proche\n" );
         delay(2000);
 				return;
 			}
 			if ( distanceFrom(coord_r, coord_c, DistancePath) > getAttack(tab_perso[i_perso_actuel].att, attack)->range_max) {
-				printf("Sible trop loin\n" );
+				printf("Cible trop loin\n" );
         delay(2000);
 				return;
 			}
 			if (getAttack(tab_perso[i_perso_actuel].att, attack)->only_line == 1 &&
       (coord_r - tab_perso[i_perso_actuel].coord[0] != 0 &&  coord_c - tab_perso[i_perso_actuel].coord[1] != 0 )) {
-				printf("Sible doit sur la même ligne\n" );
+				printf("Cible doit sur la même ligne\n" );
         delay(2000);
 				return;
 			}
@@ -226,7 +226,7 @@ void attaque(int * PA_tour){
                   }
                 }
 
-                printf("\tSible touchée\n");
+                printf("\tCible touchée\n");
                 afficher_perso(tab_perso[recherche_perso_tab(coord_r, coord_c)]);
                 delay(1250);
               }
