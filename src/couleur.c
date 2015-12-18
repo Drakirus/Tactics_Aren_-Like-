@@ -1,6 +1,6 @@
 /**
  * \file couleur.c
- * \brief Module nous permettant d'afficher les couleurs sur la console de commmande. Nous l'avons pris sur internet.
+ * \brief Module nous permettant d'afficher les couleurs sur la console de commmande. COUSIN Brandon nous a fourni ce module.
  * \author LAVILLE Martin
  * \version 0.1
  * \date 18 décembre 2015
