@@ -75,9 +75,9 @@ void placement_perso() //Cette fonction place les personnages des différents é
 			else
 			{
 				if(i_equipe%2==0)
-					creation(per, i_classe, 'A', coord[0], coord[1]);
+				creation(per, i_classe, 'A', coord[0], coord[1]);
 				else
-					creation(per, i_classe, 'B', coord[0], coord[1]);
+				creation(per, i_classe, 'B', coord[0], coord[1]);
 				tab_perso[i_compteur]=*per; //On ajoute le perso au tableau.
 				i_compteur++;
 				b_sortie=0;
