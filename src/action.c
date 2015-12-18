@@ -112,6 +112,7 @@ void attaque(int * PA_tour){
     displaylistAttack(tab_perso[i_perso_actuel].att);
     printf("Choisissez une attaque  (-1 pour annuler) : ");
     scanf("%i", &attack);
+    printf("%i\n", attack);
 
     if (attack == -1 || getCountAttack(tab_perso[i_perso_actuel].att) == 0) {
       return;
@@ -133,7 +134,6 @@ void attaque(int * PA_tour){
   //   }
   //   printf("\n" );
   // }
-
 	while(sortie!=0){
 		printf("Veuillez rentrer les coordonnées du personnages que vous voulez attaquer (-1 -1 pour annuler) : ");
 		scanf("%i%i", &coord_r, &coord_c);
