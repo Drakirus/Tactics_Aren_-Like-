@@ -116,7 +116,7 @@ void attaque(int * PA_tour){
     if (attack == -1 || getCountAttack(tab_perso[i_perso_actuel].att) == 0) {
       return;
     }
-  printf("%i\n", getCountAttack(tab_perso[i_perso_actuel].att));
+  // printf("%i\n", getCountAttack(tab_perso[i_perso_actuel].att));
 }while( attack<1 || attack>getCountAttack(tab_perso[i_perso_actuel].att));
 
   for ( i = 0; i < i_taille_map; i++) {
