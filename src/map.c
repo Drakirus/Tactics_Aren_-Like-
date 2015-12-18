@@ -1,7 +1,7 @@
 /**
- * \file main.c
+ * \file map.c
  * \brief Ce module permet de créer la carte de jeu ainsi que gérer l'affichage de celle-ci.
- * \author CHAMPION Pierre, LAVILLE Martin, MOK Modira
+ * \author MOK Modira
  * \version 0.1
  * \date 18 décembre 2015
  *

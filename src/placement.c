@@ -1,3 +1,13 @@
+/**
+ * \file placement.c
+ * \brief Module utilisé lors de l'initialisation du jeu. Les joueurs placent leur personnage.
+ * \author MOK Modira
+ * \version 0.1
+ * \date 18 décembre 2015
+ *
+ *
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

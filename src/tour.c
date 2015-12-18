@@ -1,3 +1,13 @@
+/**
+ * \file tour.c
+ * \brief Module gérant le tour de chaque utilisateur.
+ * \author LAVILLE Martin
+ * \version 0.1
+ * \date 18 décembre 2015
+ *
+ *
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>

@@ -1,3 +1,13 @@
+/**
+ * \file tableau.c
+ * \brief Module créant et gérant le tableau contenant les personnages. Il se remplit lors de la création des personnages.
+ * \author MOK Modira
+ * \version 0.1
+ * \date 18 décembre 2015
+ *
+ *
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>

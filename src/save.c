@@ -1,3 +1,13 @@
+/**
+ * \file save.c
+ * \brief Module gérant la sauvegarde du jeu
+ * \author LAVILLE Martin
+ * \version 0.1
+ * \date 18 décembre 2015
+ *
+ *
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
