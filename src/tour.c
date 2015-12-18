@@ -39,7 +39,6 @@ void actio(t_perso *perso){
 
 		int PA_actuel = perso->i_PA, PM_actuel = perso->i_PM;
 		do{
-			perso_vivant();
 			afficher_map();
 			affichage_perso(*perso);
 			printf("%i PA, %i PM\n", PA_actuel, PM_actuel);
@@ -60,6 +59,7 @@ void actio(t_perso *perso){
 					break;
 				case 5: break;
 			}
+			perso_vivant();
 		}while(action != 3 && action != 5 && !victoire());
 	}
 }
