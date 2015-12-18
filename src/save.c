@@ -25,11 +25,25 @@ extern t_perso tab_perso[i_taille_tab_perso];
 extern int map[i_taille_map][i_taille_map];
 extern int i_perso_actuel;
 
+/**
+ * \fn void sauv_perso(char * sauv, t_perso perso)
+ * \param sauv
+ * \param perso
+ * \return
+ * \brief
+ *
+ */
 void sauv_perso(char * sauv, t_perso perso){
 	sprintf(sauv, "%s %d %d %d %d %d %d %c",  perso.s_classe, perso.i_HP_max, perso.i_HP, perso.i_PA, perso.i_PM, perso.coord[0], perso.coord[1], perso.c_team);
 	//sauver les attack du perso
 }
 
+/**
+ * \fn void charge()
+ * \return
+ * \brief
+ *
+ */
 void charge(){
 	int test1 = 0, test2 = 0, test3 = 0, test4 = 0;
 	int i, j, k;
@@ -79,6 +93,12 @@ void charge(){
 	fclose(fic);
 }
 
+/**
+ * \fn void save()
+ * \return
+ * \brief
+ *
+ */
 void save(){
 	int i, j, k;
 	FILE * fic;

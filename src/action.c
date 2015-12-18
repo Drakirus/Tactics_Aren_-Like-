@@ -123,13 +123,13 @@ pile *getMovePerso(int * PM_tour, int start_r,int start_c){
 */
 
 /**
- * \fn attaque(int * PA_tour)
+ * \fn void attaque(int * PA_tour)
  * \param PA_tour
  * \return
  * \brief
  *
  */
-attaque(int * PA_tour){
+void attaque(int * PA_tour){
 
   if (*PA_tour == 0 ) {
     printf("plus de PA dispo\n");
@@ -333,8 +333,9 @@ http://www.roguebasin.com/index.php?title=FOV_using_recursive_shadowcasting
 */
 
 /**
- * \fn attaque(int * PA_tour)
- * \param PA_tour
+ * \fn float getSlope(float f_a, float f_b)
+ * \param f_a
+ * \param f_b
  * \return
  * \brief
  *
@@ -347,8 +348,10 @@ float getSlope(float f_a, float f_b){ // Basic division function (with check)
 }
 
 /**
- * \fn attaque(int * PA_tour)
- * \param PA_tour
+ * \fn shadowcasting(int matrix[i_taille_map][i_taille_map], int i_player_x, int i_player_y)
+ * \param matrix[i_taille_map][i_taille_map]
+ * \param i_player_x
+ * \param i_player_y
  * \return
  * \brief
  *
@@ -467,8 +470,11 @@ void shadowcasting(int matrix[i_taille_map][i_taille_map], int i_player_x, int i
 */
 
 /**
- * \fn attaque(int * PA_tour)
- * \param PA_tour
+ * \fn int setAdjacent(int **mat, int i, int j, int value)
+ * \param mat
+ * \param i
+ * \param j
+ * \param value
  * \return
  * \brief
  *
@@ -492,8 +498,9 @@ int setAdjacent(int **mat, int i, int j, int value) {
 }
 
 /**
- * \fn attaque(int * PA_tour)
- * \param PA_tour
+ * \fn int **createDistancePath(int init_x, int init_y)
+ * \param init_x
+ * \param init_y
  * \return
  * \brief
  *
@@ -538,8 +545,10 @@ int **createDistancePath(int init_x, int init_y){
 }
 
 /**
- * \fn attaque(int * PA_tour)
- * \param PA_tour
+ * \fn void displayBoard(int r, int c, int **arr)
+ * \param r
+ * \param c
+ * \param arr
  * \return
  * \brief
  *
@@ -562,8 +571,10 @@ void displayBoard(int r, int c, int **arr){ // Display a matrix of size r,c for 
 }
 
 /**
- * \fn attaque(int * PA_tour)
- * \param PA_tour
+ * \fn int **allocateBoard(int r, int c, int from[r][c])
+ * \param r
+ * \param c
+ * \param from[r][c]
  * \return
  * \brief
  *
@@ -587,8 +598,10 @@ int **allocateBoard(int r, int c, int from[r][c]){// create a pointer array to a
 }
 
 /**
- * \fn attaque(int * PA_tour)
- * \param PA_tour
+ * \fn int distanceFrom(int to_x, int to_y,   int **DistancePath)
+ * \param to_x
+ * \param to_y
+ * \param DistancePath
  * \return
  * \brief
  *

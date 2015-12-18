@@ -18,12 +18,15 @@
 
 extern int i_perso_actuel;
 extern t_perso tab_perso[i_taille_tab_perso];
+
+
 int map[i_taille_map][i_taille_map];
 
 /**
- * \fn int main()
- *	\brief lance le jeu
- *
+ * \fn void obstacle(int i_chance_obstacle)
+ * \param i_chance_obstacle
+ * \return
+ * \brief
  *
  */
 void obstacle(int i_chance_obstacle) //Fonction insérant les obstacles dans la map. Les obstacles sont placés aléatoirement dans la map.
@@ -50,6 +53,12 @@ void obstacle(int i_chance_obstacle) //Fonction insérant les obstacles dans la 
 	}
 }
 
+/**
+ * \fn void initialise_map()
+ * \return
+ * \brief
+ *
+ */
 void initialise_map() //Fonction initialisant la map vide avec des obstacles
 {	int i,j;
 	for(i=0;i<i_taille_map;i++)
@@ -62,6 +71,12 @@ void initialise_map() //Fonction initialisant la map vide avec des obstacles
 	obstacle(10);
 }
 
+/**
+ * \fn void afficher_map()
+ * \return
+ * \brief
+ *
+ */
 void afficher_map() //Fonction affichant la map
 {
 	char perso[4]; //Pour le changement de couleur

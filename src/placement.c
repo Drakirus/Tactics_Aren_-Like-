@@ -21,6 +21,12 @@ extern t_perso ensemble_perso[i_nombre_classe];
 extern t_perso tab_perso[i_taille_tab_perso];
 extern int map[i_taille_map][i_taille_map];
 
+/**
+ * \fn void placement_perso()
+ * \return
+ * \brief
+ *
+ */
 void placement_perso() //Cette fonction place les personnages des différents équipes dans les trois premières et dernières ligne de la map.
 {
 	init_tab_perso(tab_perso);

@@ -1,7 +1,7 @@
 /**
  * \file perso.c
  * \brief Module gérant la création des personnages et de leurs caractéristiques, ainsi que des changements relatifs à leur caractéristiques
- * \author MOK Modira
+ * \author MOK Modira, CHAMPION Pierre
  * \version 0.1
  * \date 18 décembre 2015
  *
@@ -24,16 +24,38 @@ t_perso ensemble_perso[i_nombre_classe]=
 };
 
 /*Sert pour les tests*/
+/**
+ * \fn void afficher_perso(t_perso perso
+ * \param perso
+ * \return
+ * \brief
+ *
+ */
 void afficher_perso(t_perso perso){
 	printf("%s %i/%iHP %i %i [%i,%i] %c\n", perso.s_classe, perso.i_HP, perso.i_HP_max, perso.i_PA, perso.i_PM, perso.coord[0], perso.coord[1], perso.c_team);
 }
 
 /*Affichage dans la console*/
+/**
+ * \fn void affichage_perso(t_perso perso)
+ * \param perso
+ * \return
+ * \brief
+ *
+ */
 void affichage_perso(t_perso perso){
 	printf("%s %i/%iHP [%i,%i] \n", perso.s_classe, perso.i_HP, perso.i_HP_max, perso.coord[0], perso.coord[1]);
 	// displaylistAttack(perso.att);
 }
 
+/**
+ * \fn void initialisation_perso(int a, t_perso * per)
+ * \param a
+ * \param per
+ * \return
+ * \brief
+ *
+ */
 void initialisation_perso(int a, t_perso * per) //On affecte à un t_perso les données initiales présentes dans ensemble_perso
 {
 	strcpy(per->s_classe,ensemble_perso[a].s_classe);
@@ -47,7 +69,15 @@ void initialisation_perso(int a, t_perso * per) //On affecte à un t_perso les d
 
 	init_attack(per);
 }
+
 // attention : il faut que le perso passe en param ait sa classe de correctement fixee
+/**
+ * \fn int init_attack(t_perso *per)
+ * \param per
+ * \return
+ * \brief
+ *
+ */
 int init_attack(t_perso *per){
 	per->att = creer_liste_attack();
   // "attack_name" / range_max / range_min / cost_PA / splash_range / only_line / Nb trait / "Nom du trait" / valeur du trait
@@ -67,6 +97,15 @@ int init_attack(t_perso *per){
 	return 1;
 }
 
+/**
+ * \fn void augmente_nombre(int a, t_perso * per, int i_montant)
+ * \param a
+ * \param per
+ * \param i_montant
+ * \return
+ * \brief
+ *
+ */
 void augmente_nombre(int a, t_perso * per, int i_montant) //Augmente ou soustrait une valeur numérique d'un perso, 1=i_HP_max, 2=i_HP, 3=i_PA, 4=i_PM, 5=coord[0], 6=coord[1]
 {
 	switch(a)
@@ -80,6 +119,15 @@ void augmente_nombre(int a, t_perso * per, int i_montant) //Augmente ou soustrai
 	}
 }
 
+/**
+ * \fn void change_nombre(int a, t_perso * per, int i_montant)
+ * \param a
+ * \param per
+ * \param i_montant
+ * \return
+ * \brief
+ *
+ */
 void change_nombre(int a, t_perso * per, int i_montant) //Change une valeur numérique d'un perso, 1=i_HP_max, 2=i_HP, 3=i_PA, 4=i_PM, 5=coord[0], 6=coord[1]
 {
 	switch(a)
@@ -93,6 +141,17 @@ void change_nombre(int a, t_perso * per, int i_montant) //Change une valeur num�
 	}
 }
 
+/**
+ * \fn void creation(t_perso * per, int i_classe, char c_team, int x, int y)
+ * \param per
+ * \param i_classe
+ * \param c_team
+ * \param x
+ * \param y
+ * \return
+ * \brief
+ *
+ */
 void creation(t_perso * per, int i_classe, char c_team, int x, int y) //On change juste les coordonnées et l'équipe du personnage.
 {
 	initialisation_perso(i_classe, per);
@@ -101,6 +160,13 @@ void creation(t_perso * per, int i_classe, char c_team, int x, int y) //On chang
 	per->c_team=c_team;
 }
 
+/**
+ * \fn int est_mort(t_perso perso)
+ * \param perso
+ * \return
+ * \brief
+ *
+ */
 /*retourne 1 si le le personnage est mort, 0 sinon */
 int est_mort(t_perso perso){
 	if(perso.i_HP == 0) return 1;

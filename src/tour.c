@@ -25,6 +25,12 @@ int nb_perso[2]; //Stocke le nombre de perso de chaque équipe
 int i_perso_actuel = 0;
 int action = 0;
 
+/**
+ * \fn void perso_vivant()
+ * \return
+ * \brief
+ *
+ */
 /*Compte le nombre de personnage vivant de chaque équipe et le stocke dans un tableau*/
 void perso_vivant(){
 	int i;
@@ -38,12 +44,25 @@ void perso_vivant(){
 	}
 }
 
+/**
+ * \fn int victoire()
+ * \return
+ * \brief
+ *
+ */
 int victoire(){
 	if(nb_perso[0] == 0) return 2; /*Vérifie si il reste des personnages de l'équipe 1 renvoie 2 pour signifier que l'équipe 2 a gagné*/
 	else if(nb_perso[1] == 0) return 1; /*Inversement*/
 	else return 0;
 }
 
+/**
+ * \fn void actio(t_perso *perso)
+ * \param perso
+ * \return
+ * \brief
+ *
+ */
 void actio(t_perso *perso){
 	if(perso->i_HP > 0){
 
@@ -74,7 +93,13 @@ void actio(t_perso *perso){
 	}
 }
 
-
+/**
+ * \fn void tour()
+ * \param tab_perso
+ * \return
+ * \brief
+ *
+ */
 void tour(){
 	/*Tant qu'on a pas utilisé tous les persos, que personne n'a gagné et qu'on ne décide pas de retourner au menu principal*/
 	while(i_perso_actuel < i_taille_tab_perso && !victoire() && action != 5){
@@ -83,6 +108,12 @@ void tour(){
 	}
 }
 
+/**
+ * \fn void partie()
+ * \return
+ * \brief
+ *
+ */
 void partie(){
 	perso_vivant();
 	while(!victoire() && action != 5){
