@@ -176,7 +176,7 @@ void attaque(int * PA_tour){
       if (splashRange > 1) {
         for (dx = -splashRange; dx < splashRange; dx++) {
           for (dy = -splashRange; dy < splashRange; dy++) {
-            printf("%i %i\n",coord_r+dx,coord_c+dy );
+            // printf("%i %i\n",coord_r+dx,coord_c+dy );
             if (coord_r+dx>=0 && coord_c+dy>=0 && coord_r+dx<i_taille_map && coord_c+dy<i_taille_map) {
               coord_r = coord_r+dx;
               coord_c = coord_c+dy;
