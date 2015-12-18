@@ -27,5 +27,9 @@ clean:
 
 mrproper: clean
 	@rm -rf $(EXEC)
+rmdoc:
+	rm -rf $(DOCDIR)
+doc: rmdoc
+	doxygen doxytics
 
 .PHONY: rien

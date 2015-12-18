@@ -13,8 +13,6 @@
 #include <string.h>
 #include "../include/tableau.h"
 
-t_perso tab_perso[i_taille_tab_perso]; //Contient les données de tous les persos.
-
 /**
  * \fn void afficher_tableau()
  * \brief On affiche le tableau contenant tous les personnages
@@ -71,5 +69,22 @@ void init_tab_perso(t_perso tab_perso[i_taille_tab_perso])
 		tab_perso[i].coord[1]=-1;
 		tab_perso[i].c_team=' ';
 
+	}
+}
+/**
+ * \fn freeListAttack();
+ * \brief https://www.youtube.com/watch?v=wQP9XZc2Y_c
+ *
+ */
+void freeAllListAttack(){
+	int perso = 0;
+	int nbPersoAtt;
+	while (perso < i_taille_tab_perso) {
+		nbPersoAtt = getCountAttack(tab_perso[perso].att);
+		while( getAttack(tab_perso[perso].att, nbPersoAtt) != NULL){
+			free(getAttack(tab_perso[perso].att, nbPersoAtt));
+			nbPersoAtt--;
+		}
+		perso++;
 	}
 }

@@ -27,8 +27,7 @@ int action = 0;
 
 /**
  * \fn void perso_vivant()
- * \return
- * \brief
+ * \brief Compte le nombre de personnage vivant de chaque équipe et le stocke dans un tableau
  *
  */
 /*Compte le nombre de personnage vivant de chaque équipe et le stocke dans un tableau*/
@@ -46,8 +45,8 @@ void perso_vivant(){
 
 /**
  * \fn int victoire()
- * \return
- * \brief
+ * \return 1 si l'équipe 1 a gagné, 2 si l'équipe 2, 0 sinon.
+ * \brief Vérifie les valeurs du tableau comprenant le nombre de personnages vivant par équipe et retourne si une équipe a gagné
  *
  */
 int victoire(){
@@ -58,15 +57,14 @@ int victoire(){
 
 /**
  * \fn void actio(t_perso *perso)
- * \param perso
- * \return
- * \brief
+ * \param perso Personnage du tableau de perso 
+ * \brief Effectue une action pour un personnage 
  *
  */
 void actio(t_perso *perso){
 	if(perso->i_HP > 0){
 
-		int PA_actuel = perso->i_PA, PM_actuel = perso->i_PM;
+		int PA_actuel = perso->i_PA, PM_actuel = perso->i_PM; /*Permet de ne pas modifier les statistiques du personnage*/
 		do{
 			afficher_map();
 			affichage_perso(*perso);
@@ -83,7 +81,7 @@ void actio(t_perso *perso){
 				case 2: attaque(&PA_actuel);
 					break;
 				case 3: printf("Passage de tour\n");
-					break; /*Remise au max des PAs PMs du soldat en cours et on passe au suivant dans la liste*/
+					break;
 				case 4: save();
 					break;
 				case 5: break;
@@ -95,9 +93,7 @@ void actio(t_perso *perso){
 
 /**
  * \fn void tour()
- * \param tab_perso
- * \return
- * \brief
+ * \brief Permet le bon déroulement d'un tour
  *
  */
 void tour(){
@@ -110,8 +106,7 @@ void tour(){
 
 /**
  * \fn void partie()
- * \return
- * \brief
+ * \brief Permet le bon déroulement de la partie.
  *
  */
 void partie(){

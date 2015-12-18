@@ -16,17 +16,15 @@
 #include "../include/placement.h"
 #include "../include/tour.h"
 #include "../include/map.h"
-//#include "../include/list_attack.h"
+#include "../include/tableau.h"
 
 
 /**
  * \fn int main()
- *	\brief lance le jeu
- *
+ * \brief Menu principal, donne accès au lancement de la partie et au chargement.
  *
  */
 int main() {
-
 	srand(time(NULL));
 	int choix_menu = 0;
 	do{
@@ -48,5 +46,6 @@ int main() {
 					break;
 		}
 	}while(choix_menu != 3);
+	freeAllListAttack();
 	return 0;
 }

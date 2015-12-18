@@ -49,7 +49,7 @@ void color(int color, char type[]){
 	char colorToUse[3];
 
 	strcpy(colorToUse, getColor(color, type));
-	
+
 	printf("\033[%sm",colorToUse); // Change le texte / l'écran avec la couleur désirée
 	if(strcmp(type, "Screen") != 0){
 		printf("%s", type);
