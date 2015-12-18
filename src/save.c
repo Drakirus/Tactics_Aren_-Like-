@@ -63,7 +63,7 @@ void charge(){
 		fscanf(fic, "%i", &tab_perso[k].coord[0]);
 		fscanf(fic, "%i", &tab_perso[k].coord[1]);
 		fscanf(fic, " %c ", &tab_perso[k].c_team);
-		// init_attack(tab_perso[k]);
+		init_attack(&tab_perso[k]);
 		//charger les attack du perso
 	}
 	fclose(fic);
