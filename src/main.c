@@ -3,7 +3,7 @@
  * \brief Programme lançant notre version du jeu Tactics Arena.
  * \author CHAMPION Pierre, LAVILLE Martin, MOK Modira
  * \version 0.1
- * \date 6 septembre 2007
+ * \date 18 décembre 2015
  *
  *
  */
@@ -19,7 +19,12 @@
 //#include "../include/list_attack.h"
 
 
-
+/**
+ * \fn int main()
+ *	\brief lance le jeu
+ *
+ *
+ */
 int main() {
 
 	srand(time(NULL));

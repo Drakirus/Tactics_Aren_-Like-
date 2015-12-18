@@ -1,3 +1,14 @@
+/**
+ * \file action.c
+ * \brief Module contenant toutes les actions du jeu (déplacement, attaque)
+ * \author CHAMPION Pierre
+ * \version 0.1
+ * \date 18 décembre 2015
+ *
+ *
+ */
+
+
 //Ce module servira à créer la map de base dans laquelle les personnages vont se battre.
 
 #include "../include/action.h"
@@ -116,7 +127,6 @@ void attaque(int * PA_tour){
       return;
     }
   }while( attack<1 || attack>getCountAttack(tab_perso[i_perso_actuel].att));
-
 
   for ( i = 0; i < i_taille_map ; i++) {
     for ( j = 0; j < i_taille_map ; j++) {

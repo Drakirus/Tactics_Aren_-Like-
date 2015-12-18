@@ -1,4 +1,12 @@
-//Ce module servira à créer la map de base dans laquelle les personnages vont se battre.
+/**
+ * \file main.c
+ * \brief Ce module permet de créer la carte de jeu ainsi que gérer l'affichage de celle-ci.
+ * \author CHAMPION Pierre, LAVILLE Martin, MOK Modira
+ * \version 0.1
+ * \date 18 décembre 2015
+ *
+ *
+ */
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -12,6 +20,12 @@ extern int i_perso_actuel;
 extern t_perso tab_perso[i_taille_tab_perso];
 int map[i_taille_map][i_taille_map];
 
+/**
+ * \fn int main()
+ *	\brief lance le jeu
+ *
+ *
+ */
 void obstacle(int i_chance_obstacle) //Fonction insérant les obstacles dans la map. Les obstacles sont placés aléatoirement dans la map.
 {
 	int i,j;
