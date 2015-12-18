@@ -18,8 +18,7 @@
 /**
  * \fn void displayAttack(t_attak * att)
  * \param att
- * \return
- * \brief
+ * \brief affiche une attaque
  *
  */
 void displayAttack(t_attak * att){
@@ -53,8 +52,7 @@ void displayAttack(t_attak * att){
  * \param only_line
  * \param num_trait
  * \param ...
- * \return
- * \brief
+ * \return un pointeur vers la nouvelle attaque crée
  *
  */
 t_attak *createAttack(

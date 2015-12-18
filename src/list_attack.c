@@ -17,8 +17,7 @@
 /**
  * \fn void displaylistAttack(list_attack *perso_att)
  * \param perso_att
- * \return
- * \brief
+ * \brief affiche la liste des attaques d'un perso
  *
  */
 void displaylistAttack(list_attack *perso_att){
@@ -43,8 +42,7 @@ void displaylistAttack(list_attack *perso_att){
 
 /**
  * \fn list_attack* creer_liste_attack()
- * \return
- * \brief
+ * \return le contenant de la prochaine attaque
  *
  */
 list_attack* creer_liste_attack(){
@@ -59,8 +57,7 @@ list_attack* creer_liste_attack(){
  * \fn void pushAttack(list_attack *p, t_attak *new_att)
  * \param p
  * \param new_att
- * \return
- * \brief
+ * \brief empile une attaque
  *
  */
 void pushAttack(list_attack *p, t_attak *new_att){
@@ -76,8 +73,7 @@ void pushAttack(list_attack *p, t_attak *new_att){
 /**
  * \fn int getCountAttack(list_attack *perso_att)
  * \param pers_att
- * \return
- * \brief
+ * \return le nombres d'attaques d'un perso
  *
  */
 int getCountAttack(list_attack *perso_att){
@@ -97,8 +93,7 @@ int getCountAttack(list_attack *perso_att){
  * \fn t_attak *getAttack(list_attack *attack, int nbatt)
  * \param attack
  * \param nbatt
- * \return
- * \brief
+ * \return l'attaque d'un perso choisie
  *
  */
 t_attak *getAttack(list_attack *attack, int nbatt){

@@ -45,7 +45,7 @@ void delay(int milliseconds){
  * \fn void deplacement(int * PM_actuel)
  * \param PM_actuel
  * \return
- * \brief
+ * \brief déplace le personnage avec un animation à l'écran
  *
  */
 void deplacement(int * PM_actuel){
@@ -73,8 +73,8 @@ void deplacement(int * PM_actuel){
  * \param PM_tour
  * \param start_r
  * \param start_c
- * \return
- * \brief
+ * \return une pile contenant les coordonnées de déplacement
+ * \brief demande à l'utilisateur des coordonnées pour déplacer le personnage actuel différent test sont effectué
  *
  */
 pile *getMovePerso(int * PM_tour, int start_r,int start_c){
@@ -134,8 +134,7 @@ pile *getMovePerso(int * PM_tour, int start_r,int start_c){
 /**
  * \fn void attaque(int * PA_tour)
  * \param PA_tour
- * \return
- * \brief
+ * \brief fonction qui applique les effect d'une attaque à un personnage, la le recul est géré, tout comme les dommages de zone, les heal ne dépace les pv max.
  *
  */
 void attaque(int * PA_tour){
@@ -144,17 +143,17 @@ void attaque(int * PA_tour){
     printf("plus de PA dispo\n");
     return;
   }
-  int sortie=1;
-  int attack=0;
-  int coord_r, coord_c;
-  int map_shadowcasting[i_taille_map][i_taille_map];
+  int sortie=1; // boucle selection des attaque
+  int attack=0; // choix de l'attaque
+  int coord_r, coord_c; // coordonnées x et y d
+  int map_shadowcasting[i_taille_map][i_taille_map]; // map qui affiche si une zone est cachée ou pas
   int i,j;
-  int splashRange = 0;
-  int dx,dy;
-  int shoot;
-  int **DistancePath = createDistancePath( tab_perso[i_perso_actuel].coord[0],  tab_perso[i_perso_actuel].coord[1]);
-  t_attak * tmp_att =NULL;
-  int recul_r;
+  int splashRange = 0; // dommages appliqué en zone ou pas
+  int dx,dy; // pour les dommages de zone
+  int shoot; // si le tir est effectuer
+  int **DistancePath = createDistancePath( tab_perso[i_perso_actuel].coord[0],  tab_perso[i_perso_actuel].coord[1]); // creation des distances
+  t_attak * tmp_att =NULL; // initialisation de l'ATTAQUE
+  int recul_r; // gestion du recu
   int recul_c;
   int HP;
   int range_max;
@@ -258,7 +257,7 @@ void attaque(int * PA_tour){
             }
           }
         }
-      }else{
+      }else{ // une attaque de zone ne peut affectée la position d'un personnage
 
         // printf("looking for player in %i %i\n",coord_r,coord_c );
         if (coord_r>=0 && coord_c>=0 && coord_r<i_taille_map && coord_c<i_taille_map) {
@@ -348,8 +347,8 @@ http://www.roguebasin.com/index.php?title=FOV_using_recursive_shadowcasting
  * \fn float getSlope(float f_a, float f_b)
  * \param f_a
  * \param f_b
- * \return
- * \brief
+ * \return le résultat de la division
+ * \brief Dans le but d'évité le cas de la division pas 0
  *
  */
 float getSlope(float f_a, float f_b){ // Basic division function (with check)
@@ -364,8 +363,7 @@ float getSlope(float f_a, float f_b){ // Basic division function (with check)
  * \param matrix[i_taille_map][i_taille_map]
  * \param i_player_x
  * \param i_player_y
- * \return
- * \brief
+ * \brief crée une map ou les cellules attaquable sont égal à 0
  *
  */
 void shadowcasting(int matrix[i_taille_map][i_taille_map], int i_player_x, int i_player_y){
@@ -487,8 +485,7 @@ void shadowcasting(int matrix[i_taille_map][i_taille_map], int i_player_x, int i
  * \param i
  * \param j
  * \param value
- * \return
- * \brief
+ * \return le nombre de case changée
  *
  */
 int setAdjacent(int **mat, int i, int j, int value) {
@@ -513,8 +510,7 @@ int setAdjacent(int **mat, int i, int j, int value) {
  * \fn int **createDistancePath(int init_x, int init_y)
  * \param init_x
  * \param init_y
- * \return
- * \brief
+ * \return retourne une matrice contenant les distance d'un points A à un point B
  *
  */
 int **createDistancePath(int init_x, int init_y){
@@ -561,8 +557,7 @@ int **createDistancePath(int init_x, int init_y){
  * \param r
  * \param c
  * \param arr
- * \return
- * \brief
+ * \brief affiche une matrice définie en pointer de pointer. pour le debuging
  *
  */
 void displayBoard(int r, int c, int **arr){ // Display a matrix of size r,c for debuging
@@ -587,7 +582,7 @@ void displayBoard(int r, int c, int **arr){ // Display a matrix of size r,c for 
  * \param r
  * \param c
  * \param from[r][c]
- * \return
+ * \return creé une matrice de pointer de pointer
  * \brief
  *
  */
@@ -614,8 +609,8 @@ int **allocateBoard(int r, int c, int from[r][c]){// create a pointer array to a
  * \param to_x
  * \param to_y
  * \param DistancePath
- * \return
- * \brief
+ * \return la valeur d'une case dans la matrice des distances
+ * \brief pour une facilitée déconcertante
  *
  */
 int distanceFrom(int to_x, int to_y, 	int **DistancePath){ //My teammates have so much chance
@@ -626,8 +621,7 @@ int distanceFrom(int to_x, int to_y, 	int **DistancePath){ //My teammates have s
  * \fn void freeBoard(int **arr, int Rows)
  * \param arr
  * \param Rows
- * \return
- * \brief
+ * \brief https://www.youtube.com/watch?v=wQP9XZc2Y_c
  *
  */
 void freeBoard(int **arr, int Rows){ //free the  dynamically allocated memory
@@ -645,8 +639,9 @@ void freeBoard(int **arr, int Rows){ //free the  dynamically allocated memory
  * \param DistancePath
  * \param i
  * \param j
- * \return
- * \brief
+ * \return une pile de coordonnées
+ * \brief   this function return the shortest path to a *i* *j* coordinate, where *DistancePath* is the distances matrix.
+ the path (coordinate) is stored in a pile and return.
  *
  */
 pile *getPath(int **DistancePath, int i, int j){
@@ -684,8 +679,7 @@ pile *getPath(int **DistancePath, int i, int j){
 
 /**
  * \fn pile * createPile()
- * \return
- * \brief
+ * \return le prochain élémént de la pile
  *
  */
 pile * createPile(){
@@ -699,8 +693,7 @@ pile * createPile(){
  * \param p
  * \param r
  * \param c
- * \return
- * \brief
+ * \return remplie la pile avec des coordonnées
  *
  */
 void push(pile **p, int r, int c){
@@ -716,8 +709,8 @@ void push(pile **p, int r, int c){
  * \param p
  * \param r
  * \param c
- * \return
- * \brief
+ * \return -1 si la pile est vide sinon 1
+ * \brief dépile la pile avec des coordonnées
  *
  */
 int pop(pile **p, int * r, int * c){
