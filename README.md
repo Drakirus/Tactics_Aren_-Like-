@@ -1,57 +1,41 @@
-Tactics Arena [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/Drakirus/Tactics_Arena_Like?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
-======
-	Voici le projet de CHAMPION Pierre, LAVILLE Martin et MOK Modira.
+Tactics Arena Like  [![Build Status](https://travis-ci.org/Drakirus/Ruzzle.svg)](https://travis-ci.org/Drakirus/Ruzzle)
+==
 
-### Trello (Organisation)
-	https://trello.com/b/JkJAWVmc
+Notre projet, qui se déroule dans le cadre de notre premier semestre de deuxième année de licence SPI, a pour but de nous faire programmer en langage C une version, fonctionnelle sur la console et qui nous est propre, de ce jeu. Notre trinôme se compose de **Champion Pierre, Laville Martin et Mok Modira**.
 
+# Release - 1
 
-### Fonction action exemple d'utilisation
+## Instructions de compilation
+### Jeux
+Pour compiler l'ensemble des sources :
+```
+$ make
+```
+ L'exécutable généré peut être retrouvé dans **./bin**
+
+Pour exécuter le programme :
 
 ```
-
-#include "../include\action.h"
-
-* ===========================================
-*			 FONCTION LIGNE DE VUE
-* ===========================================
-*/
-
-initialise_map();
-obstacle(10);
-
-afficher_map();
-if (shoot(0, 0, 9,9)) {
-	printf("tir impossible \n");
-}else{
-	printf("tir possible \n");
-}
-
-/*
-* ===========================================
-*			 FONCTION PATHFINDING
-* ===========================================
-*/
-
-
-
-initialise_map();
-obstacle(35);
-int init_x=2, init_y=2;
-
-int **DistancePath = createDistancePath(init_x, init_y);
-
-
-displayBoard(i_taille_map,i_taille_map,DistancePath);
-printf("\ndistanceFrom %i\n", distanceFrom(9, 9, DistancePath));
-
-pile *path = getPath(DistancePath, 9, 9);
-
-int r,c;
-int sortir = pop(&path, &r, &c);
-while (sortir != -1) {
-	sortir = pop(&path, &r, &c);
-	printf("r: %i c: %i\n",r,c );
-}
-freeBoard(DistancePath, i_taille_map);
+$ ./bin/out
 ```
+### Documentation
+```
+$ make doc
+```
+La documentation  générée peut être retrouvée dans **./doc/html/index.html**
+### Nettoyage
+```
+$ make clean
+```
+ Supprime les fichiers dus à la création de l'exécutable
+ ```
+ $ make rmdoc
+ ```
+  Supprime les fichiers de la documentation
+
+
+
+### Lien Github
+
+
+https://github.com/Drakirus/Tactics_Arena_Like

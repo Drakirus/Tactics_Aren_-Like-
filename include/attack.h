@@ -16,7 +16,6 @@ struct list_caract{
   int PM;
   int coord_r;
   int coord_c;
-  int team;
 };
 
 struct attak{
