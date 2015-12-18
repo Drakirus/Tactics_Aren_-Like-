@@ -184,6 +184,7 @@ void attaque(int * PA_tour){
               if (recherche_perso_tab(coord_r, coord_c) != -1) {
 
                 persoAttaquer.i_HP += tmp_att->trait.HP;
+                augmente_nombre(2,persoAttaquer, tmp_att->trait.HP )
                 persoAttaquer.i_HP_max += tmp_att->trait.HP_max;
                 persoAttaquer.i_PA += tmp_att->trait.PA;
                 persoAttaquer.i_PM += tmp_att->trait.PM;
