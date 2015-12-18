@@ -1,7 +1,7 @@
 /**
- * \file main.c
+ * \file map.c
  * \brief Ce module permet de créer la carte de jeu ainsi que gérer l'affichage de celle-ci.
- * \author CHAMPION Pierre, LAVILLE Martin, MOK Modira
+ * \author MOK Modira
  * \version 0.1
  * \date 18 décembre 2015
  *
@@ -17,12 +17,16 @@
 
 extern int i_perso_actuel;
 extern t_perso tab_perso[i_taille_tab_perso];
+
+/**
+ * \def la carte de taille i_taille_map qu'on a choisi à 10
+ **/
 int map[i_taille_map][i_taille_map];
 
 /**
- * \fn int main()
- *	\brief lance le jeu
- *
+ * \fn void obstacle(int i_chance_obstacle)
+ * \param i_chance_obstacle Plus ce paramètre est grand, plus il y aura d'obstacle
+ * \brief Une carte remplie avec des obstacles. Les obstacles sont entre les lignes 3 et 6
  *
  */
 void obstacle(int i_chance_obstacle) //Fonction insérant les obstacles dans la map. Les obstacles sont placés aléatoirement dans la map.
@@ -49,6 +53,11 @@ void obstacle(int i_chance_obstacle) //Fonction insérant les obstacles dans la 
 	}
 }
 
+/**
+ * \fn void initialise_map()
+ * \brief La carte normalement vide contient maintenant des obstacles
+ *
+ */
 void initialise_map() //Fonction initialisant la map vide avec des obstacles
 {	int i,j;
 	for(i=0;i<i_taille_map;i++)
@@ -61,6 +70,11 @@ void initialise_map() //Fonction initialisant la map vide avec des obstacles
 	obstacle(10);
 }
 
+/**
+ * \fn void afficher_map()
+ * \brief Affiche la carte dans la console
+ *
+ */
 void afficher_map() //Fonction affichant la map
 {
 	char perso[4]; //Pour le changement de couleur

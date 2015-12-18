@@ -15,7 +15,13 @@
 #include <stdarg.h>
 #include "../include/list_attack.h"
 
-
+/**
+ * \fn void displaylistAttack(list_attack *perso_att)
+ * \param perso_att
+ * \return
+ * \brief
+ *
+ */
 void displaylistAttack(list_attack *perso_att){
   list_attack *tmp = perso_att;
   int actual = 1;
@@ -36,6 +42,12 @@ void displaylistAttack(list_attack *perso_att){
   }
 }
 
+/**
+ * \fn list_attack* creer_liste_attack()
+ * \return
+ * \brief
+ *
+ */
 list_attack* creer_liste_attack(){
   list_attack *tmp = malloc(sizeof(list_attack));
   if(!tmp)
@@ -44,6 +56,14 @@ list_attack* creer_liste_attack(){
   return tmp;
 }
 
+/**
+ * \fn void pushAttack(list_attack *p, t_attak *new_att)
+ * \param p
+ * \param new_att
+ * \return
+ * \brief
+ *
+ */
 void pushAttack(list_attack *p, t_attak *new_att){
   if(p!=NULL) {
     while(p->current_attack != NULL) {
@@ -54,6 +74,13 @@ void pushAttack(list_attack *p, t_attak *new_att){
   }
 }
 
+/**
+ * \fn int getCountAttack(list_attack *perso_att)
+ * \param pers_att
+ * \return
+ * \brief
+ *
+ */
 int getCountAttack(list_attack *perso_att){
   list_attack *tmp = perso_att;
   int actual = 1;
@@ -67,6 +94,14 @@ int getCountAttack(list_attack *perso_att){
   return actual;
 }
 
+/**
+ * \fn t_attak *getAttack(list_attack *attack, int nbatt)
+ * \param attack
+ * \param nbatt
+ * \return
+ * \brief
+ *
+ */
 t_attak *getAttack(list_attack *attack, int nbatt){
   list_attack *tmp = attack;
   int actual=1;

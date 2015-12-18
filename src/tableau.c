@@ -1,3 +1,13 @@
+/**
+ * \file tableau.c
+ * \brief Module créant et gérant le tableau contenant les personnages. Il se remplit lors de la création des personnages.
+ * \author MOK Modira
+ * \version 0.1
+ * \date 18 décembre 2015
+ *
+ *
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -5,6 +15,11 @@
 
 t_perso tab_perso[i_taille_tab_perso]; //Contient les données de tous les persos.
 
+/**
+ * \fn void afficher_tableau()
+ * \brief On affiche le tableau contenant tous les personnages
+ *
+ */
 void afficher_tableau()
 {
 	int i;
@@ -15,7 +30,16 @@ void afficher_tableau()
 }
 
 
-int recherche_perso_tab(int x, int y) //A partir de coordonnées, on retourne la position du perso dans le tableau correspondant au coordonnées. Retourne -1 s'il n'y a personne
+/**
+ * \fn int recherche_perso_tab(int x, int y)
+ * \param x coordonée en abscisse
+ * \param y coordonnée en ordonnée
+ * \return -1 s'il n'y a personne dans ces coordonées
+ * \return i la place du tableau dans lequel le personnage est
+ * \brief A partir de coordonnées, on retourne la position du perso dans le tableau correspondant au coordonnées.
+ *
+ */
+int recherche_perso_tab(int x, int y)
 {	int i;
 	for(i=0; i<i_taille_tab_perso; i++)
 	{
@@ -27,7 +51,13 @@ int recherche_perso_tab(int x, int y) //A partir de coordonnées, on retourne la
 	return -1;
 }
 
-void init_tab_perso(t_perso tab_perso[i_taille_tab_perso]) //On initialise le tableau contenant les personnages, cela évite qu'on retrouve n'importe quoi dedans.
+/**
+ * \fn void init_tab_perso(t_perso tab_perso[i_taille_tab_perso])
+ * \param tab_perso Le tableau à initialiser
+ * \brief On initialise le tableau contenant les personnages, cela évite qu'on retrouve n'importe quoi dedans.
+ *
+ */
+void init_tab_perso(t_perso tab_perso[i_taille_tab_perso])
 {
 	int i;
 	for(i=0;i<i_taille_tab_perso;i++)

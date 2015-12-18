@@ -25,6 +25,13 @@ extern int i_perso_actuel;
 * ===========================================
 */
 
+/**
+ * \fn void delay(int milliseconds)
+ * \param milliseconds
+ * \return
+ * \brief
+ *
+ */
 void delay(int milliseconds){
   long pause;
   clock_t now,then;
@@ -34,6 +41,13 @@ void delay(int milliseconds){
   now = clock();
 }
 
+/**
+ * \fn void deplacement(int * PM_actuel)
+ * \param PM_actuel
+ * \return
+ * \brief
+ *
+ */
 void deplacement(int * PM_actuel){
   pile *path = NULL; // move personnage
   int r,c; // move personnage
@@ -54,6 +68,15 @@ void deplacement(int * PM_actuel){
   }
 }
 
+/**
+ * \fn pile *getMovePerso(int * PM_tour, int start_r,int start_c)
+ * \param PM_tour
+ * \param start_r
+ * \param start_c
+ * \return
+ * \brief
+ *
+ */
 pile *getMovePerso(int * PM_tour, int start_r,int start_c){
   if (*PM_tour == 0) {
     return NULL;
@@ -108,6 +131,13 @@ pile *getMovePerso(int * PM_tour, int start_r,int start_c){
 * ===========================================
 */
 
+/**
+ * \fn void attaque(int * PA_tour)
+ * \param PA_tour
+ * \return
+ * \brief
+ *
+ */
 void attaque(int * PA_tour){
 
   if (*PA_tour == 0 ) {
@@ -311,6 +341,15 @@ http://krosmaster.herazade.com/
 http://www.roguebasin.com/index.php?title=FOV_using_recursive_shadowcasting
 * ===========================================
 */
+
+/**
+ * \fn float getSlope(float f_a, float f_b)
+ * \param f_a
+ * \param f_b
+ * \return
+ * \brief
+ *
+ */
 float getSlope(float f_a, float f_b){ // Basic division function (with check)
   if(f_b == 0){
     return 99;
@@ -318,6 +357,15 @@ float getSlope(float f_a, float f_b){ // Basic division function (with check)
   return f_a/f_b;
 }
 
+/**
+ * \fn shadowcasting(int matrix[i_taille_map][i_taille_map], int i_player_x, int i_player_y)
+ * \param matrix[i_taille_map][i_taille_map]
+ * \param i_player_x
+ * \param i_player_y
+ * \return
+ * \brief
+ *
+ */
 void shadowcasting(int matrix[i_taille_map][i_taille_map], int i_player_x, int i_player_y){
   int i,j,cx,cy;
   float f_slope_min, f_slope_max, f_slope;
@@ -431,6 +479,16 @@ void shadowcasting(int matrix[i_taille_map][i_taille_map], int i_player_x, int i
 * ===========================================
 */
 
+/**
+ * \fn int setAdjacent(int **mat, int i, int j, int value)
+ * \param mat
+ * \param i
+ * \param j
+ * \param value
+ * \return
+ * \brief
+ *
+ */
 int setAdjacent(int **mat, int i, int j, int value) {
   /*
   * setAdjacent is a function call by (only) *createDistancePath*, it takes a *X* and *Y* coordinates, and print *value* to here direct neighbor.
@@ -449,7 +507,14 @@ int setAdjacent(int **mat, int i, int j, int value) {
   return nbUpdate;
 }
 
-
+/**
+ * \fn int **createDistancePath(int init_x, int init_y)
+ * \param init_x
+ * \param init_y
+ * \return
+ * \brief
+ *
+ */
 int **createDistancePath(int init_x, int init_y){
   /*
   * *createDistancePath* return a matrix fill of distances, the center point have *init_x* and *init_y* coordinate.
@@ -489,6 +554,15 @@ int **createDistancePath(int init_x, int init_y){
   return map_path_finding;
 }
 
+/**
+ * \fn void displayBoard(int r, int c, int **arr)
+ * \param r
+ * \param c
+ * \param arr
+ * \return
+ * \brief
+ *
+ */
 void displayBoard(int r, int c, int **arr){ // Display a matrix of size r,c for debuging
   int i,j;
   for (i = 0; i <  r; i++){
@@ -506,6 +580,15 @@ void displayBoard(int r, int c, int **arr){ // Display a matrix of size r,c for 
   }
 }
 
+/**
+ * \fn int **allocateBoard(int r, int c, int from[r][c])
+ * \param r
+ * \param c
+ * \param from[r][c]
+ * \return
+ * \brief
+ *
+ */
 int **allocateBoard(int r, int c, int from[r][c]){// create a pointer array to a pointer array and return it
   int **arr;
   int i,j;
@@ -524,10 +607,27 @@ int **allocateBoard(int r, int c, int from[r][c]){// create a pointer array to a
   return arr;
 }
 
+/**
+ * \fn int distanceFrom(int to_x, int to_y,   int **DistancePath)
+ * \param to_x
+ * \param to_y
+ * \param DistancePath
+ * \return
+ * \brief
+ *
+ */
 int distanceFrom(int to_x, int to_y, 	int **DistancePath){ //My teammates have so much chance
   return DistancePath[to_x][to_y];
 }
 
+/**
+ * \fn void freeBoard(int **arr, int Rows)
+ * \param arr
+ * \param Rows
+ * \return
+ * \brief
+ *
+ */
 void freeBoard(int **arr, int Rows){ //free the  dynamically allocated memory
   int row;
   // free de toutes les lignes
@@ -538,6 +638,15 @@ void freeBoard(int **arr, int Rows){ //free the  dynamically allocated memory
   free(arr);
 }
 
+/**
+ * \fn pile *getPath(int **DistancePath, int i, int j)
+ * \param DistancePath
+ * \param i
+ * \param j
+ * \return
+ * \brief
+ *
+ */
 pile *getPath(int **DistancePath, int i, int j){
   /*
   * this function return the shortest path to a *i* *j* coordinate, where *DistancePath* is the distances matrix.
@@ -570,11 +679,28 @@ pile *getPath(int **DistancePath, int i, int j){
 * FONCTION GESTION PILE
 * ===========================================
 */
+
+/**
+ * \fn pile * createPile()
+ * \return
+ * \brief
+ *
+ */
 pile * createPile(){
   pile *tmp = malloc(sizeof(pile));
   if(!tmp) exit(EXIT_FAILURE); /* If the allocation failed. */
   return tmp;
 }
+
+/**
+ * \fn void push(pile **p, int r, int c)
+ * \param p
+ * \param r
+ * \param c
+ * \return
+ * \brief
+ *
+ */
 void push(pile **p, int r, int c){
   pile *tmp = createPile();
   tmp->row = r;
@@ -583,6 +709,15 @@ void push(pile **p, int r, int c){
   *p = tmp;
 }
 
+/**
+ * \fn int pop(pile **p, int * r, int * c)
+ * \param p
+ * \param r
+ * \param c
+ * \return
+ * \brief
+ *
+ */
 int pop(pile **p, int * r, int * c){
   pile *tmp;
   if(!*p) return -1;     /* Returns -1 if the pile is empty. */

@@ -1,3 +1,13 @@
+/**
+ * \file placement.c
+ * \brief Module utilisé lors de l'initialisation du jeu. Les joueurs placent leur personnage.
+ * \author MOK Modira
+ * \version 0.1
+ * \date 18 décembre 2015
+ *
+ *
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -11,6 +21,11 @@ extern t_perso ensemble_perso[i_nombre_classe];
 extern t_perso tab_perso[i_taille_tab_perso];
 extern int map[i_taille_map][i_taille_map];
 
+/**
+ * \fn void placement_perso()
+ * \brief Permet de placer les personnages dans la carte.
+ *
+ */
 void placement_perso() //Cette fonction place les personnages des différents équipes dans les trois premières et dernières ligne de la map.
 {
 	init_tab_perso(tab_perso);

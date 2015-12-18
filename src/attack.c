@@ -15,6 +15,13 @@
 #include <stdarg.h>
 #include "../include/attack.h"
 
+/**
+ * \fn void displayAttack(t_attak * att)
+ * \param att
+ * \return
+ * \brief
+ *
+ */
 void displayAttack(t_attak * att){
 	printf("Attaque/Sort '%s' à pour range : max %i min %i, %i cost",att->attack_name, att->range_max, att->range_min, att->cost_PA);
 	if (att->splash_range > 1)
@@ -38,6 +45,20 @@ void displayAttack(t_attak * att){
   printf("\n");
 }
 
+/**
+ * \fn t_attak *createAttack(char attack_name[20],int range_max,int range_min,int cost_PA,int splash_range,int only_line,int num_trait,...)
+ * \param attack_name
+ * \param range_max
+ * \param range_min
+ * \param cost_PA
+ * \param splash_range
+ * \param only_line
+ * \param num_trait
+ * \param ...
+ * \return
+ * \brief
+ *
+ */
 t_attak *createAttack(
   char attack_name[20],
   int range_max,
