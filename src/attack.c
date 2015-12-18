@@ -1,3 +1,13 @@
+/**
+ * \file attack.c
+ * \brief Module gérant les créations de chaque attaque
+ * \author CHAMPION Pierre
+ * \version 0.1
+ * \date 18 décembre 2015
+ *
+ *
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

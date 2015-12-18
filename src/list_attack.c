@@ -1,3 +1,13 @@
+/**
+ * \file list_attack.c
+ * \brief Module contenant les attaques de chaque personnage sous forme de liste.
+ * \author CHAMPION Pierre
+ * \version 0.1
+ * \date 18 décembre 2015
+ *
+ *
+ */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>

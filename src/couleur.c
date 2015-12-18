@@ -1,3 +1,13 @@
+/**
+ * \file couleur.c
+ * \brief Module nous permettant d'afficher les couleurs sur la console de commmande. Nous l'avons pris sur internet.
+ * \author LAVILLE Martin
+ * \version 0.1
+ * \date 18 décembre 2015
+ *
+ *
+ */
+
 #include "../include/couleur.h"
 
 /**
