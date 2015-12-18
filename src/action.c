@@ -119,7 +119,7 @@ void attaque(int * PA_tour){
   // printf("%i\n", getCountAttack(tab_perso[i_perso_actuel].att));
 }while( attack<1 || attack>getCountAttack(tab_perso[i_perso_actuel].att));
 
-	
+
   for ( i = 0; i < i_taille_map; i++) {
     for ( j = 0; j < i_taille_map; j++) {
       map_shadowcasting[i][j] = map[i][j];
@@ -236,8 +236,8 @@ void attaque(int * PA_tour){
 
             }
             if (splashRange == 0) {
-              dy = 2;
-              dy = 2;
+              dy = 99;
+              dy = 99;
             }
           }
         }

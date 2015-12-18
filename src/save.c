@@ -31,12 +31,12 @@ void charge(){
 	do{
 		printf("Quelle partie charger ?\n");
 		/* Permet de lister les fichiers présents dans "save/" */
-		DIR * rep = opendir(rep_save);     
+		DIR * rep = opendir(rep_save);
     		if (rep != NULL){
         		struct dirent * ent;
 			while ((ent = readdir(rep)) != NULL){
             			printf("%s\n", ent->d_name);
-        		}        
+        		}
         		closedir(rep);
     		}
 		scanf("%s", temp);
@@ -63,6 +63,7 @@ void charge(){
 		fscanf(fic, "%i", &tab_perso[k].coord[0]);
 		fscanf(fic, "%i", &tab_perso[k].coord[1]);
 		fscanf(fic, " %c ", &tab_perso[k].c_team);
+		init_attack(&tab_perso[k]);
 		//charger les attack du perso
 	}
 	fclose(fic);
