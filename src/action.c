@@ -183,11 +183,10 @@ void attaque(int * PA_tour){
               persoAttaquer = tab_perso[recherche_perso_tab(coord_r, coord_c)];
               if (recherche_perso_tab(coord_r, coord_c) != -1) {
 
-                persoAttaquer.i_HP += tmp_att->trait.HP;
+                augmente_nombre(1, &persoAttaquer, tmp_att->trait.HP_max );
                 augmente_nombre(2, &persoAttaquer, tmp_att->trait.HP );
-                persoAttaquer.i_HP_max += tmp_att->trait.HP_max;
-                persoAttaquer.i_PA += tmp_att->trait.PA;
-                persoAttaquer.i_PM += tmp_att->trait.PM;
+                augmente_nombre(3, &persoAttaquer, tmp_att->trait.PA );
+                augmente_nombre(4, &persoAttaquer, tmp_att->trait.PM );
 
                 shoot=1;
 
@@ -197,7 +196,7 @@ void attaque(int * PA_tour){
                 while (shoot && coord_r != tab_perso[i_perso_actuel].coord[0] &&  coord_c != tab_perso[i_perso_actuel].coord[1]) {
                   if (persoAttaquer.coord[1] > tab_perso[i_perso_actuel].coord[0]) {
                     if (persoAttaquer.coord[1] - recul_r >= 0 && persoAttaquer.coord[1] - recul_r < i_taille_map && map[persoAttaquer.coord[1] - recul_r][persoAttaquer.coord[0] ] != 1) {
-                      persoAttaquer.coord[1] -= recul_r;
+                      augmente_nombre(6, &persoAttaquer, recul_r );
                       shoot =0;
                     }
                     recul_r++;
@@ -205,13 +204,14 @@ void attaque(int * PA_tour){
                   if (persoAttaquer.coord[0] > tab_perso[i_perso_actuel].coord[1]) {
                     if (persoAttaquer.coord[0] - recul_c >= 0 && persoAttaquer.coord[0] - recul_c < i_taille_map && map[persoAttaquer.coord[1] ][persoAttaquer.coord[0] - recul_c] != 1 ) {
                       persoAttaquer.coord[0] -= recul_c;
+                      augmente_nombre(5, &persoAttaquer, recul_c );
                       shoot =0;
                     }
                     recul_c++;
                   }
                   if (persoAttaquer.coord[1] < tab_perso[i_perso_actuel].coord[0]  ) {
                     if (persoAttaquer.coord[1] + recul_r >= 0 && persoAttaquer.coord[1] + recul_r < i_taille_map && map[persoAttaquer.coord[1] + recul_r][persoAttaquer.coord[0]] != 1 ) {
-                      persoAttaquer.coord[1] += recul_r;
+                      augmente_nombre(6, &persoAttaquer, recul_r );
                       shoot =0;
                     }
                     recul_r++;
@@ -219,7 +219,7 @@ void attaque(int * PA_tour){
                   }else
                   if (persoAttaquer.coord[0] < tab_perso[i_perso_actuel].coord[1] ) {
                     if (persoAttaquer.coord[0] + recul_c >= 0 && persoAttaquer.coord[0] + recul_c < i_taille_map && map[persoAttaquer.coord[1]][persoAttaquer.coord[0] + recul_c] != 1) {
-                      persoAttaquer.coord[0] += recul_c;
+                      augmente_nombre(5, &persoAttaquer, recul_c );
                       shoot =0;
                     }
                     recul_c++;
