@@ -141,7 +141,7 @@ void attaque(int * PA_tour){
 		if (coord_r == -1 || coord_c == -1) {
 			return;
 		}
-		
+
     if (coord_r>=0 && coord_r<=i_taille_map && coord_c>=0 && coord_c<=i_taille_map) {
       if (0 != map_shadowcasting[coord_r][coord_c]) {
         printf("Ligne de vue obstruée\n" );
