@@ -22,7 +22,7 @@ t_perso ensemble_perso[i_nombre_classe]=
 	{"Guerrier",50,50,3,3,{0,0},'X', NULL},
 	{"Archer",30,30,3,3,{0,0},'X', NULL},
 	{"Mage",20,20,2,2,{0,0},'X', NULL},
-	{"Voleur",10,10,4,3,{0,0},'X', NULL},
+	{"Voleur",10,10,4,4,{0,0},'X', NULL},
 	{"Dovakhiin",150,150,20,20,{0,0},'X', NULL}
 };
 
