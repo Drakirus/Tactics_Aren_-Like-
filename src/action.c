@@ -227,7 +227,6 @@ void attaque(int * PA_tour){
             augmente_nombre(4, &tab_perso[recherche_perso_tab(coord_r, coord_c)], tmp_att->trait.PM );
 
             printf("\tCible touchée\n");
-            afficher_perso(tab_perso[recherche_perso_tab(coord_r, coord_c)]);
 
             shoot=1;
 
@@ -267,7 +266,7 @@ void attaque(int * PA_tour){
                 recul_c++;
               }
             }
-
+            afficher_perso(tab_perso[recherche_perso_tab(coord_r, coord_c)]);
             printf("recul sur %i(prioritaire) ou %i\n",recul_r,recul_c );
           }
 
