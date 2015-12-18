@@ -106,7 +106,7 @@ void attaque(int * PA_tour){
   t_attak * tmp_att =NULL;
   int recul_r;
   int recul_c;
-
+  int HP;
   do{
     displaylistAttack(tab_perso[i_perso_actuel].att);
     printf("Choisissez une attaque  (-1 pour annuler) : ");
@@ -115,23 +115,25 @@ void attaque(int * PA_tour){
       return;
     }
   // printf("%i\n", getCountAttack(tab_perso[i_perso_actuel].att));
-}while( attack<1 || attack>getCountAttack(tab_perso[i_perso_actuel].att));
+}while( attack<1 && attack>getCountAttack(tab_perso[i_perso_actuel].att));
 
 
-  for ( i = 0; i < i_taille_map; i++) {
-    for ( j = 0; j < i_taille_map; j++) {
+  for ( i = 0; i < i_taille_map ; i++) {
+    for ( j = 0; j < i_taille_map ; j++) {
       map_shadowcasting[i][j] = map[i][j];
     }
   }
 
   shadowcasting(map_shadowcasting, tab_perso[i_perso_actuel].coord[0], tab_perso[i_perso_actuel].coord[1]);
 
-  // for ( i = 0; i < i_taille_map; i++) {
-  //   for ( j = 0; j < i_taille_map; j++) {
-  //     printf("%i",map_shadowcasting[i][j] );
-  //   }
-  //   printf("\n" );
-  // }
+  tmp_att = getAttack(tab_perso[i_perso_actuel].att, attack);
+
+  for ( i = 0; i < i_taille_map && DistancePath[i][j] > tmp_att->range_max && DistancePath[i][j] < tmp_att->range_min ; i++) {
+    for ( j = 0; j < i_taille_map && DistancePath[i][j] > tmp_att->range_max && DistancePath[i][j] < tmp_att->range_min ; j++) {
+      printf("%i ",map_shadowcasting[i][j] );
+    }
+    printf("\n" );
+  }
 	while(sortie!=0){
 		printf("Veuillez rentrer les coordonnées du personnages que vous voulez attaquer (-1 -1 pour annuler) : ");
 		scanf("%i%i", &coord_r, &coord_c);
@@ -143,6 +145,8 @@ void attaque(int * PA_tour){
     if (coord_r>=0 && coord_r<=i_taille_map && coord_c>=0 && coord_c<=i_taille_map) {
       if (0 != map_shadowcasting[coord_r][coord_c]) {
         printf("Ligne de vue obstruée\n" );
+        delay(1200);
+        return;
       }
     }
     // displaylistAttack(tab_perso[i_perso_actuel].att);
@@ -151,26 +155,25 @@ void attaque(int * PA_tour){
 
 			if (*PA_tour < getAttack(tab_perso[i_perso_actuel].att, attack)->cost_PA ) {
 				printf("plus de PA dispo\n");
-        delay(2000);
+        delay(1200);
 				return;
 			}
 			if (distanceFrom(coord_r, coord_c, DistancePath) < getAttack(tab_perso[i_perso_actuel].att, attack)->range_min) {
-				printf("Sible trop proche\n" );
-        delay(2000);
+				printf("Cible trop proche\n" );
+        delay(1200);
 				return;
 			}
 			if ( distanceFrom(coord_r, coord_c, DistancePath) > getAttack(tab_perso[i_perso_actuel].att, attack)->range_max) {
-				printf("Sible trop loin\n" );
-        delay(2000);
+				printf("Cible trop loin\n" );
+        delay(1200);
 				return;
 			}
 			if (getAttack(tab_perso[i_perso_actuel].att, attack)->only_line == 1 &&
       (coord_r - tab_perso[i_perso_actuel].coord[0] != 0 &&  coord_c - tab_perso[i_perso_actuel].coord[1] != 0 )) {
-				printf("Sible doit sur la même ligne\n" );
-        delay(2000);
+				printf("Cible doit sur la même ligne\n" );
+        delay(1200);
 				return;
 			}
-			tmp_att = getAttack(tab_perso[i_perso_actuel].att, attack);
       splashRange = (tmp_att->splash_range)-1;
         for (dx = -splashRange; dx <= splashRange; dx++) {
           for (dy = -splashRange; dy <= splashRange; dy++) {
@@ -178,15 +181,23 @@ void attaque(int * PA_tour){
               dy = 0;
               dy = 0;
             }
-            // printf("%i %i\n",coord_r+dx,coord_c+dy );
+            printf("%i %i\n",coord_r+dx,coord_c+dy );
             if (coord_r+dx>=0 && coord_c+dy>=0 && coord_r+dx<i_taille_map && coord_c+dy<i_taille_map) {
               coord_r = coord_r+dx;
               coord_c = coord_c+dy;
               if (recherche_perso_tab(coord_r, coord_c) != -1) {
+
                 augmente_nombre(1, &tab_perso[recherche_perso_tab(coord_r, coord_c)], tmp_att->trait.HP_max );
-                augmente_nombre(2, &tab_perso[recherche_perso_tab(coord_r, coord_c)], tmp_att->trait.HP );
+                HP = tmp_att->trait.HP;
+                while (tab_perso[recherche_perso_tab(coord_r, coord_c)].i_HP_max > HP + tab_perso[recherche_perso_tab(coord_r, coord_c)].i_HP_max ) {
+                  HP--;
+                }
+                augmente_nombre(2, &tab_perso[recherche_perso_tab(coord_r, coord_c)], HP );
                 augmente_nombre(3, &tab_perso[recherche_perso_tab(coord_r, coord_c)], tmp_att->trait.PA );
                 augmente_nombre(4, &tab_perso[recherche_perso_tab(coord_r, coord_c)], tmp_att->trait.PM );
+
+                printf("\tCible touchée\n");
+                afficher_perso(tab_perso[recherche_perso_tab(coord_r, coord_c)]);
 
                 shoot=1;
 
@@ -194,15 +205,16 @@ void attaque(int * PA_tour){
                 recul_c = tmp_att->trait.coord_c;
 
                 while (shoot && coord_r != tab_perso[i_perso_actuel].coord[0] &&  coord_c != tab_perso[i_perso_actuel].coord[1]) {
+                  printf("%i %i\n",recul_r,recul_c  );
                   if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] > tab_perso[i_perso_actuel].coord[0]) {
-                    if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] - recul_r >= 0 && tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] - recul_r < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] - recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] ] != 1) {
+                    if (recul_r >= 0 &&  recul_r < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] - recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] ] != 1) {
                       augmente_nombre(6, &tab_perso[recherche_perso_tab(coord_r, coord_c)], recul_r );
                       shoot =0;
                     }
                     recul_r++;
                   }else
                   if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] > tab_perso[i_perso_actuel].coord[1]) {
-                    if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_c >= 0 && tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_c < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] ][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_c] != 1 ) {
+                    if ( recul_c >= 0 &&  recul_c < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] ][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_c] != 1 ) {
                       tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] -= recul_c;
                       augmente_nombre(5, &tab_perso[recherche_perso_tab(coord_r, coord_c)], recul_c );
                       shoot =0;
@@ -210,7 +222,7 @@ void attaque(int * PA_tour){
                     recul_c++;
                   }
                   if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] < tab_perso[i_perso_actuel].coord[0]  ) {
-                    if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] + recul_r >= 0 && tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] + recul_r < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] + recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0]] != 1 ) {
+                    if (recul_r >= 0 &&  recul_r < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] + recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0]] != 1 ) {
                       augmente_nombre(6, &tab_perso[recherche_perso_tab(coord_r, coord_c)], recul_r );
                       shoot =0;
                     }
@@ -218,17 +230,14 @@ void attaque(int * PA_tour){
 
                   }else
                   if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] < tab_perso[i_perso_actuel].coord[1] ) {
-                    if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] + recul_c >= 0 && tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] + recul_c < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1]][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] + recul_c] != 1) {
+                    if ( recul_c >= 0 &&  recul_c < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1]][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] + recul_c] != 1) {
                       augmente_nombre(5, &tab_perso[recherche_perso_tab(coord_r, coord_c)], recul_c );
                       shoot =0;
                     }
                     recul_c++;
                   }
                 }
-
-                printf("\tSible touchée\n");
-                afficher_perso(tab_perso[recherche_perso_tab(coord_r, coord_c)]);
-                delay(1250);
+                printf("%i %i\n",recul_r,recul_c );
               }
 
             }
@@ -238,12 +247,13 @@ void attaque(int * PA_tour){
             }
           }
         }
+        sortie = 0;
 
     }
-    *PA_tour -= tmp_att->cost_PA;
-    sortie = 0;
-    freeBoard(DistancePath, i_taille_map);
 	}
+  delay(2000);
+  *PA_tour -= tmp_att->cost_PA;
+  freeBoard(DistancePath, i_taille_map);
 }
 
 
@@ -513,10 +523,13 @@ pile *getPath(int **DistancePath, int i, int j){
   * FONCTION GESTION PILE
  * ===========================================
  */
-
+pile * createPile(){
+  pile *tmp = malloc(sizeof(pile));
+  if(!tmp) exit(EXIT_FAILURE); /* If the allocation failed. */
+  return tmp;
+}
  void push(pile **p, int r, int c){
-	 pile *tmp = malloc(sizeof(pile));
-	 if(!tmp) exit(EXIT_FAILURE);     /* If the allocation failed. */
+   pile *tmp = createPile();
 	 tmp->row = r;
 	 tmp->column = c;
 	 tmp->prec = *p;
