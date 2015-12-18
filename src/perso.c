@@ -16,7 +16,7 @@
 
 /**
  * \def Les personnages que l'on a créé
- **/ 
+ **/
 t_perso ensemble_perso[i_nombre_classe]=
 {// "perso_name" / HP_max / HP / Points d'action / Points de mouvement / ligne / colonnes / team / placé ou pas / LISTE de ses attaques
 	{"Guerrier",50,50,3,3,{0,0},'X', NULL},
@@ -84,13 +84,14 @@ int init_attack(t_perso *per){
 	if( strcmp(per->s_classe, "Guerrier" ) == 0){ //guerrier
 		pushAttack(per->att, createAttack("Coup d'épée", 1, 0, 3, 1, 0, 1, "HP", -5));// copie d'une attack par defaut d'un guerrier
 	}else if(strcmp(per->s_classe, "Archer") == 0 ){ //guerrier
-		pushAttack(per->att, createAttack("Tir à l'arc", 5, 2, 3, 1, 1, 3, "HP", -3,"coord_r", -2,"coord_c", -2));// copie d'une attack par defaut d'un archer
+		pushAttack(per->att, createAttack("Pousse toi d'la", 5, 2, 3, 1, 1, 3, "HP", -1,"coord_r", -2,"coord_c", -2));// copie d'une attack par defaut d'un archer
+		pushAttack(per->att, createAttack("Tir à l'arc", 5, 2, 3, 1, 0, 2, "HP", -3, "HP_max", -2));// copie d'une attack par defaut d'un archer
 	}else if(strcmp(per->s_classe, "Mage" ) == 0){ //guerrier
 		pushAttack(per->att, createAttack("Boule De Feu", 3, 0, 2, 2, 1, 1, "HP", -3));// copie d'une attack par defaut d'un mage
 		pushAttack(per->att,createAttack("Sort de Soin", 3, 0, 2, 1, 0, 1, "HP", 6));
 	}else if (strcmp(per->s_classe, "Voleur" ) == 0){
 		pushAttack(per->att,createAttack("Lenteur", 1, 0, 4, 1, 0, 1, "PM", -1));
-		pushAttack(per->att,createAttack("Coup de Babouche", 2, 0, 2, 1, 0, 1, "HP", -2));
+		pushAttack(per->att,createAttack("Coup de Babouche", 2, 0, 2, 1, 0, 2, "HP", -10, "PA", 2));
 	} else{
 		return 0;
 	}

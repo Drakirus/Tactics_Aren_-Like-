@@ -210,7 +210,7 @@ void attaque(int * PA_tour){
     if(coord_r>=0 && coord_r<=i_taille_map && coord_c>=0 && coord_c<=i_taille_map && !(map_shadowcasting[coord_r][coord_c] != 0)){
 
       if (*PA_tour < tmp_att->cost_PA ) {
-        printf("plus de PA dispo\n");
+        printf("pas assez de PA dispo\n");
         delay(1200);
         return;
       }

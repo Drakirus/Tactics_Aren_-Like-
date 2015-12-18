@@ -37,7 +37,7 @@ void displayAttack(t_attak * att){
 	if (att->trait.PA != 0)
 		printf("\n\tChange les P d'action à %i ",att->trait.PA);
 	if (att->trait.PM != 0)
-		printf("\n\tChange les P de mouvement à %i ",att->trait.PM);
+		printf("\n\tChange les P de mouvement à + %i ",att->trait.PM);
 	if (att->trait.coord_r != 0 || att->trait.coord_c != 0)
 		printf("\n\tFait reculer le perso de %ix%i ",att->trait.coord_r, att->trait.coord_c);
 	if (att->trait.team != -1)
