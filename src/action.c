@@ -114,15 +114,9 @@ void attaque(int * PA_tour){
     if (attack == -1 || getCountAttack(tab_perso[i_perso_actuel].att) == 0) {
       return;
     }
-<<<<<<< HEAD
   // printf("%i\n", getCountAttack(tab_perso[i_perso_actuel].att));
 }while( attack<1 && attack>getCountAttack(tab_perso[i_perso_actuel].att));
 
-=======
-  printf("%i\n", getCountAttack(tab_perso[i_perso_actuel].att));
-}while( attack<1 || attack>getCountAttack(tab_perso[i_perso_actuel].att));
-printf("ghsirejgsolrejgmssg");
->>>>>>> 989d7373d6744657f56c65e4f59095b368b58037
 
   for ( i = 0; i < i_taille_map ; i++) {
     for ( j = 0; j < i_taille_map ; j++) {
@@ -160,41 +154,24 @@ printf("ghsirejgsolrejgmssg");
 		if(coord_r>=0 && coord_r<=i_taille_map && coord_c>=0 && coord_c<=i_taille_map && !(map_shadowcasting[coord_r][coord_c] != 0)){
 
 			if (*PA_tour < getAttack(tab_perso[i_perso_actuel].att, attack)->cost_PA ) {
-<<<<<<< HEAD
 				printf("plus de PA dispo\n");
         delay(1200);
-=======
-				printf("Plus de PA dispo\n");
-        delay(2000);
->>>>>>> 989d7373d6744657f56c65e4f59095b368b58037
 				return;
 			}
 			if (distanceFrom(coord_r, coord_c, DistancePath) < getAttack(tab_perso[i_perso_actuel].att, attack)->range_min) {
 				printf("Cible trop proche\n" );
-<<<<<<< HEAD
         delay(1200);
-=======
-        delay(2000);
->>>>>>> 989d7373d6744657f56c65e4f59095b368b58037
 				return;
 			}
 			if ( distanceFrom(coord_r, coord_c, DistancePath) > getAttack(tab_perso[i_perso_actuel].att, attack)->range_max) {
 				printf("Cible trop loin\n" );
-<<<<<<< HEAD
         delay(1200);
-=======
-        delay(2000);
->>>>>>> 989d7373d6744657f56c65e4f59095b368b58037
 				return;
 			}
 			if (getAttack(tab_perso[i_perso_actuel].att, attack)->only_line == 1 &&
       (coord_r - tab_perso[i_perso_actuel].coord[0] != 0 &&  coord_c - tab_perso[i_perso_actuel].coord[1] != 0 )) {
 				printf("Cible doit sur la même ligne\n" );
-<<<<<<< HEAD
         delay(1200);
-=======
-        delay(2000);
->>>>>>> 989d7373d6744657f56c65e4f59095b368b58037
 				return;
 			}
       splashRange = (tmp_att->splash_range)-1;
@@ -271,9 +248,9 @@ printf("ghsirejgsolrejgmssg");
               dy = 99;
               dy = 99;
             }
+            sortie = 0;
           }
         }
-        sortie = 0;
 
     }
 	}
