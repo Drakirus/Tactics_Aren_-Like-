@@ -40,11 +40,11 @@ void initialisation_perso(int a, t_perso * per) //On affecte à un t_perso les d
 // attention : il faut que le perso passe en param ait sa classe de correctement fixee
 int init_attack(t_perso *per){
 	per->att = creer_liste_attack();
-	if(per->s_classe[0] == 'G'){ //guerrier
+	if( strcmp(per->s_classe, "Guerrier" ) == 0){ //guerrier
 		pushAttack(per->att, createAttack("Coup d'épée", 1, 0, 3, 1, 0, 1, "HP", -5));// copie d'une attack par defaut d'un guerrier
-	}else if(per->s_classe[0] == 'A'){ //guerrier
+	}else if(strcmp(per->s_classe, "Archer") == 0 ){ //guerrier
 		pushAttack(per->att, createAttack("Tir à l'arc", 5, 2, 3, 2, 0, 3, "HP", -3,"coord_r",-2,"coord_c",-2));// copie d'une attack par defaut d'un archer
-	}else if(per->s_classe[0] == 'M'){ //guerrier
+	}else if(strcmp(per->s_classe, "Mage" ) == 0){ //guerrier
 		pushAttack(per->att, createAttack("Boule De Feu", 3, 0, 4, 3, 1, 1, "HP", -2));// copie d'une attack par defaut d'un mage
 		pushAttack(per->att,createAttack("Sort de Soin", 3, 0, 2, 1, 0, 1, "HP", 2));
 	}else{

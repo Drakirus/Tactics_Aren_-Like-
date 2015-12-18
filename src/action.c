@@ -172,10 +172,13 @@ void attaque(int * PA_tour){
 				return;
 			}
 			tmp_att = getAttack(tab_perso[i_perso_actuel].att, attack);
-      splashRange = tmp_att->splash_range;
-      if (splashRange > 1) {
+      splashRange = (tmp_att->splash_range)-1;
         for (dx = -splashRange; dx < splashRange; dx++) {
           for (dy = -splashRange; dy < splashRange; dy++) {
+            if (splashRange == 0) {
+              dy = 0;
+              dy = 0;
+            }
             // printf("%i %i\n",coord_r+dx,coord_c+dy );
             if (coord_r+dx>=0 && coord_c+dy>=0 && coord_r+dx<i_taille_map && coord_c+dy<i_taille_map) {
               coord_r = coord_r+dx;
@@ -184,7 +187,7 @@ void attaque(int * PA_tour){
               if (recherche_perso_tab(coord_r, coord_c) != -1) {
 
                 augmente_nombre(1, &persoAttaquer, tmp_att->trait.HP_max );
-                augmente_nombre(2, &persoAttaquer, tmp_att->trait.HP );
+                augmente_nombre(2, &tab_perso[recherche_perso_tab(coord_r, coord_c)], tmp_att->trait.HP );
                 augmente_nombre(3, &persoAttaquer, tmp_att->trait.PA );
                 augmente_nombre(4, &persoAttaquer, tmp_att->trait.PM );
 
@@ -232,9 +235,12 @@ void attaque(int * PA_tour){
               }
 
             }
+            if (splashRange == 0) {
+              dy = 2;
+              dy = 2;
+            }
           }
         }
-      }
 
     }
     *PA_tour -= tmp_att->cost_PA;
