@@ -1,6 +1,7 @@
 #
 # LuaDist Travis-CI Hook
 #
+sudo: required
 
 # We assume C build environments
 language: C
