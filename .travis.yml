@@ -2,6 +2,8 @@
 # LuaDist Travis-CI Hook
 #
 
+notifications:
+  email: false
 # We assume C build environments
 language: C
 
