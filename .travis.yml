@@ -22,8 +22,8 @@ script:
   
 # Only watch the master branch
 branches:
-  only:
-    - master
+  - master
+  - IA_lua
 
 # Notify the LuaDist Dev group if needed
 #notifications:
