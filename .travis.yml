@@ -16,12 +16,13 @@ install:
 
 # Build the module
 script:
+  - sudo make install-lua
   - make
   
 # Only watch the master branch
 branches:
   only:
-    - master
+    - IA_lua
 
 # Notify the LuaDist Dev group if needed
 #notifications:
