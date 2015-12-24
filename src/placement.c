@@ -37,7 +37,7 @@ void placement_perso() //Cette fonction place les personnages des différents é
 	t_perso * per;
 	per=malloc(sizeof(t_perso));
 	int i_equipe=0; //0 pour l'équipe A et 1 pour l'équipe B
-	while(i_nb_perso<10) //Ici on veut 10 personnages en tout.
+	while(i_nb_perso<2) //Ici on veut 10 personnages en tout.
 	{
 		while(b_sortie!=0)
 		{
@@ -101,6 +101,6 @@ void placement_perso() //Cette fonction place les personnages des différents é
 		b_sortie=1;
 		i_equipe++;
 		i_nb_perso++;
-		afficher_map(map);
+		afficher_map();
 	}
 }

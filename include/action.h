@@ -1,3 +1,6 @@
+#ifndef _ACTION_H_
+#define _ACTION_H_
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -37,3 +40,4 @@ void attaque(int * PA_tour);
 
 
 void shadowcasting(int matrix[i_taille_map][i_taille_map], int i_player_x, int i_player_y);
+#endif

@@ -1,5 +1,6 @@
 CC=gcc
-CFLAGS=-g -Wall
+CFLAGS=-g -Wall -I/usr/include/lua5.1 -llua5.1
+
 EXEC=bin/out
 SRC= $(wildcard src/*.c)
 OBJ= $(SRC:.c=.o)
@@ -18,6 +19,7 @@ src/tableau.o: $(INC)perso.h
 src/save.o: $(INC)map.h $(INC)placement.h $(INC)tableau.h
 src/action.o: $(INC)action.h
 src/couleur.o: $(INC)couleur.h
+src/lua_ia.o:  $(INC)lua_ia.h
 
 %.o: %.c
 	$(CC) -o $@ -c $< $(CFLAGS)
@@ -32,4 +34,19 @@ rmdoc:
 doc: rmdoc
 	doxygen doxytics
 
-.PHONY: rien
+ifndef sys
+SYS=linux
+else
+SYS=$(sys)
+endif
+
+install-lua:
+	wget http://www.lua.org/ftp/lua-5.2.1.tar.gz
+	tar -zxvf lua-5.2.1.tar.gz
+	rm -rf lua-5.2.1.tar.gz
+	cd ./lua-5.2.1 && make $(SYS) install
+	cd ..
+rm-lua:
+	rm -rf lua-5.2.1
+
+.PHONY: local

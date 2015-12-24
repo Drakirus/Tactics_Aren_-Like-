@@ -57,8 +57,8 @@ int victoire(){
 
 /**
  * \fn void actio(t_perso *perso)
- * \param perso Personnage du tableau de perso 
- * \brief Effectue une action pour un personnage 
+ * \param perso Personnage du tableau de perso
+ * \brief Effectue une action pour un personnage
  *
  */
 void actio(t_perso *perso){

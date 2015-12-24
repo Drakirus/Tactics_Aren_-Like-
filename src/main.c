@@ -17,6 +17,7 @@
 #include "../include/tour.h"
 #include "../include/map.h"
 #include "../include/tableau.h"
+#include "../include/lua_ia.h"
 
 
 /**
@@ -31,7 +32,8 @@ int main() {
 		// system("clear");
 		printf("1 - Nouvelle Partie\n");
 		printf("2 - Charger une partie\n");
-		printf("3 - Quitter\n");
+		printf("3 - IA vs IA\n");
+		printf("4 - Quitter\n");
 		scanf("%i", &choix_menu);
 		switch(choix_menu){
 			case 1: initialise_map();
@@ -43,9 +45,16 @@ int main() {
 					partie();
 					break; /*Charger une partie */
 			case 3:
+					initialise_map();
+					afficher_map();
+					init_tab_perso(tab_perso);
+					IA_play("placing", "ia_test_function.lua");
+					IA_play("placing", "ia_test2_function.lua");
+					break;
+			case 4:
 					break;
 		}
-	}while(choix_menu != 3);
-	freeAllListAttack();
+	}while(choix_menu != 4);
+	// freeAllListAttack();
 	return 0;
 }
