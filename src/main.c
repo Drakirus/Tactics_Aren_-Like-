@@ -18,7 +18,7 @@
 #include "../include/map.h"
 #include "../include/tableau.h"
 #include "../include/lua_ia.h"
-
+#include "../include/action.h"
 
 /**
  * \fn int main()
@@ -50,6 +50,10 @@ int main() {
 					init_tab_perso(tab_perso);
 					IA_play("placing", "ia_test_function.lua");
 					IA_play("placing", "ia_test2_function.lua");
+					// delay(1000);
+				  afficher_map();
+
+
 					break;
 			case 4:
 					break;
