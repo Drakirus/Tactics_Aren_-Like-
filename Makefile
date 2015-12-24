@@ -34,19 +34,4 @@ rmdoc:
 doc: rmdoc
 	doxygen doxytics
 
-ifndef sys
-SYS=linux
-else
-SYS=$(sys)
-endif
-
-install-lua:
-	wget http://www.lua.org/ftp/lua-5.2.1.tar.gz
-	tar -zxvf lua-5.2.1.tar.gz
-	rm -rf lua-5.2.1.tar.gz
-	cd ./lua-5.2.1 && make $(SYS) install
-	cd ..
-rm-lua:
-	rm -rf lua-5.2.1
-
-.PHONY: local
+.PHONY: doc
