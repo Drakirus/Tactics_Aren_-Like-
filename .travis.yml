@@ -17,7 +17,7 @@ install:
 
 # Build the module
 script:
-  - sudo make install-lua
+  - make install-lua
   - make
   
 # Only watch the master branch
