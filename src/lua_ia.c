@@ -127,12 +127,12 @@ int getCoodPerso(lua_State *L){
 // ----------------------
 // Nb pv perso en coord r,c
 // ----------------------
-int getLifePerso(lua_State *L){
+int getLife(lua_State *L){
   // get number of arguments
   int n = lua_gettop(L);
   int nbParam = 2;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getLifePerso' must take %i parameter(s) \n\texemple : "magenta"life= getLifePerso( getCoodPerso() )\n" raz ,nbParam );
+    fprintf(stderr, red "\tError in function 'getLife' must take %i parameter(s) \n\texemple : "magenta"life = getLife( getCoodPerso() )\n" raz ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -140,7 +140,7 @@ int getLifePerso(lua_State *L){
 
   // total the arguments
   if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2)){
-    fprintf(stderr, red "\tError in function 'getLifePerso' must take int parameters\n" raz );
+    fprintf(stderr, red "\tError in function 'getLife' must take int parameters\n" raz );
     WaitUserInput();
     return 0;
   }else{
@@ -158,12 +158,12 @@ int getLifePerso(lua_State *L){
 // ----------------------
 // Nb pv total perso en coord r,c
 // ----------------------
-int getTotalLifePerso(lua_State *L){
+int getTotalLife(lua_State *L){
   // get number of arguments
   int n = lua_gettop(L);
   int nbParam = 2;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getTotalLifePerso' must take %i parameter(s) \n\texemple : "magenta"life= getTotalLifePerso( getCoodPerso() )\n" raz ,nbParam );
+    fprintf(stderr, red "\tError in function 'getTotalLife' must take %i parameter(s) \n\texemple : "magenta"life = getTotalLife( getCoodPerso() )\n" raz ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -171,7 +171,7 @@ int getTotalLifePerso(lua_State *L){
 
   // total the arguments
   if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2)){
-    fprintf(stderr, red "\tError in function 'getTotalLifePerso' must take int parameters\n" raz );
+    fprintf(stderr, red "\tError in function 'getTotalLife' must take int parameters\n" raz );
     WaitUserInput();
     return 0;
   }else{
@@ -186,6 +186,100 @@ int getTotalLifePerso(lua_State *L){
   lua_pushnumber(L, returnValue);
   return 1;
 }
+// ----------------------
+// Nb PA perso en coord r,c
+// ----------------------
+int getTotalPA(lua_State *L){
+  // get number of arguments
+  int n = lua_gettop(L);
+  int nbParam = 2;
+  if (n != nbParam) {
+    fprintf(stderr, red "\tError in function 'getTotalPA' must take %i parameter(s) \n\texemple : "magenta"pa = getTotalPA( getCoodPerso() )\n" raz ,nbParam );
+    WaitUserInput();
+    return 0;
+  }
+  double r, c;
+
+  // total the arguments
+  if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2)){
+    fprintf(stderr, red "\tError in function 'getTotalPA' must take int parameters\n" raz );
+    WaitUserInput();
+    return 0;
+  }else{
+    r = lua_tonumber(L, -2);
+    c = lua_tonumber(L, -1);
+  }
+  if ( recherche_perso_tab(r, c) == -1) {
+    lua_pushnumber(L, -1);
+    return 1;
+  }
+  double returnValue = tab_perso[recherche_perso_tab(r, c)].i_PA;
+  lua_pushnumber(L, returnValue);
+  return 1;
+}
+
+// ----------------------
+// Nb PM perso en coord r,c
+// ----------------------
+int getTotalPM(lua_State *L){
+  // get number of arguments
+  int n = lua_gettop(L);
+  int nbParam = 2;
+  if (n != nbParam) {
+    fprintf(stderr, red "\tError in function 'getTotalPM' must take %i parameter(s) \n\texemple : "magenta"pm = getTotalPM( getCoodPerso() )\n" raz ,nbParam );
+    WaitUserInput();
+    return 0;
+  }
+  double r, c;
+
+  // total the arguments
+  if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2)){
+    fprintf(stderr, red "\tError in function 'getTotalPM' must take int parameters\n" raz );
+    WaitUserInput();
+    return 0;
+  }else{
+    r = lua_tonumber(L, -2);
+    c = lua_tonumber(L, -1);
+  }
+  if ( recherche_perso_tab(r, c) == -1) {
+    lua_pushnumber(L, -1);
+    return 1;
+  }
+  double returnValue = tab_perso[recherche_perso_tab(r, c)].i_PM;
+  lua_pushnumber(L, returnValue);
+  return 1;
+}
+
+// ----------------------
+// return nom classe perso en coord r,c
+// ----------------------
+int getClass(lua_State *L){
+  // get number of arguments
+  int n = lua_gettop(L);
+  int nbParam = 2;
+  if (n != nbParam) {
+    fprintf(stderr, red "\tError in function 'getClass' must take %i parameter(s) \n\texemple : "magenta"name = getClass( getCoodPerso() )\n" raz ,nbParam );
+    WaitUserInput();
+    return 0;
+  }
+  double r, c;
+
+  // total the arguments
+  if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2)){
+    fprintf(stderr, red "\tError in function 'getClass' must take int parameters\n" raz );
+    WaitUserInput();
+    return 0;
+  }else{
+    r = lua_tonumber(L, -2);
+    c = lua_tonumber(L, -1);
+  }
+  if ( recherche_perso_tab(r, c) == -1) {
+    lua_pushstring(L, "Error(character not find)");
+    return 1;
+  }
+  lua_pushstring(L, tab_perso[recherche_perso_tab(r, c)].s_classe );
+  return 1;
+}
 
 // ----------------------
 // return coord r,c de l'enemy le plus proche de r,c
@@ -195,7 +289,7 @@ int getNearestEnemy(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 2;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getNearestEnemy' must take %i parameter(s) \n\texemple : "magenta"life= getNearestEnemy( getCoodPerso() )\n" raz ,nbParam );
+    fprintf(stderr, red "\tError in function 'getNearestEnemy' must take %i parameter(s) \n\texemple : "magenta"enemy = getNearestEnemy( getCoodPerso() )\n" raz ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -236,14 +330,14 @@ int getNearestEnemy(lua_State *L){
 }
 // ----------------------
 // return 0 pour vide 1 pour obstacle
-// et le num de l'équipe
+// 2 si il y a un perso
 // ----------------------
 int getCellContent(lua_State *L){
   // get number of arguments
   int n = lua_gettop(L);
   int nbParam = 2;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getCellContent' must take %i parameter(s) \n\texemple : "magenta"life= getCellContent(x, y)\n" raz ,nbParam );
+    fprintf(stderr, red "\tError in function 'getCellContent' must take %i parameter(s) \n\texemple : "magenta"content = getCellContent(x, y)\n" raz ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -268,10 +362,88 @@ int getCellContent(lua_State *L){
     lua_pushnumber(L, map[(int)r][(int)c] );
     return 1;
   }
-  if (tab_perso[recherche_perso_tab(r, c)].c_team == 'A') {
-    lua_pushnumber(L, 2 );
+  lua_pushnumber(L, 2 );
+  return 1;
+}
+// ----------------------
+// return 1 pour ally 0 pour enemy
+// -1 pour rien
+// ----------------------
+int isAlly(lua_State *L){
+  // get number of arguments
+  int n = lua_gettop(L);
+  int nbParam = 2;
+  if (n != nbParam) {
+    fprintf(stderr, red "\tError in function 'isAlly' must take %i parameter(s) \n\texemple : "magenta"Ally = isAlly(x, y)\n" raz ,nbParam );
+    WaitUserInput();
+    return 0;
+  }
+  double r, c;
+
+  // total the arguments
+  if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2)){
+    fprintf(stderr, red "\tError in function 'isAlly' must take int parameters\n" raz );
+    WaitUserInput();
+    return 0;
   }else{
-    lua_pushnumber(L, 3 );
+    r = lua_tonumber(L, -2);
+    c = lua_tonumber(L, -1);
+  }
+  if( r < 0 || r >= i_taille_map  || c < 0 || c >= i_taille_map ){
+    fprintf(stderr, red "\tError in function 'isAlly'\n\tinvalid coordinates\n" raz );
+    fprintf(stderr, "\tYour coordinates must be between the lines 0 and %i\n",i_taille_map);
+    WaitUserInput();
+    return 0;
+  }
+  if (recherche_perso_tab(r, c) == -1 ) {
+    lua_pushnumber(L, -1 );
+    return 1;
+  }
+  if (tab_perso[recherche_perso_tab(r, c)].c_team == tab_perso[perso_actuel].c_team ) {
+    lua_pushnumber(L, 1 );
+  }else{
+    lua_pushnumber(L, 0 );
+  }
+  return 1;
+}
+// ----------------------
+// return 0 pour ally 1 pour enemy
+// -1 pour rien
+// ----------------------
+int isEnemy(lua_State *L){
+  // get number of arguments
+  int n = lua_gettop(L);
+  int nbParam = 2;
+  if (n != nbParam) {
+    fprintf(stderr, red "\tError in function 'isEnemy' must take %i parameter(s) \n\texemple : "magenta"enemy = isEnemy(x, y)\n" raz ,nbParam );
+    WaitUserInput();
+    return 0;
+  }
+  double r, c;
+
+  // total the arguments
+  if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2)){
+    fprintf(stderr, red "\tError in function 'isEnemy' must take int parameters\n" raz );
+    WaitUserInput();
+    return 0;
+  }else{
+    r = lua_tonumber(L, -2);
+    c = lua_tonumber(L, -1);
+  }
+  if( r < 0 || r >= i_taille_map  || c < 0 || c >= i_taille_map ){
+    fprintf(stderr, red "\tError in function 'isEnemy'\n\tinvalid coordinates\n" raz );
+    fprintf(stderr, "\tYour coordinates must be between the lines 0 and %i\n",i_taille_map);
+    WaitUserInput();
+    return 0;
+  }
+  if (recherche_perso_tab(r, c) == -1 ) {
+    lua_pushnumber(L, -1 );
+    return 1;
+  }
+  if (tab_perso[recherche_perso_tab(r, c)].c_team != tab_perso[perso_actuel].c_team ) {
+    lua_pushnumber(L, 1 );
+  }else{
+    lua_pushnumber(L, 0 );
   }
   return 1;
 }
@@ -283,7 +455,7 @@ int getPathLength(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 4;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getPathLength' must take %i parameter(s) \n\texemple : "magenta"path= getPathLength( 0, 0, 9, 0 )\n" raz ,nbParam );
+    fprintf(stderr, red "\tError in function 'getPathLength' must take %i parameter(s) \n\texemple : "magenta"path = getPathLength( 0, 0, 9, 0 )\n" raz ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -322,12 +494,19 @@ int IA_play(char function[10], char script[20] ){
   // register our functions
   lua_register(L, "placePerso", placePerso );
   lua_register(L, "nbPalcePerso", nbPalcePerso );
+
   lua_register(L, "getCoodPerso", getCoodPerso );
-  lua_register(L, "getLifePerso", getLifePerso );
-  lua_register(L, "getTotalLifePerso", getTotalLifePerso );
+  lua_register(L, "getClass", getClass );
+  lua_register(L, "getTotalPA", getTotalPA );
+  lua_register(L, "getTotalPM", getTotalPM );
+  lua_register(L, "getLife", getLife );
+  lua_register(L, "getTotalLife", getTotalLife );
+
   lua_register(L, "getNearestEnemy", getNearestEnemy );
   lua_register(L, "getCellContent", getCellContent );
   lua_register(L, "getPathLength", getPathLength );
+  lua_register(L, "isAlly", isAlly );
+  lua_register(L, "isEnemy", isEnemy );
 
   //run the script
   luaL_dofile(L, script);

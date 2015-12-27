@@ -52,7 +52,7 @@ int main() {
 					IA_play("placing", "ia_test2_function.lua");
 					// delay(1000);
 				  afficher_map();
-
+					IA_play("main", "ia_test2_function.lua");
 
 					break;
 			case 4:

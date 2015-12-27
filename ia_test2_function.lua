@@ -9,9 +9,15 @@ function main ()
   -- life = getLifePerso( 1,6  )
   -- print(getCoodPerso())
   print(getNearestEnemy( getCoodPerso() ))
-  print(getCellContent( 4,0 ))
+
   x,y =getCoodPerso()
-  -- content = getCellContent( 11,0 )
+  -- print(getPathLength( x,y , 9,0 ))
+
+  -- content = getCellContent( 3,2 )
   -- print(content)
-  print(getPathLength( x,y , 9,0 ))
+
+  print("is enemy", isAlly(0,6))
+
+  print("perso : ", getClass( getCoodPerso()))
+  print("pa: ", getTotalPM( getCoodPerso()))
 end
