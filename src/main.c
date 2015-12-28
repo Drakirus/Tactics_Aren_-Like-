@@ -50,10 +50,8 @@ int main() {
 					init_tab_perso(tab_perso);
 					IA_play("placing", "ia_test_function.lua");
 					IA_play("placing", "ia_test2_function.lua");
-					// delay(1000);
 				  afficher_map();
-					IA_play("main", "ia_test2_function.lua");
-
+					partieIA();
 					break;
 			case 4:
 					break;

@@ -18,6 +18,7 @@
 #include "../include/save.h"
 #include "../include/action.h"
 #include "../include/tableau.h"
+#include "../include/lua_ia.h"
 
 extern int map[i_taille_map][i_taille_map];
 extern t_perso tab_perso[i_taille_tab_perso];
@@ -25,6 +26,7 @@ int nb_perso[2]; //Stocke le nombre de perso de chaque équipe
 int i_perso_actuel = 0;
 int action = 0;
 
+extern int PA_actuel, PM_actuel; // extern at lua_ia.c
 /**
  * \fn void perso_vivant()
  * \brief Compte le nombre de personnage vivant de chaque équipe et le stocke dans un tableau
@@ -117,4 +119,36 @@ void partie(){
 	}
 	if(action == 5);
 	else printf("Le joueur %i a gagné !\n", victoire());
+}
+
+void call_IA_play(char src[50]){
+	if(tab_perso[i_perso_actuel].i_HP > 0){
+
+		PA_actuel = tab_perso[i_perso_actuel].i_PA;
+		PM_actuel = tab_perso[i_perso_actuel].i_PM; /*Permet de ne pas modifier les statistiques du personnage*/
+
+		afficher_map();
+		IA_play("main", src);
+		delay(1000);
+	}
+	i_perso_actuel++;
+}
+/**
+ * \fn void partieIA()
+ * \brief Permet le bon déroulement de la partie.
+ *
+ */
+void partieIA(){
+	perso_vivant();
+	while(!victoire()){
+		while(i_perso_actuel < i_taille_tab_perso && !victoire()){
+
+			call_IA_play("ia_test_function.lua");
+
+			call_IA_play("ia_test2_function.lua");
+
+		}
+		i_perso_actuel = 0;
+	}
+	printf("Le joueur %i a gagné !\n", victoire());
 }

@@ -1,10 +1,11 @@
+int PA_actuel, PM_actuel;
 #include "../include/lua_ia.h"
 
 #include "lua.h"
 #include "lualib.h"
 #include "lauxlib.h"
 
-int perso_actuel = 0;
+extern int i_perso_actuel;
 extern t_perso ensemble_perso[i_nombre_classe];
 extern t_perso tab_perso[i_taille_tab_perso];
 extern int map[i_taille_map][i_taille_map];
@@ -110,18 +111,18 @@ int nbPalcePerso(lua_State *L){
 // ----------------------
 // coord du perso actuel
 // ----------------------
-int getCoodPerso(lua_State *L){
+int getCood(lua_State *L){
   // get number of arguments
   double n = lua_gettop(L);
   int nbParam = 0;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getCoodPerso' must take %i parameter(s) \n\texemple : "magenta"r,c = getCoodPerso()\n" raz ,nbParam );
+    fprintf(stderr, red "\tError in function 'getCood' must take %i parameter(s) \n\texemple : "magenta"r,c = getCood()\n" raz ,nbParam );
     WaitUserInput();
     return 0;
   }
 
-  lua_pushnumber(L, tab_perso[perso_actuel].coord[0]);
-  lua_pushnumber(L, tab_perso[perso_actuel].coord[1]);
+  lua_pushnumber(L, tab_perso[i_perso_actuel].coord[0]);
+  lua_pushnumber(L, tab_perso[i_perso_actuel].coord[1]);
   return 2;
 }
 // ----------------------
@@ -287,23 +288,17 @@ int getClass(lua_State *L){
 int getNearestEnemy(lua_State *L){
   // get number of arguments
   int n = lua_gettop(L);
-  int nbParam = 2;
+  int nbParam = 0;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getNearestEnemy' must take %i parameter(s) \n\texemple : "magenta"enemy = getNearestEnemy( getCoodPerso() )\n" raz ,nbParam );
+    fprintf(stderr, red "\tError in function 'getNearestEnemy' must take %i parameter(s) \n\texemple : "magenta"enemy = getNearestEnemy()\n" raz ,nbParam );
     WaitUserInput();
     return 0;
   }
-  double r, c;
+  int r, c;
 
-  // total the arguments
-  if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2)){
-    fprintf(stderr, red "\tError in function 'getNearestEnemy' must take int parameters\n" raz );
-    WaitUserInput();
-    return 0;
-  }else{
-    r = lua_tonumber(L, -2);
-    c = lua_tonumber(L, -1);
-  }
+  r = tab_perso[i_perso_actuel].coord[0];
+  c = tab_perso[i_perso_actuel].coord[1];
+
   if( r < 0 || r >= i_taille_map  || c < 0 || c >= i_taille_map ){
     fprintf(stderr, red "\tError in function 'getNearestEnemy'\n\tinvalid coordinates\n" raz );
     fprintf(stderr, "\tYour coordinates must be between the lines 0 and %i\n",i_taille_map);
@@ -313,7 +308,7 @@ int getNearestEnemy(lua_State *L){
 
   int i=0,j=0;
   int lowerPath = 9999;
-  int **DistancePath = createDistancePath( (int)r, (int)c );
+  int **DistancePath = createDistancePath( r, c );
   int persoNearest=0;
   for (i = 0; i <  i_taille_map; i++){
     for (j = 0; j < i_taille_map; j++){
@@ -399,7 +394,7 @@ int isAlly(lua_State *L){
     lua_pushnumber(L, -1 );
     return 1;
   }
-  if (tab_perso[recherche_perso_tab(r, c)].c_team == tab_perso[perso_actuel].c_team ) {
+  if (tab_perso[recherche_perso_tab(r, c)].c_team == tab_perso[i_perso_actuel].c_team ) {
     lua_pushnumber(L, 1 );
   }else{
     lua_pushnumber(L, 0 );
@@ -440,7 +435,7 @@ int isEnemy(lua_State *L){
     lua_pushnumber(L, -1 );
     return 1;
   }
-  if (tab_perso[recherche_perso_tab(r, c)].c_team != tab_perso[perso_actuel].c_team ) {
+  if (tab_perso[recherche_perso_tab(r, c)].c_team != tab_perso[i_perso_actuel].c_team ) {
     lua_pushnumber(L, 1 );
   }else{
     lua_pushnumber(L, 0 );
@@ -453,24 +448,24 @@ int isEnemy(lua_State *L){
 int getPathLength(lua_State *L){
   // get number of arguments
   int n = lua_gettop(L);
-  int nbParam = 4;
+  int nbParam = 2;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getPathLength' must take %i parameter(s) \n\texemple : "magenta"path = getPathLength( 0, 0, 9, 0 )\n" raz ,nbParam );
+    fprintf(stderr, red "\tError in function 'getPathLength' must take %i parameter(s) \n\texemple : "magenta"path = getPathLength( 9, 0 )\n" raz ,nbParam );
     WaitUserInput();
     return 0;
   }
-  double r, c, i, j;
+  double r, c;
+  int i = tab_perso[i_perso_actuel].coord[0];
+  int j = tab_perso[i_perso_actuel].coord[1];
 
   // total the arguments
-  if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2) || !lua_isnumber(L, 3) || !lua_isnumber(L, 4)){
+  if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2)){
     fprintf(stderr, red "\tError in function 'getPathLength' must take int parameters\n" raz );
     WaitUserInput();
     return 0;
   }else{
     r = lua_tonumber(L, 1);
     c = lua_tonumber(L, 2);
-    i = lua_tonumber(L, 3);
-    j = lua_tonumber(L, 4);
   }
 
   if( r < 0 || r >= i_taille_map  || c < 0 || c >= i_taille_map || i < 0 || i >= i_taille_map  || j < 0 || j >= i_taille_map){
@@ -486,6 +481,76 @@ int getPathLength(lua_State *L){
   return 1;
 }
 
+// ----------------------
+// moveToward a perso to coord
+// ----------------------
+int moveToward(lua_State *L){
+  // get number of arguments
+  int n = lua_gettop(L);
+  int nbParam = 3;
+  if (n != nbParam) {
+    fprintf(stderr, red "\tError in function 'moveToward' must take %i parameter(s) \n\texemple : "magenta"moveToward( 0 , 0 , 1 ) where 0,0 are the coordinates and 1 the number of PA to use\n" raz ,nbParam );
+    WaitUserInput();
+    return 0;
+  }
+  int r, c, PA_toUse;
+  int i = tab_perso[i_perso_actuel].coord[0];
+  int j = tab_perso[i_perso_actuel].coord[1];
+
+  // total the arguments
+  if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2) || !lua_isnumber(L, 3) ){
+    fprintf(stderr, red "\tError in function 'moveToward' must take int parameters\n" raz );
+    WaitUserInput();
+    return 0;
+  }else{
+    r = lua_tonumber(L, 1);
+    c = lua_tonumber(L, 2);
+    PA_toUse = lua_tonumber(L, 3);
+  }
+
+  if( r < 0 || r >= i_taille_map  || c < 0 || c >= i_taille_map || i < 0 || i >= i_taille_map  || j < 0 || j >= i_taille_map){
+    fprintf(stderr, red "\tError in function 'moveToward'\n\tinvalid coordinates\n" raz );
+    fprintf(stderr, "\tYour coordinates must be between the lines 0 and %i\n",i_taille_map);
+    WaitUserInput();
+    return 0;
+  }
+
+  pile *path = NULL;
+  int sortir;
+  int **DistancePath = createDistancePath(i, j );
+  int PA_used = 0;
+  path = getPath(DistancePath, r, c);
+
+  if (path == NULL)
+    fprintf(stderr, "\tCan not move\n");
+  else{
+    sortir = pop(&path, &r, &c);
+    afficher_map();
+    while (sortir != -1) {
+      sortir = pop(&path, &r, &c);
+      // printf("r: %i c: %i\n",r,c );
+      if ( PM_actuel > 0 && recherche_perso_tab(r, c) == -1 && PA_toUse != PA_used ) {
+        change_nombre(6, &tab_perso[i_perso_actuel], c);
+        change_nombre(5, &tab_perso[i_perso_actuel], r);
+        PM_actuel--;
+        PA_used++;
+        afficher_map();
+        delay(400);
+      }
+
+    }
+  }
+  return 0;
+
+}
+
+// ----------------------
+// moveAway a perso to coord
+// ----------------------
+int moveAway(lua_State *L){
+
+}
+
 int IA_play(char function[10], char script[20] ){
   // Create new Lua state and load the lua libraries
   lua_State *L = luaL_newstate();
@@ -495,7 +560,7 @@ int IA_play(char function[10], char script[20] ){
   lua_register(L, "placePerso", placePerso );
   lua_register(L, "nbPalcePerso", nbPalcePerso );
 
-  lua_register(L, "getCoodPerso", getCoodPerso );
+  lua_register(L, "getCood", getCood );
   lua_register(L, "getClass", getClass );
   lua_register(L, "getTotalPA", getTotalPA );
   lua_register(L, "getTotalPM", getTotalPM );
@@ -508,6 +573,8 @@ int IA_play(char function[10], char script[20] ){
   lua_register(L, "isAlly", isAlly );
   lua_register(L, "isEnemy", isEnemy );
 
+  lua_register(L, "moveToward", moveToward );
+
   //run the script
   luaL_dofile(L, script);
 
@@ -517,13 +584,10 @@ int IA_play(char function[10], char script[20] ){
   // Checks if top of the Lua stack is a function.
   if (lua_isfunction(L, -1) == 0) {
     fprintf(stderr, red "\tFunction %s is not found\n" raz, function );
-    WaitUserInput();
-    lua_close(L);
-    return -1;
   }
   // Perform the function call (0 arguments, 1 result, 0 Error) */
   if (lua_pcall(L, 0, 1, 0) != 0) {
-      fprintf(stderr, red "\tError running function :"raz" %s\n" , lua_tostring(L, -1) );
+      fprintf(stderr, red "\tError LUA :"raz" %s\n" , lua_tostring(L, -1) );
       WaitUserInput();
       lua_close(L);
       return -1;

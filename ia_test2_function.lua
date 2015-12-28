@@ -5,19 +5,25 @@ end
 
 
 function main ()
-  -- life = getLifePerso( getCoodPerso() )
-  -- life = getLifePerso( 1,6  )
-  -- print(getCoodPerso())
-  print(getNearestEnemy( getCoodPerso() ))
+  print("test 2")
+  x,y =getCood()
+  print(x,y)
 
-  x,y =getCoodPerso()
-  -- print(getPathLength( x,y , 9,0 ))
+  -- life = getLifePerso( getCood() )
+  -- life = getLifePerso( 1,6  )
+  -- print(getCood())
+  print(getNearestEnemy())
+
+  print("pa need",getPathLength( 9,0 ))
 
   -- content = getCellContent( 3,2 )
   -- print(content)
 
-  print("is enemy", isAlly(0,6))
+  print("is ally", isEnemy(0,6))
 
-  print("perso : ", getClass( getCoodPerso()))
-  print("pa: ", getTotalPM( getCoodPerso()))
+  print("perso : ", getClass( getCood()))
+  print("pa: ", getTotalPA( getCood()))
+
+  moveToward( (getNearestEnemy()), (getNearestEnemy()) , 2)
+
 end

@@ -1,5 +1,5 @@
-#ifndef _ACTION_H_
-#define _ACTION_H_
+#ifndef _LUA_H_
+#define _LUA_H_
 
 #include <stdio.h>
 #include <stdlib.h>
