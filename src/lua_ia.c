@@ -1,4 +1,3 @@
-int PA_actuel, PM_actuel;
 #include "../include/lua_ia.h"
 
 #include "lua.h"
@@ -9,6 +8,10 @@ extern int i_perso_actuel;
 extern t_perso ensemble_perso[i_nombre_classe];
 extern t_perso tab_perso[i_taille_tab_perso];
 extern int map[i_taille_map][i_taille_map];
+
+int PA_actuel, PM_actuel;
+extern int nbIA;
+
 
 void WaitUserInput(){
   fprintf(stderr, green "Press any key to continue..."raz );
@@ -37,7 +40,7 @@ int placePerso(lua_State *L){
     fprintf(stderr, red "\tError in function 'placePerso' must take int parameter\n" raz );
     WaitUserInput();
     return 0;
-	}else{
+  }else{
     r = lua_tonumber(L, 1);
     c = lua_tonumber(L, 2);
     selectedPerso = lua_tonumber(L, 3);
@@ -73,6 +76,12 @@ int placePerso(lua_State *L){
   if( r < limiteA || r >= limiteB  || c < 0 || c >= i_taille_map ){
     fprintf(stderr, red "\tError in function 'placePerso'\n\tinvalid coordinates\n" raz );
     fprintf(stderr, "\tYour coordinates must be between the lines %i and %i\n",limiteA,limiteB-1);
+    WaitUserInput();
+    return 0;
+  }
+
+  if (nbIA == i) {
+    fprintf(stderr, red "\tError in function 'placePerso'\n"raz"\tCan't add any more perso\n" raz );
     WaitUserInput();
     return 0;
   }
@@ -313,8 +322,8 @@ int getNearestEnemy(lua_State *L){
   for (i = 0; i <  i_taille_map; i++){
     for (j = 0; j < i_taille_map; j++){
       if (recherche_perso_tab(i, j) != -1 && lowerPath > distanceFrom(i, j, DistancePath) && distanceFrom(i, j, DistancePath) != 0 ) {
-         persoNearest = recherche_perso_tab(i, j);
-         lowerPath =  distanceFrom(i, j, DistancePath);
+        persoNearest = recherche_perso_tab(i, j);
+        lowerPath =  distanceFrom(i, j, DistancePath);
       }
     }
   }
@@ -522,7 +531,7 @@ int moveToward(lua_State *L){
   path = getPath(DistancePath, r, c);
 
   if (path == NULL)
-    fprintf(stderr, "\tCan not move\n");
+  fprintf(stderr, "\tCan not move\n");
   else{
     sortir = pop(&path, &r, &c);
     afficher_map();
@@ -540,15 +549,265 @@ int moveToward(lua_State *L){
 
     }
   }
+  freeBoard(DistancePath, i_taille_map);
   return 0;
-
 }
 
 // ----------------------
 // moveAway a perso to coord
 // ----------------------
 int moveAway(lua_State *L){
+  // get number of arguments
+  int n = lua_gettop(L);
+  int nbParam = 3;
+  if (n != nbParam) {
+    fprintf(stderr, red "\tError in function 'moveAway' must take %i parameter(s) \n\texemple : "magenta"moveAway( 0 , 0 , 1 ) where 0,0 are the coordinates and 1 the number of PA to use\n" raz ,nbParam );
+    WaitUserInput();
+    return 0;
+  }
+  int r, c, PA_toUse;
 
+  // total the arguments
+  if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2) || !lua_isnumber(L, 3) ){
+    fprintf(stderr, red "\tError in function 'moveAway' must take int parameters\n" raz );
+    WaitUserInput();
+    return 0;
+  }else{
+    r = lua_tonumber(L, 1);
+    c = lua_tonumber(L, 2);
+    PA_toUse = lua_tonumber(L, 3);
+  }
+
+  if( r < 0 || r >= i_taille_map  || c < 0 || c >= i_taille_map ){
+    fprintf(stderr, red "\tError in function 'moveAway'\n\tinvalid coordinates\n" raz );
+    fprintf(stderr, "\tYour coordinates must be between the lines 0 and %i\n",i_taille_map);
+    WaitUserInput();
+    return 0;
+  }
+
+  pile *path = NULL;
+
+  int sortir;
+  int **DistancePath = createDistancePath(r, c );
+  int PA_used = 0;
+  int i,j;
+  int to_i,to_j;
+  int longestPath = 0;
+  int **DistancePathFromActual = createDistancePath(tab_perso[i_perso_actuel].coord[0], tab_perso[i_perso_actuel].coord[1] );
+
+  /*
+  * find the farthest point without getting closer of the enemy
+  */
+  for (i = 0; i <  i_taille_map; i++){
+    for (j = 0; j < i_taille_map; j++){
+      if (DistancePath[i][j] - DistancePathFromActual[i][j] >= 0 && DistancePath[i][j] > longestPath ){
+        to_i = i;
+        to_j = j;
+        longestPath = DistancePath[i][j];
+      }
+    }
+  }
+  path = getPath(DistancePathFromActual, to_i, to_j);
+
+
+/*
+* DEBUG
+*/
+
+  // printf("\n\n\nfarthest point %i %i\n Distances depuis perso\n",to_i,to_j );
+  // displayBoard(i_taille_map,i_taille_map, DistancePathFromActual);
+  // printf("------- Distances depuis enemy-------\n" );
+  // displayBoard(i_taille_map,i_taille_map, DistancePath);
+  // printf("------- 2éme - 1er --------\n" );
+  //
+  // for (i = 0; i <  i_taille_map; i++){
+  //   for (j = 0; j < i_taille_map; j++){
+  //     if (DistancePath[i][j] - DistancePathFromActual[i][j] == -4)
+  //     printf("   ");
+  //     else
+  //     printf("%2d ", DistancePath[i][j] - DistancePathFromActual[i][j]);
+  //
+  //   }
+  //   printf("\n" );
+  // }
+  // WaitUserInput();
+
+  if (path == NULL)
+  fprintf(stderr, "\tCan not move\n");
+  else{
+    sortir = pop(&path, &r, &c);
+    afficher_map();
+    while (sortir != -1) {
+      sortir = pop(&path, &r, &c);
+      // printf("r: %i c: %i\n",r,c );
+      if ( PM_actuel > 0 && recherche_perso_tab(r, c) == -1 && PA_toUse != PA_used ) {
+        change_nombre(6, &tab_perso[i_perso_actuel], c);
+        change_nombre(5, &tab_perso[i_perso_actuel], r);
+        PM_actuel--;
+        PA_used++;
+        afficher_map();
+        delay(400);
+      }
+
+    }
+  }
+  freeBoard(DistancePath, i_taille_map);
+  freeBoard(DistancePathFromActual, i_taille_map);
+  return 0;
+}
+
+// ----------------------
+// getInfoAttack
+// ----------------------
+int getAttackCost(lua_State *L){
+  // get number of arguments
+  int n = lua_gettop(L);
+  int nbParam = 1;
+  if (n != nbParam) {
+    fprintf(stderr, red "\tError in function 'getAttackCost' must take %i parameter(s) \n\texemple : "magenta"info = getAttackCost(\"name of the attack\")\n" raz ,nbParam );
+    WaitUserInput();
+    return 0;
+  }
+  char attackNameInput[20];
+  size_t l;
+
+  // total the arguments
+  if (!lua_isstring(L, 1) ){
+    fprintf(stderr, red "\tError in function 'getAttackCost' must take string parameters\n" raz );
+    WaitUserInput();
+    return 0;
+  }else{
+    strcpy(attackNameInput, lua_tolstring(L, 1, &l) );
+  }
+
+  list_attack * tmp_att = tab_perso[i_perso_actuel].att ;
+  while( tmp_att->current_attack != NULL && strcmp(tmp_att->current_attack->attack_name, attackNameInput) != 0){
+    // fprintf(stderr, "%s\n", tmp_att->current_attack->attack_name );
+    tmp_att = tmp_att->next;
+  }
+  if (tmp_att->current_attack == NULL) {
+    fprintf(stderr, red "\tError in function 'getAttackCost'\n"raz"\tinvalid name : \'%s\'\n" raz, attackNameInput );
+    WaitUserInput();
+    return 0;
+  }
+  // fprintf(stderr, "%s\n", tmp_att->current_attack->attack_name );
+  lua_pushnumber(L, tmp_att->current_attack->cost_PA );
+  return 1;
+}
+
+// ----------------------
+// getInfoAttack
+// ----------------------
+int getAttackArea(lua_State *L){
+  // get number of arguments
+  int n = lua_gettop(L);
+  int nbParam = 1;
+  if (n != nbParam) {
+    fprintf(stderr, red "\tError in function 'getAreaCost' must take %i parameter(s) \n\texemple : "magenta"info = getAreaCost(\"name of the attack\")\n" raz ,nbParam );
+    WaitUserInput();
+    return 0;
+  }
+  char attackNameInput[20];
+  size_t l;
+
+  // total the arguments
+  if (!lua_isstring(L, 1) ){
+    fprintf(stderr, red "\tError in function 'getAreaCost' must take string parameters\n" raz );
+    WaitUserInput();
+    return 0;
+  }else{
+    strcpy(attackNameInput, lua_tolstring(L, 1, &l) );
+  }
+
+  list_attack * tmp_att = tab_perso[i_perso_actuel].att ;
+  while( tmp_att->current_attack != NULL && strcmp(tmp_att->current_attack->attack_name, attackNameInput) != 0){
+    // fprintf(stderr, "%s\n", tmp_att->current_attack->attack_name );
+    tmp_att = tmp_att->next;
+  }
+  if (tmp_att->current_attack == NULL) {
+    fprintf(stderr, red "\tError in function 'getAreaCost'\n"raz"\tinvalid name : \'%s\'\n" raz, attackNameInput );
+    WaitUserInput();
+    return 0;
+  }
+  // fprintf(stderr, "%s\n", tmp_att->current_attack->attack_name );
+  lua_pushnumber(L, tmp_att->current_attack->splash_range );
+  return 1;
+}
+
+// ----------------------
+// getInfoAttack
+// ----------------------
+int getRangeCost(lua_State *L){
+  // get number of arguments
+  int n = lua_gettop(L);
+  int nbParam = 1;
+  if (n != nbParam) {
+    fprintf(stderr, red "\tError in function 'getRangeCost' must take %i parameter(s) \n\texemple : "magenta"min , max = getRangeCost(\"name of the attack\")\n" raz ,nbParam );
+    WaitUserInput();
+    return 0;
+  }
+  char attackNameInput[20];
+  size_t l;
+
+  // total the arguments
+  if (!lua_isstring(L, 1) ){
+    fprintf(stderr, red "\tError in function 'getRangeCost' must take string parameters\n" raz );
+    WaitUserInput();
+    return 0;
+  }else{
+    strcpy(attackNameInput, lua_tolstring(L, 1, &l) );
+  }
+
+  list_attack * tmp_att = tab_perso[i_perso_actuel].att ;
+  while( tmp_att->current_attack != NULL && strcmp(tmp_att->current_attack->attack_name, attackNameInput) != 0){
+    // fprintf(stderr, "%s\n", tmp_att->current_attack->attack_name );
+    tmp_att = tmp_att->next;
+  }
+  if (tmp_att->current_attack == NULL) {
+    fprintf(stderr, red "\tError in function 'getRangeCost'\n"raz"\tinvalid name : \'%s\'\n" raz, attackNameInput );
+    WaitUserInput();
+    return 0;
+  }
+  // fprintf(stderr, "%s\n", tmp_att->current_attack->attack_name );
+  lua_pushnumber(L, tmp_att->current_attack->range_min );
+  lua_pushnumber(L, tmp_att->current_attack->range_max );
+  return 2;
+}
+
+int isInlineWeapon(lua_State *L){
+  // get number of arguments
+  int n = lua_gettop(L);
+  int nbParam = 1;
+  if (n != nbParam) {
+    fprintf(stderr, red "\tError in function 'isInlineWeapon' must take %i parameter(s) \n\texemple : "magenta"info = isInlineWeapon(\"name of the attack\")\n" raz ,nbParam );
+    WaitUserInput();
+    return 0;
+  }
+  char attackNameInput[20];
+  size_t l;
+
+  // total the arguments
+  if (!lua_isstring(L, 1) ){
+    fprintf(stderr, red "\tError in function 'isInlineWeapon' must take string parameters\n" raz );
+    WaitUserInput();
+    return 0;
+  }else{
+    strcpy(attackNameInput, lua_tolstring(L, 1, &l) );
+  }
+
+  list_attack * tmp_att = tab_perso[i_perso_actuel].att ;
+  while( tmp_att->current_attack != NULL && strcmp(tmp_att->current_attack->attack_name, attackNameInput) != 0){
+    // fprintf(stderr, "%s\n", tmp_att->current_attack->attack_name );
+    tmp_att = tmp_att->next;
+  }
+  if (tmp_att->current_attack == NULL) {
+    fprintf(stderr, red "\tError in function 'isInlineWeapon'\n"raz"\tinvalid name : \'%s\'\n" raz, attackNameInput );
+    WaitUserInput();
+    return 0;
+  }
+  // fprintf(stderr, "%s\n", tmp_att->current_attack->attack_name );
+  lua_pushnumber(L, tmp_att->current_attack->only_line );
+  return 1;
 }
 
 int IA_play(char function[10], char script[20] ){
@@ -574,24 +833,31 @@ int IA_play(char function[10], char script[20] ){
   lua_register(L, "isEnemy", isEnemy );
 
   lua_register(L, "moveToward", moveToward );
+  lua_register(L, "moveAway", moveAway );
+
+  lua_register(L, "getAttackCost", getAttackCost );
+  lua_register(L, "getAttackArea", getAttackArea );
+  lua_register(L, "getRangeCost", getRangeCost );
+  lua_register(L, "isInlineWeapon", isInlineWeapon );
+
 
   //run the script
   luaL_dofile(L, script);
 
   // Push "main" function to the Lua stack
   lua_getglobal(L, function);
-  fprintf(stderr, green "\nIn script "raz"\"%s\""green"\nFunction: "raz"\"%s\"\n\n", script, function );
   // Checks if top of the Lua stack is a function.
   if (lua_isfunction(L, -1) == 0) {
     fprintf(stderr, red "\tFunction %s is not found\n" raz, function );
   }
   // Perform the function call (0 arguments, 1 result, 0 Error) */
   if (lua_pcall(L, 0, 1, 0) != 0) {
-      fprintf(stderr, red "\tError LUA :"raz" %s\n" , lua_tostring(L, -1) );
-      WaitUserInput();
-      lua_close(L);
-      return -1;
+    fprintf(stderr, red "\tError LUA :"raz" %s\n" , lua_tostring(L, -1) );
+    WaitUserInput();
+    lua_close(L);
+    return -1;
   }
+  fprintf(stderr, green "\nIn script "raz"\"%s\""green"\nFunction: "raz"\"%s\"\n\n", script, function );
   // double c = lua_tonumber(L, -1); // retrieve the result
   // lua_pop(L, 1); // Pop retrieved value from the Lua stack
   // printf("\nThe number returned by main is %f\n", c);

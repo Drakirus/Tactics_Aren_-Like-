@@ -10,4 +10,6 @@ void actio(t_perso *perso);
 void partie();
 int victoire();
 
+void partieIA();
+void call_IA_play(char src[50]);
 #endif

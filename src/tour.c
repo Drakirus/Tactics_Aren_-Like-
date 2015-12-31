@@ -27,6 +27,8 @@ int i_perso_actuel = 0;
 int action = 0;
 
 extern int PA_actuel, PM_actuel; // extern at lua_ia.c
+extern int nbIA; //extern a main.c
+extern char NomSaveIA[10][50]; //extern a main.c
 /**
  * \fn void perso_vivant()
  * \brief Compte le nombre de personnage vivant de chaque équipe et le stocke dans un tableau
@@ -129,7 +131,7 @@ void call_IA_play(char src[50]){
 
 		afficher_map();
 		IA_play("main", src);
-		delay(1000);
+		delay(1400);
 	}
 	i_perso_actuel++;
 }
@@ -140,12 +142,13 @@ void call_IA_play(char src[50]){
  */
 void partieIA(){
 	perso_vivant();
+	int i;
 	while(!victoire()){
 		while(i_perso_actuel < i_taille_tab_perso && !victoire()){
 
-			call_IA_play("ia_test_function.lua");
-
-			call_IA_play("ia_test2_function.lua");
+			for ( i = 0; i < nbIA; i++){
+				call_IA_play(NomSaveIA[i]);
+			}
 
 		}
 		i_perso_actuel = 0;

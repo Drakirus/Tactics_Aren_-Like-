@@ -148,14 +148,9 @@ void attaque(int * PA_tour){
   int coord_r, coord_c; // coordonnées x et y d
   int map_shadowcasting[i_taille_map][i_taille_map]; // map qui affiche si une zone est cachée ou pas
   int i,j;
-  int splashRange = 0; // dommages appliqué en zone ou pas
-  int dx,dy; // pour les dommages de zone
-  int shoot; // si le tir est effectuer
   int **DistancePath = createDistancePath( tab_perso[i_perso_actuel].coord[0],  tab_perso[i_perso_actuel].coord[1]); // creation des distances
   t_attak * tmp_att =NULL; // initialisation de l'ATTAQUE
-  int recul_r; // gestion du recu
-  int recul_c;
-  int HP;
+
   int range_max;
   int range_min;
   int ligne;
@@ -229,111 +224,128 @@ void attaque(int * PA_tour){
         delay(1200);
         return;
       }
-      splashRange = (tmp_att->splash_range)-1;
-      if (splashRange >= 1) {
-        dy = 0;
-        dy = 0;
-        for (dx = -splashRange; dx <= splashRange; dx++) {
-          for (dy = -splashRange; dy <= splashRange; dy++){
-            // printf("looking for player in %i %i\n",coord_r+dx,coord_c+dy );
-            if (coord_r+dx>=0 && coord_c+dy>=0 && coord_r+dx<i_taille_map && coord_c+dy<i_taille_map) {
-              if (recherche_perso_tab(coord_r+dx, coord_c+dy) != -1) {
-
-                augmente_nombre(1, &tab_perso[recherche_perso_tab(coord_r+dx, coord_c+dy)], tmp_att->trait.HP_max );
-                HP = tmp_att->trait.HP;
-                if (HP>0) {
-                  while (tab_perso[recherche_perso_tab(coord_r+dx, coord_c+dy)].i_HP_max < HP + tab_perso[recherche_perso_tab(coord_r+dx, coord_c+dy)].i_HP ) {
-                    HP--;
-                    // printf("%i \n",HP );
-                  }
-                }
-
-                augmente_nombre(2, &tab_perso[recherche_perso_tab(coord_r+dx, coord_c+dy)], HP );
-                augmente_nombre(3, &tab_perso[recherche_perso_tab(coord_r+dx, coord_c+dy)], tmp_att->trait.PA );
-                augmente_nombre(4, &tab_perso[recherche_perso_tab(coord_r+dx, coord_c+dy)], tmp_att->trait.PM );
-                printf("\tCible touchée\n");
-                afficher_perso(tab_perso[recherche_perso_tab(coord_r+dx, coord_c+dy)]);
-              }
-            }
-          }
-        }
-      }else{ // une attaque de zone ne peut affectée la position d'un personnage
-
-        // printf("looking for player in %i %i\n",coord_r,coord_c );
-        if (coord_r>=0 && coord_c>=0 && coord_r<i_taille_map && coord_c<i_taille_map) {
-          if (recherche_perso_tab(coord_r, coord_c) != -1) {
-
-            augmente_nombre(1, &tab_perso[recherche_perso_tab(coord_r, coord_c)], tmp_att->trait.HP_max );
-            HP = tmp_att->trait.HP;
-            if (HP>0) {
-              while (tab_perso[recherche_perso_tab(coord_r, coord_c)].i_HP_max < HP + tab_perso[recherche_perso_tab(coord_r, coord_c)].i_HP ) {
-                HP--;
-                // printf("%i \n",HP );
-              }
-            }
-
-            augmente_nombre(2, &tab_perso[recherche_perso_tab(coord_r, coord_c)], HP );
-            augmente_nombre(3, &tab_perso[recherche_perso_tab(coord_r, coord_c)], tmp_att->trait.PA );
-            augmente_nombre(4, &tab_perso[recherche_perso_tab(coord_r, coord_c)], tmp_att->trait.PM );
-
-            printf("\tCible touchée\n");
-
-            shoot=1;
-
-    				recul_r = tmp_att->trait.coord_r;
-    				recul_c = tmp_att->trait.coord_c;
-
-    				while (shoot) {
-    					// printf("%i\n", map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] - recul_c]);
-    					// printf("%i\n", map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] + recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] + recul_c]);
-    					if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] > tab_perso[i_perso_actuel].coord[0]) {
-    						if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_r >= 0 && tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_r < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] ] != 1) {
-
-    							augmente_nombre( 5 , &tab_perso[recherche_perso_tab(coord_r, coord_c)] , (recul_r * -1) );
-    							shoot =0;
-    						}
-    						recul_r++;
-
-    					}else
-    					if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] > tab_perso[i_perso_actuel].coord[1]) {
-    						if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] - recul_c >= 0 && tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] - recul_c < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] ][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] - recul_c] != 1 ) {
-
-    							augmente_nombre( 6 , &tab_perso[recherche_perso_tab(coord_r, coord_c)] , (recul_c * -1) );
-    							shoot =0;
-    						}
-    						recul_c++;
-
-    					}
-    					if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] < tab_perso[i_perso_actuel].coord[0]  ) {
-    						if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] + recul_r >= 0 && tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] + recul_r < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] + recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1]] != 1 ) {
-    							augmente_nombre( 5 , &tab_perso[recherche_perso_tab(coord_r, coord_c)] , recul_r );
-    							shoot =0;
-
-    						}
-    						recul_r++;
-
-    					}else
-    					if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] < tab_perso[i_perso_actuel].coord[1] ) {
-    						if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] + recul_c >= 0 && tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] + recul_c < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0]][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] + recul_c] != 1) {
-    							augmente_nombre( 6 , &tab_perso[recherche_perso_tab(coord_r, coord_c)] , recul_c );
-    							shoot =0;
-    						}
-    						recul_c++;
-    					}
-    				}
-          }
-
-        }
+      if (dealAttack(tmp_att, coord_r, coord_c)) {
+        delay(2500);
       }
       sortie = 0;
 
     }
   }
-  delay(2500);
   *PA_tour -= tmp_att->cost_PA;
   freeBoard(DistancePath, i_taille_map);
 }
 
+
+int  dealAttack(t_attak * tmp_att, int coord_r, int coord_c){
+  int dx,dy; // pour les dommages de zone
+  int splashRange = (tmp_att->splash_range)-1;
+  int recul_r; // gestion du recu
+  int recul_c;
+  int HP;
+  int shoot; // si le tir est effectuer
+  int returnValue = 0;
+
+
+  if (splashRange >= 1) {
+    dy = 0;
+    dy = 0;
+    for (dx = -splashRange; dx <= splashRange; dx++) {
+      for (dy = -splashRange; dy <= splashRange; dy++){
+        // printf("looking for player in %i %i\n",coord_r+dx,coord_c+dy );
+        if (coord_r+dx>=0 && coord_c+dy>=0 && coord_r+dx<i_taille_map && coord_c+dy<i_taille_map) {
+          if (recherche_perso_tab(coord_r+dx, coord_c+dy) != -1) {
+
+            augmente_nombre(1, &tab_perso[recherche_perso_tab(coord_r+dx, coord_c+dy)], tmp_att->trait.HP_max );
+            HP = tmp_att->trait.HP;
+            if (HP>0) {
+              while (tab_perso[recherche_perso_tab(coord_r+dx, coord_c+dy)].i_HP_max < HP + tab_perso[recherche_perso_tab(coord_r+dx, coord_c+dy)].i_HP ) {
+                HP--;
+                // printf("%i \n",HP );
+              }
+            }
+
+            augmente_nombre(2, &tab_perso[recherche_perso_tab(coord_r+dx, coord_c+dy)], HP );
+            augmente_nombre(3, &tab_perso[recherche_perso_tab(coord_r+dx, coord_c+dy)], tmp_att->trait.PA );
+            augmente_nombre(4, &tab_perso[recherche_perso_tab(coord_r+dx, coord_c+dy)], tmp_att->trait.PM );
+            printf("\tCible touchée\n");
+            afficher_perso(tab_perso[recherche_perso_tab(coord_r+dx, coord_c+dy)]);
+            returnValue = 1;
+          }
+        }
+      }
+    }
+  }else{ // une attaque de zone ne peut affectée la position d'un personnage
+
+    // printf("looking for player in %i %i\n",coord_r,coord_c );
+    if (coord_r>=0 && coord_c>=0 && coord_r<i_taille_map && coord_c<i_taille_map) {
+      if (recherche_perso_tab(coord_r, coord_c) != -1) {
+
+        augmente_nombre(1, &tab_perso[recherche_perso_tab(coord_r, coord_c)], tmp_att->trait.HP_max );
+        HP = tmp_att->trait.HP;
+        if (HP>0) {
+          while (tab_perso[recherche_perso_tab(coord_r, coord_c)].i_HP_max < HP + tab_perso[recherche_perso_tab(coord_r, coord_c)].i_HP ) {
+            HP--;
+            // printf("%i \n",HP );
+          }
+        }
+
+        augmente_nombre(2, &tab_perso[recherche_perso_tab(coord_r, coord_c)], HP );
+        augmente_nombre(3, &tab_perso[recherche_perso_tab(coord_r, coord_c)], tmp_att->trait.PA );
+        augmente_nombre(4, &tab_perso[recherche_perso_tab(coord_r, coord_c)], tmp_att->trait.PM );
+
+        printf("\tCible touchée\n");
+
+        shoot=1;
+
+        recul_r = tmp_att->trait.coord_r;
+        recul_c = tmp_att->trait.coord_c;
+
+        while (shoot) {
+          // printf("%i\n", map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] - recul_c]);
+          // printf("%i\n", map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] + recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] + recul_c]);
+          if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] > tab_perso[i_perso_actuel].coord[0]) {
+            if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_r >= 0 && tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_r < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] ] != 1) {
+              returnValue = 1;
+              augmente_nombre( 5 , &tab_perso[recherche_perso_tab(coord_r, coord_c)] , (recul_r * -1) );
+              shoot =0;
+            }
+            recul_r++;
+
+          }else
+          if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] > tab_perso[i_perso_actuel].coord[1]) {
+            if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] - recul_c >= 0 && tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] - recul_c < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] ][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] - recul_c] != 1 ) {
+              returnValue = 1;
+              augmente_nombre( 6 , &tab_perso[recherche_perso_tab(coord_r, coord_c)] , (recul_c * -1) );
+              shoot =0;
+            }
+            recul_c++;
+
+          }
+          if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] < tab_perso[i_perso_actuel].coord[0]  ) {
+            if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] + recul_r >= 0 && tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] + recul_r < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] + recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1]] != 1 ) {
+              returnValue = 1;
+              augmente_nombre( 5 , &tab_perso[recherche_perso_tab(coord_r, coord_c)] , recul_r );
+              shoot =0;
+
+            }
+            recul_r++;
+
+          }else
+          if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] < tab_perso[i_perso_actuel].coord[1] ) {
+            if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] + recul_c >= 0 && tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] + recul_c < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0]][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] + recul_c] != 1) {
+              returnValue = 1;
+              augmente_nombre( 6 , &tab_perso[recherche_perso_tab(coord_r, coord_c)] , recul_c );
+              shoot =0;
+            }
+            recul_c++;
+          }
+        }
+      }
+
+    }
+  }
+  return returnValue;
+}
 
 /*
 * ===========================================
@@ -567,11 +579,7 @@ void displayBoard(int r, int c, int **arr){ // Display a matrix of size r,c for 
       if (arr[i][j] == -2)
       printf("   ");
       else
-      if(arr[i][j]	>=10)
       printf("%2d ", arr[i][j]);
-      else
-      printf("%2d ", arr[i][j]);
-
     }
     printf("\n" );
   }

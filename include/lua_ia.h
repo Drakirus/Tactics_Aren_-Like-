@@ -18,5 +18,6 @@
 #define cyan    "\x1B[36m"
 #define white   "\x1B[37m"
 
+int IA_play(char function[10], char script[20] );
 
 #endif

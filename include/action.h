@@ -37,7 +37,7 @@ void deplacement(int * PM_actuel);
 void delay(int milliseconds);
 pile *getMovePerso(int * PM_tour, int start_r,int start_c);
 void attaque(int * PA_tour);
-
+int dealAttack(t_attak * tmp_att, int coord_r, int coord_c);
 
 void shadowcasting(int matrix[i_taille_map][i_taille_map], int i_player_x, int i_player_y);
 #endif

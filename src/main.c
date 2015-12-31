@@ -11,6 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <dirent.h>
 #include <unistd.h>
 #include "../include/save.h"
 #include "../include/placement.h"
@@ -20,6 +21,11 @@
 #include "../include/lua_ia.h"
 #include "../include/action.h"
 
+char rep_saveIA[10] = "IA_save/";
+int nbIA = 0;
+char NomSaveIA[10][50];
+
+void initIAFile();
 /**
  * \fn int main()
  * \brief Menu principal, donne accès au lancement de la partie et au chargement.
@@ -28,6 +34,7 @@
 int main() {
 	srand(time(NULL));
 	int choix_menu = 0;
+	int i;
 	do{
 		// system("clear");
 		printf("1 - Nouvelle Partie\n");
@@ -48,8 +55,10 @@ int main() {
 					initialise_map();
 					afficher_map();
 					init_tab_perso(tab_perso);
-					IA_play("placing", "ia_test_function.lua");
-					IA_play("placing", "ia_test2_function.lua");
+					initIAFile();
+					for ( i = 0; i < nbIA; i++){
+						IA_play("placing", NomSaveIA[i]);
+					}
 				  afficher_map();
 					partieIA();
 					break;
@@ -59,4 +68,32 @@ int main() {
 	}while(choix_menu != 4);
 	// freeAllListAttack();
 	return 0;
+}
+
+void initIAFile(){
+	printf("\nCombien d'IA à charger ?\n");
+	scanf("%i", &nbIA);
+
+	int i;
+	char tmp[50];
+	for ( i = 0; i < nbIA; i++) {
+		printf("\nIA : %i\nQuelle IA charger ? (sans .lua)\n\n",i+1);
+
+		DIR * rep = opendir(rep_saveIA);
+		if (rep != NULL){
+			struct dirent * ent;
+			while ((ent = readdir(rep)) != NULL){
+				if (strcmp(ent->d_name,".") != 0 && strcmp(ent->d_name,"..") != 0) {
+					printf("\t%s\n", ent->d_name);
+				}
+			}
+			closedir(rep);
+		}
+		memset (tmp, 0, sizeof (tmp));
+		scanf("%s", tmp);
+		memset (NomSaveIA[i], 0, sizeof (NomSaveIA));
+		strcpy(NomSaveIA[i], rep_saveIA);
+		strcat(NomSaveIA[i], tmp);
+		strcat(NomSaveIA[i], ".lua");
+	}
 }

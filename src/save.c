@@ -48,8 +48,8 @@ void charge(){
 	FILE * fic;
 	char nom_fichier[20];
 	memset (nom_fichier, 0, sizeof (nom_fichier)); /*Permet de s'assurer que la chaine est vide*/
-	char temp[15];
 	strcat(nom_fichier, rep_save);
+	char temp[15];
 	do{
 		printf("Quelle partie charger ?\n");
 		/* Permet de lister les fichiers présents dans "save/" */
