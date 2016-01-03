@@ -23,6 +23,7 @@ function main ()
   print("pa need",getPathLength( 9,0 ))
 
   i , j = getNearestEnemy()
+  useWeaponOnCell("Tir à l'arc",i,j)
   moveToward( i , j , 3)
 
   -- content = getCellContent( 3,2 )
@@ -31,11 +32,11 @@ function main ()
   print("is enemy", isEnemy(0,6))
 
   print("perso : ", getClass( getCood()))
-  print("pa: ", getTotalPM( getCood()))
+  print("pm ", getTotalPM( getCood()))
   print("pa de l'attaque Tir à l'arc ",getAttackCost("Tir à l'arc"))
   print("area de l'attaque Tir à l'arc ",getAttackArea("Tir à l'arc"))
-  min , max = getRangeCost("Tir à l'arc")
+  min , max = getRangeInfo("Tir à l'arc")
   print("l'attaque Tir à l'arc ",min , max )
   print("ligne ? de l'attaque Tir à l'arc ",isInlineWeapon("Pousse toi d'la"))
-
+  useWeaponOnCell("Tir à l'arc",i,j)
 end

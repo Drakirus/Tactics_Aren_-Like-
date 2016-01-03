@@ -1,9 +1,5 @@
 #include "../include/lua_ia.h"
 
-#include "lua.h"
-#include "lualib.h"
-#include "lauxlib.h"
-
 extern int i_perso_actuel;
 extern t_perso ensemble_perso[i_nombre_classe];
 extern t_perso tab_perso[i_taille_tab_perso];
@@ -742,7 +738,7 @@ int getRangeCost(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 1;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getRangeCost' must take %i parameter(s) \n\texemple : "magenta"min , max = getRangeCost(\"name of the attack\")\n" raz ,nbParam );
+    fprintf(stderr, red "\tError in function 'getRangeInfo' must take %i parameter(s) \n\texemple : "magenta"min , max = getRangeInfo(\"name of the attack\")\n" raz ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -751,7 +747,7 @@ int getRangeCost(lua_State *L){
 
   // total the arguments
   if (!lua_isstring(L, 1) ){
-    fprintf(stderr, red "\tError in function 'getRangeCost' must take string parameters\n" raz );
+    fprintf(stderr, red "\tError in function 'getRangeInfo' must take string parameters\n" raz );
     WaitUserInput();
     return 0;
   }else{
@@ -764,7 +760,7 @@ int getRangeCost(lua_State *L){
     tmp_att = tmp_att->next;
   }
   if (tmp_att->current_attack == NULL) {
-    fprintf(stderr, red "\tError in function 'getRangeCost'\n"raz"\tinvalid name : \'%s\'\n" raz, attackNameInput );
+    fprintf(stderr, red "\tError in function 'getRangeInfo'\n"raz"\tinvalid name : \'%s\'\n" raz, attackNameInput );
     WaitUserInput();
     return 0;
   }
@@ -810,6 +806,96 @@ int isInlineWeapon(lua_State *L){
   return 1;
 }
 
+
+int useWeaponOnCell(lua_State *L){
+  // get number of arguments
+  int n = lua_gettop(L);
+  int nbParam = 3;
+  if (n != nbParam) {
+    fprintf(stderr, red "\tError in function 'useWeaponOnCell' must take %i parameter(s) \n\texemple : "magenta"success = useWeaponOnCell(\"name of the attack\", r, c)\n" raz ,nbParam );
+    WaitUserInput();
+    lua_pushnumber(L, -1 );
+    return 1;
+  }
+  char attackNameInput[20];
+  int r, c;
+  size_t l;
+
+  // total the arguments
+  if (!lua_isstring(L, 1) || !lua_isnumber(L, 2) || !lua_isnumber(L, 3) ){
+    fprintf(stderr, red "\tError in function 'useWeaponOnCell' must take (string, int, int) parameters\n" raz );
+    WaitUserInput();
+    lua_pushnumber(L, -1 );
+    return 1;;
+  }else{
+    strcpy(attackNameInput, lua_tolstring(L, 1, &l) );
+    r = lua_tonumber(L, 2);
+    c = lua_tonumber(L, 3);
+  }
+
+  list_attack * tmp_att = tab_perso[i_perso_actuel].att ;
+  while( tmp_att->current_attack != NULL && strcmp(tmp_att->current_attack->attack_name, attackNameInput) != 0){
+    // fprintf(stderr, "%s\n", tmp_att->current_attack->attack_name );
+    tmp_att = tmp_att->next;
+  }
+  if (tmp_att->current_attack == NULL) {
+    fprintf(stderr, red "\tError in function 'useWeaponOnCell'\n"raz"\tinvalid name : \'%s\'\n" raz, attackNameInput );
+    WaitUserInput();
+    lua_pushnumber(L, -1 );
+    return 1;
+  }
+  if( r < 0 || r >= i_taille_map  || c < 0 || c >= i_taille_map ){
+    fprintf(stderr, red "\tError in function 'useWeaponOnCell'\n\tinvalid coordinates\n" raz );
+    fprintf(stderr, "\tYour coordinates must be between the lines 0 and %i\n",i_taille_map);
+    WaitUserInput();
+    lua_pushnumber(L, -1 );
+    return 1;
+  }
+
+  int map_shadowcasting[i_taille_map][i_taille_map]; // map qui affiche si une zone est cachée ou pas
+  int i,j;
+  for ( i = 0; i < i_taille_map ; i++) {
+    for ( j = 0; j < i_taille_map ; j++) {
+      map_shadowcasting[i][j] = map[i][j];
+    }
+  }
+  shadowcasting(map_shadowcasting, tab_perso[i_perso_actuel].coord[0], tab_perso[i_perso_actuel].coord[1]);
+
+  if (0 != map_shadowcasting[r][c]) {
+    lua_pushnumber(L, -1 );
+    return 1;
+  }
+  int **DistancePath = createDistancePath( tab_perso[i_perso_actuel].coord[0],  tab_perso[i_perso_actuel].coord[1]); // creation des distances
+  if (PA_actuel < tmp_att->current_attack->cost_PA ) {
+    fprintf(stderr,"Not enough Action Points available\n");
+    lua_pushnumber(L, -1 );
+    return 1;
+  }
+  if (distanceFrom(r, c, DistancePath) < tmp_att->current_attack->range_min) {
+    fprintf(stderr,"The target is too close\n" );
+    lua_pushnumber(L, -1 );
+    return 1;;
+  }
+  if ( distanceFrom(r, c, DistancePath) > tmp_att->current_attack->range_max) {
+    fprintf(stderr,"The target is too far\n" );
+    lua_pushnumber(L, -1 );
+    return 1;
+  }
+  if (tmp_att->current_attack->only_line == 1 &&
+  (r - tab_perso[i_perso_actuel].coord[0] != 0 &&  c - tab_perso[i_perso_actuel].coord[1] != 0 )) {
+    fprintf(stderr,"The target must be on the same line\n" );
+    lua_pushnumber(L, -1 );
+    return 1;
+  }
+  dealAttack(tmp_att->current_attack, r, c);
+
+  // fprintf(stderr, "%s\n", tmp_att->current_attack->attack_name );
+  PA_actuel -= tmp_att->current_attack->cost_PA;
+  lua_pushnumber(L, tmp_att->current_attack->trait.HP );
+  return 1;
+}
+
+
 int IA_play(char function[10], char script[20] ){
   // Create new Lua state and load the lua libraries
   lua_State *L = luaL_newstate();
@@ -837,8 +923,11 @@ int IA_play(char function[10], char script[20] ){
 
   lua_register(L, "getAttackCost", getAttackCost );
   lua_register(L, "getAttackArea", getAttackArea );
-  lua_register(L, "getRangeCost", getRangeCost );
+  lua_register(L, "getRangeInfo", getRangeCost );
   lua_register(L, "isInlineWeapon", isInlineWeapon );
+
+  lua_register(L, "useWeaponOnCell", useWeaponOnCell );
+
 
 
   //run the script

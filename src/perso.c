@@ -84,7 +84,7 @@ int init_attack(t_perso *per){
 		pushAttack(per->att, createAttack("Coup d'épée", 1, 0, 3, 1, 0, 1, "HP", -5));// copie d'une attack par defaut d'un guerrier
 	}else if(strcmp(per->s_classe, "Archer") == 0 ){ //Archer
 		pushAttack(per->att, createAttack("Pousse toi d'la", 5, 2, 3, 1, 1, 3, "HP", -1,"coord_r", -2,"coord_c", -2));// copie d'une attack par defaut d'un archer
-		pushAttack(per->att, createAttack("Tir à l'arc", 5, 2, 3, 1, 0, 2, "HP", -3, "HP_max", -2));// copie d'une attack par defaut d'un archer
+		pushAttack(per->att, createAttack("Tir à l'arc", 5, 2, 3, 1, 0, 2, "HP", -10, "HP_max", -2));// copie d'une attack par defaut d'un archer
 	}else if(strcmp(per->s_classe, "Mage" ) == 0){ //Mage
 		pushAttack(per->att, createAttack("Boule De Feu", 3, 0, 2, 2, 1, 1, "HP", -3));// copie d'une attack par defaut d'un mage
 		pushAttack(per->att,createAttack("Sort de Soin", 3, 0, 2, 1, 0, 1, "HP", 6));

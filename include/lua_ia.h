@@ -18,6 +18,10 @@
 #define cyan    "\x1B[36m"
 #define white   "\x1B[37m"
 
+#include "lua.h" // ../lua-5.3.2/install/include/
+#include "lualib.h"
+#include "lauxlib.h"
+
 int IA_play(char function[10], char script[20] );
 
 #endif

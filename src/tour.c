@@ -148,8 +148,8 @@ void partieIA(){
 
 			for ( i = 0; i < nbIA; i++){
 				call_IA_play(NomSaveIA[i]);
+				perso_vivant();
 			}
-
 		}
 		i_perso_actuel = 0;
 	}
