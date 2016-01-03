@@ -38,6 +38,7 @@ src/lua_ia.o: $(INC)action.h $(INC)lua_ia.h
 
 
 %.o: %.c
+	@test -d ./lua-5.3.2 || { echo "\t$(ERROR_COLOR)[ERRORS] LUA NOT FOUND \n$(WARN_COLOR)\trun ' make lua '$(NO_COLOR)"; exit 2;}
 	@$(CC) $(CFLAGS) -o $@ -c $< $(OUTERROR)
 	$(DISPLAY)
 
@@ -60,8 +61,10 @@ doc: rmdoc
 	doxygen doxytics $(OUTERROR)
 	$(DISPLAY)
 lua:
-	test -d ./lua-5.3.2 || curl -R -O http://www.lua.org/ftp/lua-5.3.2.tar.gz
-	test -d ./lua-5.3.2 || tar zxf lua-5.3.2.tar.gz && rm lua-5.3.2.tar.gz
+	@if [ -d "./lua-5.3.2" ]; then { echo "\t$(ERROR_COLOR)[ERRORS] LUA is already installed \n$(WARN_COLOR)\trun ' make lua-rm ' to clean lua$(NO_COLOR)"; exit 1; }  fi
+	curl -R -O http://www.lua.org/ftp/lua-5.3.2.tar.gz
+	tar zxf lua-5.3.2.tar.gz
+	rm lua-5.3.2.tar.gz
 	cd lua-5.3.2 && make $(PLAT) && make local
 lua-rm:
 	rm -rf lua-5.3.2 $(OUTERROR)
