@@ -25,9 +25,14 @@ src/couleur.o: $(INC)couleur.h
 src/lua_ia.o: $(INC)action.h $(INC)lua_ia.h
 
 
-
 %.o: %.c
 	$(CC) $(CFLAGS) -o $@ -c $<
+
+ifndef plat
+PLAT=linux
+else
+PLAT=$(plat)
+endif
 
 clean:
 	@rm -f $(OBJ)
@@ -39,10 +44,12 @@ rmdoc:
 doc: rmdoc
 	doxygen doxytics
 lua:
-	curl -R -O http://www.lua.org/ftp/lua-5.3.2.tar.gz
-	tar zxf lua-5.3.2.tar.gz
-	rm lua-5.3.2.tar.gz
-	cd lua-5.3.2 && make linux && make local
+	test -d ./lua-5.3.2 || curl -R -O http://www.lua.org/ftp/lua-5.3.2.tar.gz
+	test -d ./lua-5.3.2 || tar zxf lua-5.3.2.tar.gz
+	test -d ./lua-5.3.2 || rm lua-5.3.2.tar.gz
+	cd lua-5.3.2 && make $(PLAT) && make local
+lua-rm:
+	rm -rf lua-5.3.2
 require: # if #include <readline/readline.h> is missing
 	apt-get install libreadline-dev
 
