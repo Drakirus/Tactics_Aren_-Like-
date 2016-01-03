@@ -61,7 +61,7 @@ doc: rmdoc
 	$(DISPLAY)
 lua:
 	test -d ./lua-5.3.2 || curl -R -O http://www.lua.org/ftp/lua-5.3.2.tar.gz
-	test -d ./lua-5.3.2 || tar zxf lua-5.3.2.tar.gz || rm lua-5.3.2.tar.gz
+	test -d ./lua-5.3.2 || tar zxf lua-5.3.2.tar.gz && rm lua-5.3.2.tar.gz
 	cd lua-5.3.2 && make $(PLAT) && make local
 lua-rm:
 	rm -rf lua-5.3.2 $(OUTERROR)
