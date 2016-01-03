@@ -2,7 +2,7 @@ CC=gcc
 
 LUA_LIB_DIR = ./lua-5.3.2/install/lib
 LUA_INCLUDE = ./lua-5.3.2/install/include
-CFLAGS=-Wall -lm -L$(LUA_LIB_DIR) -llua -lm -ldl
+CFLAGS=-Wall -lm -L$(LUA_LIB_DIR) -llua -lm -ldl -I$(LUA_INCLUDE)
 
 EXEC=bin/out
 SRC= $(wildcard src/*.c)
