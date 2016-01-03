@@ -22,9 +22,7 @@ install:
 
 # Build the module
 script:
-  - if [ "$TRAVIS_BRANCH" == "IA_lua" ]; then
-    make lua
-  fi
+  - if [ "$TRAVIS_BRANCH" == "IA_lua" ]; then make lua; fi
   - make
   
 # Only watch the master branch
