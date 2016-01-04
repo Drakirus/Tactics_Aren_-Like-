@@ -32,4 +32,9 @@
 # Debug files
 *.dSYM/
 
-~$Tactics Arena Like.pptx
+# ALL 
+*~*
+
+# perso
+./bin/*
+./lua-5.3.2/*
