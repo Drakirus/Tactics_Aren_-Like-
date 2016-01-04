@@ -32,9 +32,9 @@
 # Debug files
 *.dSYM/
 
-# ALL 
+# ALL
 *~*
 
 # perso
 bin/*
-lua-5.3.2/*
+lua-*/*
