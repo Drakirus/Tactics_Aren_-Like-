@@ -1,5 +1,5 @@
 CC=gcc
-
+LUA_VERSION=lua-5.3.2
 LUA_LIB_DIR = ./lua-5.3.2/install/lib
 LUA_INCLUDE = ./lua-5.3.2/install/include
 CFLAGS=-Wall -lm -L$(LUA_LIB_DIR) -llua -lm -ldl -I$(LUA_INCLUDE)
@@ -38,7 +38,7 @@ src/lua_ia.o: $(INC)action.h $(INC)lua_ia.h
 
 
 %.o: %.c
-	@test -d ./lua-5.3.2 || { echo "\t$(ERROR_COLOR)[ERRORS] LUA NOT FOUND \n$(WARN_COLOR)\trun ' make lua '$(NO_COLOR)"; exit 2;}
+	@test -d ./$(LUA_VERSION) || { echo "\t$(ERROR_COLOR)[ERRORS] LUA NOT FOUND \n$(WARN_COLOR)\trun ' make lua '$(NO_COLOR)"; exit 2;}
 	@$(CC) $(CFLAGS) -o $@ -c $< $(OUTERROR)
 	$(DISPLAY)
 
@@ -61,13 +61,13 @@ doc: rmdoc
 	doxygen doxytics $(OUTERROR)
 	$(DISPLAY)
 lua:
-	@if [ -d "./lua-5.3.2" ]; then { echo "\t$(ERROR_COLOR)[ERRORS] LUA is already installed \n$(WARN_COLOR)\trun ' make lua-rm ' to clean lua$(NO_COLOR)"; exit 1; }  fi
-	curl -R -O http://www.lua.org/ftp/lua-5.3.2.tar.gz
-	tar zxf lua-5.3.2.tar.gz
-	rm lua-5.3.2.tar.gz
-	cd lua-5.3.2 && make $(PLAT) && make local
+	@if [ -d "./$(LUA_VERSION)" ]; then { echo "\t$(ERROR_COLOR)[ERRORS] LUA is already installed \n$(WARN_COLOR)\trun ' make lua-rm ' to clean lua$(NO_COLOR)"; exit 1; }  fi
+	curl -R -O http://www.lua.org/ftp/$(LUA_VERSION).tar.gz
+	tar zxf $(LUA_VERSION).tar.gz
+	rm $(LUA_VERSION).tar.gz
+	cd $(LUA_VERSION) && make $(PLAT) && make local
 lua-rm:
-	rm -rf lua-5.3.2 $(OUTERROR)
+	rm -rf $(LUA_VERSION) $(OUTERROR)
 	$(DISPLAY)
 require: # if #include <readline/readline.h> is missing
 	apt-get install libreadline-dev $(OUTERROR)

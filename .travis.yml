@@ -24,7 +24,7 @@ install:
 script:
   - if [ "$TRAVIS_BRANCH" == "IA_lua" ]; then make lua; fi
   - make
-  
+
 # Only watch the master branch
 branches:
   - master
@@ -37,4 +37,3 @@ branches:
 #  email:
 #    on_success: change
 #    on_failure: always
-
