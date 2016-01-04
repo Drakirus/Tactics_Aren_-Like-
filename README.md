@@ -7,3 +7,4 @@ Notre projet, qui se déroule dans le cadre de notre premier semestre de deuxiè
 ## Add IA vs IA
 
 Maintenant le joueur à l'option de jouer avec une IA qu'il aura codé (dans le langage LUA)
+
