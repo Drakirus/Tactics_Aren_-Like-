@@ -19,7 +19,7 @@ ERROR_STRING=$(ERROR_COLOR)[ERRORS]$(NO_COLOR)
 WARN_STRING=$(WARN_COLOR)[WARNINGS]$(NO_COLOR)
 
 OUTERROR=2> temp.log || touch temp.errors
-DISPLAY=@if test -e temp.errors; then echo $@ "\t$(ERROR_STRING)" && cat temp.log; elif test -s temp.log; then echo $@ "\t$(WARN_STRING)\n" && cat temp.log; else echo $@ "\t$(OK_STRING)"; fi;rm -f temp.errors temp.log
+DISPLAY=@if test -e temp.errors; then echo $@ "\t\t$(ERROR_STRING)" && cat temp.log; elif test -s temp.log; then echo $@ "\t\t$(WARN_STRING)\n" && cat temp.log; else echo $@ "\t\t$(OK_STRING)"; fi;rm -f temp.errors temp.log
 
 $(EXEC): $(OBJ)
 	@test -d ./bin || mkdir ./bin
@@ -67,7 +67,7 @@ lua:
 	rm $(LUA_VERSION).tar.gz
 	cd $(LUA_VERSION) && make $(PLAT) && make local
 lua-rm:
-	rm -rf $(LUA_VERSION) $(OUTERROR)
+	rm -rf lua-* $(OUTERROR)
 	$(DISPLAY)
 require: # if #include <readline/readline.h> is missing
 	apt-get install libreadline-dev $(OUTERROR)
