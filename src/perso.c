@@ -90,7 +90,7 @@ int init_attack(t_perso *per){
 		pushAttack(per->att,createAttack("Sort de Soin", 3, 0, 2, 1, 0, 1, "HP", 6));
 	}else if (strcmp(per->s_classe, "Voleur" ) == 0){ //Voleur
 		pushAttack(per->att,createAttack("Lenteur", 1, 0, 4, 1, 0, 1, "PM", -1));
-		pushAttack(per->att,createAttack("Coup de Babouche", 2, 0, 2, 1, 0, 2, "HP", -10, "PA", 2));
+		pushAttack(per->att,createAttack("Coup de Babouche", 2, 0, 2, 1, 0, 2, "HP", -5, "PA", 2));
 	} else{
 		return 0;
 	}

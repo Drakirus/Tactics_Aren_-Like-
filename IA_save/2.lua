@@ -1,5 +1,5 @@
 function placing ()
-  print(nbPalcePerso())
+  print(nbPlacePerso())
   placePerso(7,9,1);
   -- placePerso(1,2,1);
 end
@@ -26,6 +26,5 @@ function main ()
   print("pa: ", getTotalPA( getCood()))
   i , j = getNearestEnemy()
   -- moveToward( i , j , 3)
-  moveAway( i , j , 2)
-
+  moveAway( i , j , 3)
 end

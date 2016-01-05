@@ -903,7 +903,7 @@ int IA_play(char function[10], char script[20] ){
 
   // register our functions
   lua_register(L, "placePerso", placePerso );
-  lua_register(L, "nbPalcePerso", nbPalcePerso );
+  lua_register(L, "nbPlacePerso", nbPalcePerso );
 
   lua_register(L, "getCood", getCood );
   lua_register(L, "getClass", getClass );
