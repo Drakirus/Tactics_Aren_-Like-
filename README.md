@@ -12,10 +12,9 @@ lien Sprites : http://www.inet2inet.com/InetSoftware/Free_Char_Anims.asp
 ## Instructions de compilation
 
 ### EasySDL
-EasySDL est nécessaire à la compilation 
 Instruction : https://github.com/DanAurea/EasySDL
 
-### L'api lua est nécessaire installation : 
+### L'API Lua
 
 ```
 $ make lua
