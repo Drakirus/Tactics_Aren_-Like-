@@ -14,8 +14,14 @@ lien Sprites : http://www.inet2inet.com/InetSoftware/Free_Char_Anims.asp
 EasySDL est nécessaire à la compilation 
 Instruction : https://github.com/DanAurea/EasySDL
 
+Exemple :
+![1 v 1](ressources/game_player.gif)
+
 ### lua est nécessaire à la compilation 
-l'api Lua 
+l'api Lua exemple :
+
+![IA vs IA](ressources/game_ia.gif)
+
 ```
 $ make lua
 ```
