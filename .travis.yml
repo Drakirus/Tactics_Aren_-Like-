@@ -14,15 +14,18 @@ env:
 # Install dependencies
 install:
   - sudo apt-get install libreadline-dev
-  #- sudo apt-get install libreadline-dev
-  #- sudo apt-get install lua5.2
-  #- sudo apt-get install liblua5.1-0-dev liblua50-dev liblualib50-dev
-  #- sudo apt-get update -qq
-  #- sudo apt-get install -y libsdl1.2debian libsdl1.2-dev libsdl-image1.2 libsdl-image1.2-dev libsdl-ttf2.0-0 libsdl-ttf2.0-dev cmake
+  - sudo apt-get update -qq
+  - sudo apt-get install -y libsdl1.2debian libsdl1.2-dev libsdl-image1.2 libsdl-image1.2-dev libsdl-ttf2.0-0 libsdl-ttf2.0-dev cmake
 
 # Build the module
 script:
-  - if [ "$TRAVIS_BRANCH" == "IA_lua" ]; then make lua; fi
+  - if [ "$TRAVIS_BRANCH" == "IA_lua" ];then
+      make lua;
+      cmake -G "Unix Makefiles" -DForceAMD64=ON
+      make
+      sudo make install
+      sudo ldconfig /usr/local/lib
+  fi
   - make
 
 # Only watch the master branch
