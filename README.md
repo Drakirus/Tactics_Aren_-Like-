@@ -3,13 +3,6 @@ Tactics Arena Like  [![Build Status](https://travis-ci.org/Drakirus/Tactics_Aren
 
 Notre projet, qui se déroule dans le cadre de notre premier semestre de deuxième année de licence SPI, a pour but de nous faire programmer en langage C une version, fonctionnelle sur la console et qui nous est propre, de ce jeu. Notre trinôme se compose de **Champion Pierre, Laville Martin et Mok Modira**.
 
-# Release - 1.0 
-
-https://github.com/Drakirus/Tactics_Arena_Like/releases
-
-# Release - 1.2 "lua"
-
-https://github.com/Drakirus/Tactics_Arena_Like/raw/IA_lua/terminal.zip
 
 # Release - 2.0 "SDL"
 
@@ -73,8 +66,14 @@ Supprime les fichiers de la lib LUA
 $ make mrproper
 ```
 Retour à état du répertoire avant action de l'utilisateur
-   
 
+### Release - 1.0 
+
+https://github.com/Drakirus/Tactics_Arena_Like/releases
+
+### Release - 1.2 "lua"
+
+https://github.com/Drakirus/Tactics_Arena_Like/raw/IA_lua/terminal.zip
 
 ### Lien Github
 
