@@ -16,6 +16,11 @@
 #include "../include/map.h"
 #include "../include/tableau.h"
 #include "../include/perso.h"
+#include "../include/SDL_isometric.h"
+
+extern type_Map tMap;
+extern t_context *ingame;
+
 
 extern t_perso ensemble_perso[i_nombre_classe];
 extern t_perso tab_perso[i_taille_tab_perso];
@@ -28,6 +33,7 @@ extern int map[i_taille_map][i_taille_map];
  */
 void placement_perso() //Cette fonction place les personnages des différents équipes dans les trois premières et dernières ligne de la map.
 {
+	int i,j;
 	init_tab_perso(tab_perso);
 	int i_classe; //Classe du personnage choisie.
 	int coord[2];
@@ -45,7 +51,15 @@ void placement_perso() //Cette fonction place les personnages des différents é
 			{
 				printf("\nEquipe A, à vous de placer un personnage : \n"); //La phase de choix de l'équipe A
 				printf("Choisissez les coordonnées (ligne entre 0 et 2 et colonne entre 0 et 9): ");
-				scanf("%i%i", &coord[0], &coord[1]); //Les coordonnées sont comprises entre 0 et 9.
+				// scanf("%i%i", &coord[0], &coord[1]); //Les coordonnées sont comprises entre 0 et 9.
+				for (i = 0; i < 3; i++) {
+					for (j = 0; j < i_taille_map; j++) {
+						drawTileplace(ingame, tMap, i* TILE_W, j* TILE_H);
+					}
+				}
+				SDL_generate(ingame);
+			  GetClick(ingame, tMap, &coord[0], &coord[1]);
+				printf("%i %i\n",coord[0],coord[1]  );
 				if(coord[0]>=0 && coord[0]<3 && coord[1]>=0 && coord[1]<=9 && map[coord[0]][coord[1]]==0 && recherche_perso_tab(coord[0], coord[1])==-1) //On vérifie que les coordonnées sont bonnes
 				{
 					b_sortie=0;
@@ -59,7 +73,15 @@ void placement_perso() //Cette fonction place les personnages des différents é
 			{
 				printf("\nEquipe B, à vous de placer un personnage : \n"); //On passe à la phase de choix de l'équipe B
 				printf("Choisissez les coordonnées (ligne entre 7 et 9 et colonne entre 0 et 9): ");
-				scanf("%i%i", &coord[0], &coord[1]); //Les coordonnées sont comprises entre 0 et 9.
+				// scanf("%i%i", &coord[0], &coord[1]); //Les coordonnées sont comprises entre 0 et 9.
+				for (i = 7; i < i_taille_map; i++) {
+					for (j = 0; j < i_taille_map; j++) {
+						drawTileplace(ingame, tMap, i* TILE_W, j* TILE_H);
+					}
+				}
+				SDL_generate(ingame);
+				GetClick(ingame, tMap, &coord[0], &coord[1]);
+				printf("%i %i\n",coord[0],coord[1]  );
 				if(coord[0]>=7 && coord[0]<=9 && coord[1]>=0 && coord[1]<=9 && recherche_perso_tab(coord[0], coord[1])==-1) //On vérifie aussi qu'il n'y ait personne dans cette case
 				{
 					b_sortie=0;
@@ -82,7 +104,9 @@ void placement_perso() //Cette fonction place les personnages des différents é
 				printf("\t\t\t%i - %s\n",i, ensemble_perso[i].s_classe);
 			}
 			printf("Choisissez la classe du personnage: ");
-			scanf("%i", &i_classe); //0 pour un guerrier, 1 pour un archer, 2 pour un mage
+			// scanf("%i", &i_classe); //0 pour un guerrier, 1 pour un archer, 2 pour un mage
+			i_classe = MenuPerso(ingame);
+			i_classe--;
 			if(i_classe<0 || i_classe>=i_nombre_classe)
 			{
 				printf("Le nombre de la classe saisi doit être compris entre 0 et %i.\n\n", i_nombre_classe-1);

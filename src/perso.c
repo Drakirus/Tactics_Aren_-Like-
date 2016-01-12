@@ -14,15 +14,19 @@
 #include <time.h>
 #include "../include/perso.h"
 
+#include "../include/SDL_isometric.h"
+
+extern type_Map tMap;
+extern t_context *ingame;
 /**
  * \def Les personnages que l'on a créé
  **/
 t_perso ensemble_perso[i_nombre_classe]=
 {// "perso_name" / HP_max / HP / Points d'action / Points de mouvement / ligne / colonnes / team / placé ou pas / LISTE de ses attaques
-	{"Guerrier",50,50,3,3,{0,0},'X', NULL},
-	{"Archer",30,30,3,3,{0,0},'X', NULL},
-	{"Mage",20,20,2,2,{0,0},'X', NULL},
-	{"Voleur",10,10,4,4,{0,0},'X', NULL},
+	{"Guerrier",50,50,3,3,{0,0},'X', NULL, "Guerrier.png", -1},
+	{"Archer",30,30,3,3,{0,0},'X', NULL, "Guerrier.png", -1},
+	{"Mage",20,20,2,2,{0,0},'X', NULL, "Guerrier.png", -1},
+	{"Voleur",10,10,4,4,{0,0},'X', NULL, "Guerrier.png", -1},
 };
 
 /*Sert pour les tests*/
@@ -65,7 +69,8 @@ void initialisation_perso(int a, t_perso * per) //On affecte à un t_perso les d
 	per->coord[0]=ensemble_perso[a].coord[0];
 	per->coord[1]=ensemble_perso[a].coord[1];
 	per->c_team=ensemble_perso[a].c_team;
-
+	strcpy(per->file,ensemble_perso[a].file);
+	per->id=ensemble_perso[a].id;
 	init_attack(per);
 }
 
@@ -155,6 +160,15 @@ void creation(t_perso * per, int i_classe, char c_team, int x, int y) //On chang
 	per->coord[0]=x;
 	per->coord[1]=y;
 	per->c_team=c_team;
+	// printf("%s\n", per->file);
+	int posX = x * TILE_W, posY = y * TILE_H;
+	toIso(tMap, &posX, &posY);
+	posX += offsetX(tMap);
+	posY += offsetY();
+	SDL_newSprite(ingame, per->file, colorGreenLight, 100, 78, posX, posY-(78/1.5), 5, 1, 0);
+	SDL_setOnLayer(ingame, SPRITE, ingame->nbSprite-1, 10);
+	per->id = ingame->nbSprite-1;
+	
 }
 
 /**

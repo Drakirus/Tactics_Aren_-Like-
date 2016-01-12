@@ -7,7 +7,8 @@
  *
  *
  */
-
+ int idCursor = -1; /**< Identifiant du curseur */
+ 
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
@@ -20,10 +21,13 @@
 #include "../include/tableau.h"
 #include "../include/lua_ia.h"
 #include "../include/action.h"
+#include "../include/SDL_isometric.h"
 
 char rep_saveIA[10] = "IA_save/";
 int nbIA = 0;
 char NomSaveIA[10][50];
+type_Map tMap = diamond;
+t_context *ingame;
 
 void initIAFile();
 /**
@@ -31,7 +35,15 @@ void initIAFile();
  * \brief Menu principal, donne accès au lancement de la partie et au chargement.
  *
  */
+
 int main() {
+	
+	// menuStart(ingame);
+	// drawMap(ingame, tMap);
+	// SDL_generate(ingame);
+
+	SDL_initWindow(SCREEN_WIDTH, SCREEN_HEIGHT, 0, "Tactics Arena", "M_ICON.png", 1, "global.ttf", 20, 0);
+	ingame = SDL_newContext("Tactics Arena", 0, 0, SCREEN_WIDTH, SCREEN_HEIGHT);
 	srand(time(NULL));
 	int choix_menu = 0;
 	int i;
@@ -41,9 +53,12 @@ int main() {
 		printf("2 - Charger une partie\n");
 		printf("3 - IA vs IA\n");
 		printf("4 - Quitter\n");
-		scanf("%i", &choix_menu);
+		// scanf("%i", &choix_menu);
+		choix_menu = menuStart(ingame);
 		switch(choix_menu){
-			case 1: initialise_map();
+			SDL_generate(ingame);
+			case 1: 
+					initialise_map();
 					afficher_map();
 					placement_perso();
 					partie();
@@ -67,6 +82,7 @@ int main() {
 		}
 	}while(choix_menu != 4);
 	// freeAllListAttack();
+	SDL_freeContext(ingame);
 	return 0;
 }
 

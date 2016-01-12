@@ -14,7 +14,10 @@
 #include <unistd.h>
 #include "../include/tableau.h"
 #include "../include/map.h"
+#include "../include/SDL_isometric.h"
 
+extern type_Map tMap;
+extern t_context *ingame;
 extern int i_perso_actuel;
 extern t_perso tab_perso[i_taille_tab_perso];
 
@@ -77,6 +80,7 @@ void initialise_map() //Fonction initialisant la map vide avec des obstacles
  */
 void afficher_map() //Fonction affichant la map
 {
+	int posX, posY;
 	char perso[4]; //Pour le changement de couleur
 	system("clear");
 	int i,j;
@@ -88,6 +92,14 @@ void afficher_map() //Fonction affichant la map
 		{
 			if(recherche_perso_tab(i, j)!=-1 && tab_perso[recherche_perso_tab(i, j)].i_HP>0) //On regarde s'il y a un perso ou non. S'il n'y en a pas, il faut vérifier qu'il soit mort ou non
 			{
+				posX = i * TILE_W;
+			 	posY = j * TILE_H;
+				toIso(tMap, &posX, &posY);
+				posX += offsetX(tMap);
+				posY += offsetY();
+				// SDL_newSprite(ingame, per->file, colorGreenLight, 100, 78, posX, posY-(78/1.5), 5, 1, 0);
+				SDL_editSprite(ingame, tab_perso[recherche_perso_tab(i, j)].id, posX , posY-(78/1.5), ingame->contextSprite[tab_perso[recherche_perso_tab(i, j)].id].position , ingame->contextSprite[tab_perso[recherche_perso_tab(i, j)].id].animation, 0); //bas droite
+				
 				perso[0]=tab_perso[recherche_perso_tab(i, j)].s_classe[0];
 				perso[1]=tab_perso[recherche_perso_tab(i, j)].s_classe[1];
 				perso[2]=tab_perso[recherche_perso_tab(i, j)].s_classe[2];
@@ -107,6 +119,9 @@ void afficher_map() //Fonction affichant la map
 		}
 		printf("\n");
 	}
+	reinitColor();
+	drawMap(ingame, tMap);
+	SDL_generate(ingame);
 }
 
 /**
@@ -165,4 +180,5 @@ void afficher_map_accessible(int **DistancePath, int map_shadowcasting[i_taille_
 		}
 		printf("\n");
 	}
+	reinitColor();
 }

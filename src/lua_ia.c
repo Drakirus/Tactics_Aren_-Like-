@@ -1,4 +1,17 @@
+#define RAZ     "\x1B[0m"
+#define RED     "\x1B[31m"
+#define GREEN   "\x1B[32m"
+#define YELLOW  "\x1B[33m"
+#define BLUE    "\x1B[34m"
+#define MAGENTA "\x1B[35m"
+#define CYAN    "\x1B[36m"
+#define WHITE   "\x1B[37m"
 #include "../include/lua_ia.h"
+
+#include "../include/SDL_isometric.h"
+
+extern type_Map tMap;
+extern t_context *ingame;
 
 extern int i_perso_actuel;
 extern t_perso ensemble_perso[i_nombre_classe];
@@ -10,7 +23,7 @@ extern int nbIA;
 
 
 void WaitUserInput(){
-  fprintf(stderr, green "Press any key to continue..."raz );
+  fprintf(stderr, GREEN "Press any key to continue..."RAZ );
   char tmp[10];
   scanf("%s",tmp);
 
@@ -24,7 +37,7 @@ int placePerso(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 3;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'placePerso' must take %i parameter(s) \n\texemple : "magenta"placePerso(raw, column, selectedPerso)\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'placePerso' must take %i parameter(s) \n\texemple : "MAGENTA"placePerso(raw, column, selectedPerso)\n" RAZ ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -33,7 +46,7 @@ int placePerso(lua_State *L){
 
   // total the arguments
   if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2) || !lua_isnumber(L, 3)){
-    fprintf(stderr, red "\tError in function 'placePerso' must take int parameter\n" raz );
+    fprintf(stderr, RED "\tError in function 'placePerso' must take int parameter\n" RAZ );
     WaitUserInput();
     return 0;
   }else{
@@ -43,12 +56,12 @@ int placePerso(lua_State *L){
   }
 
   if (recherche_perso_tab(r, c) !=- 1) {
-    fprintf(stderr, red "\tError in function 'placePerso' can't place 2 perso at the same coordinates\n" raz );
+    fprintf(stderr, RED "\tError in function 'placePerso' can't place 2 perso at the same coordinates\n" RAZ );
     WaitUserInput();
     return 0;
   }
   if( selectedPerso < 0 || selectedPerso >= i_nombre_classe ){
-    fprintf(stderr, red "\tinvalid perso\n" raz );
+    fprintf(stderr, RED "\tinvalid perso\n" RAZ );
     WaitUserInput();
     return 0;
   }
@@ -70,14 +83,14 @@ int placePerso(lua_State *L){
   }
 
   if( r < limiteA || r >= limiteB  || c < 0 || c >= i_taille_map ){
-    fprintf(stderr, red "\tError in function 'placePerso'\n\tinvalid coordinates\n" raz );
+    fprintf(stderr, RED "\tError in function 'placePerso'\n\tinvalid coordinates\n" RAZ );
     fprintf(stderr, "\tYour coordinates must be between the lines %i and %i\n",limiteA,limiteB-1);
     WaitUserInput();
     return 0;
   }
 
   if (nbIA == i) {
-    fprintf(stderr, red "\tError in function 'placePerso'\n"raz"\tCan't add any more perso\n" raz );
+    fprintf(stderr, RED "\tError in function 'placePerso'\n"RAZ"\tCan't add any more perso\n" RAZ );
     WaitUserInput();
     return 0;
   }
@@ -100,7 +113,7 @@ int nbPalcePerso(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 0;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'nbPalcePerso' must take %i parameter(s) \n\texemple : "magenta"nbperos = nbPalcePerso()\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'nbPalcePerso' must take %i parameter(s) \n\texemple : "MAGENTA"nbperos = nbPalcePerso()\n" RAZ ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -121,7 +134,7 @@ int getCood(lua_State *L){
   double n = lua_gettop(L);
   int nbParam = 0;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getCood' must take %i parameter(s) \n\texemple : "magenta"r,c = getCood()\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'getCood' must take %i parameter(s) \n\texemple : "MAGENTA"r,c = getCood()\n" RAZ ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -138,7 +151,7 @@ int getLife(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 2;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getLife' must take %i parameter(s) \n\texemple : "magenta"life = getLife( getCoodPerso() )\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'getLife' must take %i parameter(s) \n\texemple : "MAGENTA"life = getLife( getCoodPerso() )\n" RAZ ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -146,7 +159,7 @@ int getLife(lua_State *L){
 
   // total the arguments
   if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2)){
-    fprintf(stderr, red "\tError in function 'getLife' must take int parameters\n" raz );
+    fprintf(stderr, RED "\tError in function 'getLife' must take int parameters\n" RAZ );
     WaitUserInput();
     return 0;
   }else{
@@ -169,7 +182,7 @@ int getTotalLife(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 2;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getTotalLife' must take %i parameter(s) \n\texemple : "magenta"life = getTotalLife( getCoodPerso() )\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'getTotalLife' must take %i parameter(s) \n\texemple : "MAGENTA"life = getTotalLife( getCoodPerso() )\n" RAZ ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -177,7 +190,7 @@ int getTotalLife(lua_State *L){
 
   // total the arguments
   if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2)){
-    fprintf(stderr, red "\tError in function 'getTotalLife' must take int parameters\n" raz );
+    fprintf(stderr, RED "\tError in function 'getTotalLife' must take int parameters\n" RAZ );
     WaitUserInput();
     return 0;
   }else{
@@ -200,7 +213,7 @@ int getTotalPA(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 2;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getTotalPA' must take %i parameter(s) \n\texemple : "magenta"pa = getTotalPA( getCoodPerso() )\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'getTotalPA' must take %i parameter(s) \n\texemple : "MAGENTA"pa = getTotalPA( getCoodPerso() )\n" RAZ ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -208,7 +221,7 @@ int getTotalPA(lua_State *L){
 
   // total the arguments
   if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2)){
-    fprintf(stderr, red "\tError in function 'getTotalPA' must take int parameters\n" raz );
+    fprintf(stderr, RED "\tError in function 'getTotalPA' must take int parameters\n" RAZ );
     WaitUserInput();
     return 0;
   }else{
@@ -232,7 +245,7 @@ int getTotalPM(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 2;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getTotalPM' must take %i parameter(s) \n\texemple : "magenta"pm = getTotalPM( getCoodPerso() )\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'getTotalPM' must take %i parameter(s) \n\texemple : "MAGENTA"pm = getTotalPM( getCoodPerso() )\n" RAZ ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -240,7 +253,7 @@ int getTotalPM(lua_State *L){
 
   // total the arguments
   if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2)){
-    fprintf(stderr, red "\tError in function 'getTotalPM' must take int parameters\n" raz );
+    fprintf(stderr, RED "\tError in function 'getTotalPM' must take int parameters\n" RAZ );
     WaitUserInput();
     return 0;
   }else{
@@ -264,7 +277,7 @@ int getClass(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 2;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getClass' must take %i parameter(s) \n\texemple : "magenta"name = getClass( getCoodPerso() )\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'getClass' must take %i parameter(s) \n\texemple : "MAGENTA"name = getClass( getCoodPerso() )\n" RAZ ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -272,7 +285,7 @@ int getClass(lua_State *L){
 
   // total the arguments
   if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2)){
-    fprintf(stderr, red "\tError in function 'getClass' must take int parameters\n" raz );
+    fprintf(stderr, RED "\tError in function 'getClass' must take int parameters\n" RAZ );
     WaitUserInput();
     return 0;
   }else{
@@ -295,7 +308,7 @@ int getNearestEnemy(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 0;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getNearestEnemy' must take %i parameter(s) \n\texemple : "magenta"enemy = getNearestEnemy()\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'getNearestEnemy' must take %i parameter(s) \n\texemple : "MAGENTA"enemy = getNearestEnemy()\n" RAZ ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -305,7 +318,7 @@ int getNearestEnemy(lua_State *L){
   c = tab_perso[i_perso_actuel].coord[1];
 
   if( r < 0 || r >= i_taille_map  || c < 0 || c >= i_taille_map ){
-    fprintf(stderr, red "\tError in function 'getNearestEnemy'\n\tinvalid coordinates\n" raz );
+    fprintf(stderr, RED "\tError in function 'getNearestEnemy'\n\tinvalid coordinates\n" RAZ );
     fprintf(stderr, "\tYour coordinates must be between the lines 0 and %i\n",i_taille_map);
     WaitUserInput();
     return 0;
@@ -337,7 +350,7 @@ int getCellContent(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 2;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getCellContent' must take %i parameter(s) \n\texemple : "magenta"content = getCellContent(x, y)\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'getCellContent' must take %i parameter(s) \n\texemple : "MAGENTA"content = getCellContent(x, y)\n" RAZ ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -345,7 +358,7 @@ int getCellContent(lua_State *L){
 
   // total the arguments
   if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2)){
-    fprintf(stderr, red "\tError in function 'getCellContent' must take int parameters\n" raz );
+    fprintf(stderr, RED "\tError in function 'getCellContent' must take int parameters\n" RAZ );
     WaitUserInput();
     return 0;
   }else{
@@ -353,7 +366,7 @@ int getCellContent(lua_State *L){
     c = lua_tonumber(L, -1);
   }
   if( r < 0 || r >= i_taille_map  || c < 0 || c >= i_taille_map ){
-    fprintf(stderr, red "\tError in function 'getCellContent'\n\tinvalid coordinates\n" raz );
+    fprintf(stderr, RED "\tError in function 'getCellContent'\n\tinvalid coordinates\n" RAZ );
     fprintf(stderr, "\tYour coordinates must be between the lines 0 and %i\n",i_taille_map);
     WaitUserInput();
     return 0;
@@ -374,7 +387,7 @@ int isAlly(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 2;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'isAlly' must take %i parameter(s) \n\texemple : "magenta"Ally = isAlly(x, y)\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'isAlly' must take %i parameter(s) \n\texemple : "MAGENTA"Ally = isAlly(x, y)\n" RAZ ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -382,7 +395,7 @@ int isAlly(lua_State *L){
 
   // total the arguments
   if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2)){
-    fprintf(stderr, red "\tError in function 'isAlly' must take int parameters\n" raz );
+    fprintf(stderr, RED "\tError in function 'isAlly' must take int parameters\n" RAZ );
     WaitUserInput();
     return 0;
   }else{
@@ -390,7 +403,7 @@ int isAlly(lua_State *L){
     c = lua_tonumber(L, -1);
   }
   if( r < 0 || r >= i_taille_map  || c < 0 || c >= i_taille_map ){
-    fprintf(stderr, red "\tError in function 'isAlly'\n\tinvalid coordinates\n" raz );
+    fprintf(stderr, RED "\tError in function 'isAlly'\n\tinvalid coordinates\n" RAZ );
     fprintf(stderr, "\tYour coordinates must be between the lines 0 and %i\n",i_taille_map);
     WaitUserInput();
     return 0;
@@ -415,7 +428,7 @@ int isEnemy(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 2;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'isEnemy' must take %i parameter(s) \n\texemple : "magenta"enemy = isEnemy(x, y)\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'isEnemy' must take %i parameter(s) \n\texemple : "MAGENTA"enemy = isEnemy(x, y)\n" RAZ ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -423,7 +436,7 @@ int isEnemy(lua_State *L){
 
   // total the arguments
   if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2)){
-    fprintf(stderr, red "\tError in function 'isEnemy' must take int parameters\n" raz );
+    fprintf(stderr, RED "\tError in function 'isEnemy' must take int parameters\n" RAZ );
     WaitUserInput();
     return 0;
   }else{
@@ -431,7 +444,7 @@ int isEnemy(lua_State *L){
     c = lua_tonumber(L, -1);
   }
   if( r < 0 || r >= i_taille_map  || c < 0 || c >= i_taille_map ){
-    fprintf(stderr, red "\tError in function 'isEnemy'\n\tinvalid coordinates\n" raz );
+    fprintf(stderr, RED "\tError in function 'isEnemy'\n\tinvalid coordinates\n" RAZ );
     fprintf(stderr, "\tYour coordinates must be between the lines 0 and %i\n",i_taille_map);
     WaitUserInput();
     return 0;
@@ -455,7 +468,7 @@ int getPathLength(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 2;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getPathLength' must take %i parameter(s) \n\texemple : "magenta"path = getPathLength( 9, 0 )\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'getPathLength' must take %i parameter(s) \n\texemple : "MAGENTA"path = getPathLength( 9, 0 )\n" RAZ ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -465,7 +478,7 @@ int getPathLength(lua_State *L){
 
   // total the arguments
   if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2)){
-    fprintf(stderr, red "\tError in function 'getPathLength' must take int parameters\n" raz );
+    fprintf(stderr, RED "\tError in function 'getPathLength' must take int parameters\n" RAZ );
     WaitUserInput();
     return 0;
   }else{
@@ -474,7 +487,7 @@ int getPathLength(lua_State *L){
   }
 
   if( r < 0 || r >= i_taille_map  || c < 0 || c >= i_taille_map || i < 0 || i >= i_taille_map  || j < 0 || j >= i_taille_map){
-    fprintf(stderr, red "\tError in function 'getPathLength'\n\tinvalid coordinates\n" raz );
+    fprintf(stderr, RED "\tError in function 'getPathLength'\n\tinvalid coordinates\n" RAZ );
     fprintf(stderr, "\tYour coordinates must be between the lines 0 and %i\n",i_taille_map);
     WaitUserInput();
     return 0;
@@ -494,7 +507,7 @@ int moveToward(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 3;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'moveToward' must take %i parameter(s) \n\texemple : "magenta"moveToward( 0 , 0 , 1 ) where 0,0 are the coordinates and 1 the number of PA to use\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'moveToward' must take %i parameter(s) \n\texemple : "MAGENTA"moveToward( 0 , 0 , 1 ) where 0,0 are the coordinates and 1 the number of PA to use\n" RAZ ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -504,7 +517,7 @@ int moveToward(lua_State *L){
 
   // total the arguments
   if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2) || !lua_isnumber(L, 3) ){
-    fprintf(stderr, red "\tError in function 'moveToward' must take int parameters\n" raz );
+    fprintf(stderr, RED "\tError in function 'moveToward' must take int parameters\n" RAZ );
     WaitUserInput();
     return 0;
   }else{
@@ -514,7 +527,7 @@ int moveToward(lua_State *L){
   }
 
   if( r < 0 || r >= i_taille_map  || c < 0 || c >= i_taille_map || i < 0 || i >= i_taille_map  || j < 0 || j >= i_taille_map){
-    fprintf(stderr, red "\tError in function 'moveToward'\n\tinvalid coordinates\n" raz );
+    fprintf(stderr, RED "\tError in function 'moveToward'\n\tinvalid coordinates\n" RAZ );
     fprintf(stderr, "\tYour coordinates must be between the lines 0 and %i\n",i_taille_map);
     WaitUserInput();
     return 0;
@@ -535,13 +548,31 @@ int moveToward(lua_State *L){
       sortir = pop(&path, &r, &c);
       // printf("r: %i c: %i\n",r,c );
       if ( PM_actuel > 0 && recherche_perso_tab(r, c) == -1 && PA_toUse != PA_used ) {
+        
+        if (tab_perso[i_perso_actuel].coord[0] > r) {
+          moveSpriteTo(ingame, tMap, UP_LEFT, tab_perso[i_perso_actuel].id );
+          change_nombre(5, &tab_perso[i_perso_actuel], r);
+        }
+        if (tab_perso[i_perso_actuel].coord[0] < r) {
+          moveSpriteTo(ingame, tMap, DOWN_RIGHT, tab_perso[i_perso_actuel].id );
+          change_nombre(5, &tab_perso[i_perso_actuel], r);
+        }
+        if (tab_perso[i_perso_actuel].coord[1] > c) {
+          moveSpriteTo(ingame, tMap, UP_RIGHT, tab_perso[i_perso_actuel].id );
+          change_nombre(6, &tab_perso[i_perso_actuel], c);
+        }
+        if (tab_perso[i_perso_actuel].coord[1] < c) {
+          moveSpriteTo(ingame, tMap, DOWN_LEFT, tab_perso[i_perso_actuel].id );
+          change_nombre(6, &tab_perso[i_perso_actuel], c);        
+        }
+        
         change_nombre(6, &tab_perso[i_perso_actuel], c);
         change_nombre(5, &tab_perso[i_perso_actuel], r);
         PM_actuel--;
         PA_used++;
-        afficher_map();
-        delay(400);
+        // delay(400);
       }
+      afficher_map();
 
     }
   }
@@ -557,7 +588,7 @@ int moveAway(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 3;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'moveAway' must take %i parameter(s) \n\texemple : "magenta"moveAway( 0 , 0 , 1 ) where 0,0 are the coordinates and 1 the number of PA to use\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'moveAway' must take %i parameter(s) \n\texemple : "MAGENTA"moveAway( 0 , 0 , 1 ) where 0,0 are the coordinates and 1 the number of PA to use\n" RAZ ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -565,7 +596,7 @@ int moveAway(lua_State *L){
 
   // total the arguments
   if (!lua_isnumber(L, 1) || !lua_isnumber(L, 2) || !lua_isnumber(L, 3) ){
-    fprintf(stderr, red "\tError in function 'moveAway' must take int parameters\n" raz );
+    fprintf(stderr, RED "\tError in function 'moveAway' must take int parameters\n" RAZ );
     WaitUserInput();
     return 0;
   }else{
@@ -575,7 +606,7 @@ int moveAway(lua_State *L){
   }
 
   if( r < 0 || r >= i_taille_map  || c < 0 || c >= i_taille_map ){
-    fprintf(stderr, red "\tError in function 'moveAway'\n\tinvalid coordinates\n" raz );
+    fprintf(stderr, RED "\tError in function 'moveAway'\n\tinvalid coordinates\n" RAZ );
     fprintf(stderr, "\tYour coordinates must be between the lines 0 and %i\n",i_taille_map);
     WaitUserInput();
     return 0;
@@ -637,15 +668,33 @@ int moveAway(lua_State *L){
       sortir = pop(&path, &r, &c);
       // printf("r: %i c: %i\n",r,c );
       if ( PM_actuel > 0 && recherche_perso_tab(r, c) == -1 && PA_toUse != PA_used ) {
+        
+        if (tab_perso[i_perso_actuel].coord[0] > r) {
+          moveSpriteTo(ingame, tMap, UP_LEFT, tab_perso[i_perso_actuel].id );
+          change_nombre(5, &tab_perso[i_perso_actuel], r);
+        }
+        if (tab_perso[i_perso_actuel].coord[0] < r) {
+          moveSpriteTo(ingame, tMap, DOWN_RIGHT, tab_perso[i_perso_actuel].id );
+          change_nombre(5, &tab_perso[i_perso_actuel], r);
+        }
+        if (tab_perso[i_perso_actuel].coord[1] > c) {
+          moveSpriteTo(ingame, tMap, UP_RIGHT, tab_perso[i_perso_actuel].id );
+          change_nombre(6, &tab_perso[i_perso_actuel], c);
+        }
+        if (tab_perso[i_perso_actuel].coord[1] < c) {
+          moveSpriteTo(ingame, tMap, DOWN_LEFT, tab_perso[i_perso_actuel].id );
+          change_nombre(6, &tab_perso[i_perso_actuel], c);        
+        }
+        
         change_nombre(6, &tab_perso[i_perso_actuel], c);
         change_nombre(5, &tab_perso[i_perso_actuel], r);
         PM_actuel--;
         PA_used++;
-        afficher_map();
-        delay(400);
+        // delay(400);
       }
 
     }
+    afficher_map();
   }
   freeBoard(DistancePath, i_taille_map);
   freeBoard(DistancePathFromActual, i_taille_map);
@@ -660,7 +709,7 @@ int getAttackCost(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 1;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getAttackCost' must take %i parameter(s) \n\texemple : "magenta"info = getAttackCost(\"name of the attack\")\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'getAttackCost' must take %i parameter(s) \n\texemple : "MAGENTA"info = getAttackCost(\"name of the attack\")\n" RAZ ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -669,7 +718,7 @@ int getAttackCost(lua_State *L){
 
   // total the arguments
   if (!lua_isstring(L, 1) ){
-    fprintf(stderr, red "\tError in function 'getAttackCost' must take string parameters\n" raz );
+    fprintf(stderr, RED "\tError in function 'getAttackCost' must take string parameters\n" RAZ );
     WaitUserInput();
     return 0;
   }else{
@@ -682,7 +731,7 @@ int getAttackCost(lua_State *L){
     tmp_att = tmp_att->next;
   }
   if (tmp_att->current_attack == NULL) {
-    fprintf(stderr, red "\tError in function 'getAttackCost'\n"raz"\tinvalid name : \'%s\'\n" raz, attackNameInput );
+    fprintf(stderr, RED "\tError in function 'getAttackCost'\n"RAZ"\tinvalid name : \'%s\'\n" RAZ, attackNameInput );
     WaitUserInput();
     return 0;
   }
@@ -699,7 +748,7 @@ int getAttackArea(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 1;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getAreaCost' must take %i parameter(s) \n\texemple : "magenta"info = getAreaCost(\"name of the attack\")\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'getAreaCost' must take %i parameter(s) \n\texemple : "MAGENTA"info = getAreaCost(\"name of the attack\")\n" RAZ ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -708,7 +757,7 @@ int getAttackArea(lua_State *L){
 
   // total the arguments
   if (!lua_isstring(L, 1) ){
-    fprintf(stderr, red "\tError in function 'getAreaCost' must take string parameters\n" raz );
+    fprintf(stderr, RED "\tError in function 'getAreaCost' must take string parameters\n" RAZ );
     WaitUserInput();
     return 0;
   }else{
@@ -721,7 +770,7 @@ int getAttackArea(lua_State *L){
     tmp_att = tmp_att->next;
   }
   if (tmp_att->current_attack == NULL) {
-    fprintf(stderr, red "\tError in function 'getAreaCost'\n"raz"\tinvalid name : \'%s\'\n" raz, attackNameInput );
+    fprintf(stderr, RED "\tError in function 'getAreaCost'\n"RAZ"\tinvalid name : \'%s\'\n" RAZ, attackNameInput );
     WaitUserInput();
     return 0;
   }
@@ -738,7 +787,7 @@ int getRangeCost(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 1;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'getRangeInfo' must take %i parameter(s) \n\texemple : "magenta"min , max = getRangeInfo(\"name of the attack\")\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'getRangeInfo' must take %i parameter(s) \n\texemple : "MAGENTA"min , max = getRangeInfo(\"name of the attack\")\n" RAZ ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -747,7 +796,7 @@ int getRangeCost(lua_State *L){
 
   // total the arguments
   if (!lua_isstring(L, 1) ){
-    fprintf(stderr, red "\tError in function 'getRangeInfo' must take string parameters\n" raz );
+    fprintf(stderr, RED "\tError in function 'getRangeInfo' must take string parameters\n" RAZ );
     WaitUserInput();
     return 0;
   }else{
@@ -760,7 +809,7 @@ int getRangeCost(lua_State *L){
     tmp_att = tmp_att->next;
   }
   if (tmp_att->current_attack == NULL) {
-    fprintf(stderr, red "\tError in function 'getRangeInfo'\n"raz"\tinvalid name : \'%s\'\n" raz, attackNameInput );
+    fprintf(stderr, RED "\tError in function 'getRangeInfo'\n"RAZ"\tinvalid name : \'%s\'\n" RAZ, attackNameInput );
     WaitUserInput();
     return 0;
   }
@@ -775,7 +824,7 @@ int isInlineWeapon(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 1;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'isInlineWeapon' must take %i parameter(s) \n\texemple : "magenta"info = isInlineWeapon(\"name of the attack\")\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'isInlineWeapon' must take %i parameter(s) \n\texemple : "MAGENTA"info = isInlineWeapon(\"name of the attack\")\n" RAZ ,nbParam );
     WaitUserInput();
     return 0;
   }
@@ -784,7 +833,7 @@ int isInlineWeapon(lua_State *L){
 
   // total the arguments
   if (!lua_isstring(L, 1) ){
-    fprintf(stderr, red "\tError in function 'isInlineWeapon' must take string parameters\n" raz );
+    fprintf(stderr, RED "\tError in function 'isInlineWeapon' must take string parameters\n" RAZ );
     WaitUserInput();
     return 0;
   }else{
@@ -797,7 +846,7 @@ int isInlineWeapon(lua_State *L){
     tmp_att = tmp_att->next;
   }
   if (tmp_att->current_attack == NULL) {
-    fprintf(stderr, red "\tError in function 'isInlineWeapon'\n"raz"\tinvalid name : \'%s\'\n" raz, attackNameInput );
+    fprintf(stderr, RED "\tError in function 'isInlineWeapon'\n"RAZ"\tinvalid name : \'%s\'\n" RAZ, attackNameInput );
     WaitUserInput();
     return 0;
   }
@@ -812,7 +861,7 @@ int useWeaponOnCell(lua_State *L){
   int n = lua_gettop(L);
   int nbParam = 3;
   if (n != nbParam) {
-    fprintf(stderr, red "\tError in function 'useWeaponOnCell' must take %i parameter(s) \n\texemple : "magenta"success = useWeaponOnCell(\"name of the attack\", r, c)\n" raz ,nbParam );
+    fprintf(stderr, RED "\tError in function 'useWeaponOnCell' must take %i parameter(s) \n\texemple : "MAGENTA"success = useWeaponOnCell(\"name of the attack\", r, c)\n" RAZ ,nbParam );
     WaitUserInput();
     lua_pushnumber(L, -1 );
     return 1;
@@ -823,7 +872,7 @@ int useWeaponOnCell(lua_State *L){
 
   // total the arguments
   if (!lua_isstring(L, 1) || !lua_isnumber(L, 2) || !lua_isnumber(L, 3) ){
-    fprintf(stderr, red "\tError in function 'useWeaponOnCell' must take (string, int, int) parameters\n" raz );
+    fprintf(stderr, RED "\tError in function 'useWeaponOnCell' must take (string, int, int) parameters\n" RAZ );
     WaitUserInput();
     lua_pushnumber(L, -1 );
     return 1;;
@@ -839,13 +888,13 @@ int useWeaponOnCell(lua_State *L){
     tmp_att = tmp_att->next;
   }
   if (tmp_att->current_attack == NULL) {
-    fprintf(stderr, red "\tError in function 'useWeaponOnCell'\n"raz"\tinvalid name : \'%s\'\n" raz, attackNameInput );
+    fprintf(stderr, RED "\tError in function 'useWeaponOnCell'\n"RAZ"\tinvalid name : \'%s\'\n" RAZ, attackNameInput );
     WaitUserInput();
     lua_pushnumber(L, -1 );
     return 1;
   }
   if( r < 0 || r >= i_taille_map  || c < 0 || c >= i_taille_map ){
-    fprintf(stderr, red "\tError in function 'useWeaponOnCell'\n\tinvalid coordinates\n" raz );
+    fprintf(stderr, RED "\tError in function 'useWeaponOnCell'\n\tinvalid coordinates\n" RAZ );
     fprintf(stderr, "\tYour coordinates must be between the lines 0 and %i\n",i_taille_map);
     WaitUserInput();
     lua_pushnumber(L, -1 );
@@ -937,16 +986,16 @@ int IA_play(char function[10], char script[20] ){
   lua_getglobal(L, function);
   // Checks if top of the Lua stack is a function.
   if (lua_isfunction(L, -1) == 0) {
-    fprintf(stderr, red "\tFunction %s is not found\n" raz, function );
+    fprintf(stderr, RED "\tFunction %s is not found\n" RAZ, function );
   }
   // Perform the function call (0 arguments, 1 result, 0 Error) */
   if (lua_pcall(L, 0, 1, 0) != 0) {
-    fprintf(stderr, red "\tError LUA :"raz" %s\n" , lua_tostring(L, -1) );
+    fprintf(stderr, RED "\tError LUA :"RAZ" %s\n" , lua_tostring(L, -1) );
     WaitUserInput();
     lua_close(L);
     return -1;
   }
-  fprintf(stderr, green "\nIn script "raz"\"%s\""green"\nFunction: "raz"\"%s\"\n\n", script, function );
+  fprintf(stderr, GREEN "\nIn script "RAZ"\"%s\""GREEN"\nFunction: "RAZ"\"%s\"\n\n", script, function );
   // double c = lua_tonumber(L, -1); // retrieve the result
   // lua_pop(L, 1); // Pop retrieved value from the Lua stack
   // printf("\nThe number returned by main is %f\n", c);

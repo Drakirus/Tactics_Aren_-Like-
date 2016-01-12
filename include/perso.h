@@ -16,6 +16,8 @@ typedef struct
 	int coord[2];
 	char c_team;
 	list_attack * att;
+	char file[20];
+	int id;
 }t_perso;
 
 void afficher_perso(t_perso perso);

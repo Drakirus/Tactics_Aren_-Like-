@@ -16,6 +16,11 @@
 #include "../include/map.h"
 #include "../include/perso.h"
 #include "../include/list_attack.h"
+#include "../include/SDL_isometric.h"
+
+extern type_Map tMap;
+extern t_context *ingame;
+
 extern int map[i_taille_map][i_taille_map];
 extern int i_perso_actuel;
 
@@ -59,12 +64,25 @@ void deplacement(int * PM_actuel){
     afficher_map();
     while (sortir != -1) {
       sortir = pop(&path, &r, &c);
-      // printf("r: %i c: %i\n",r,c );
-      change_nombre(6, &tab_perso[i_perso_actuel], c);
-      change_nombre(5, &tab_perso[i_perso_actuel], r);
-      afficher_map();
-      delay(400);
+      // fprintf(stderr, "%i %i r: %i c: %i\n",tab_perso[i_perso_actuel].coord[0], tab_perso[i_perso_actuel].coord[1] ,r,c );
+      if (tab_perso[i_perso_actuel].coord[0] > r) {
+        moveSpriteTo(ingame, tMap, UP_LEFT, tab_perso[i_perso_actuel].id );
+        change_nombre(5, &tab_perso[i_perso_actuel], r);
+      }
+      if (tab_perso[i_perso_actuel].coord[0] < r) {
+        moveSpriteTo(ingame, tMap, DOWN_RIGHT, tab_perso[i_perso_actuel].id );
+        change_nombre(5, &tab_perso[i_perso_actuel], r);
+      }
+      if (tab_perso[i_perso_actuel].coord[1] > c) {
+        moveSpriteTo(ingame, tMap, UP_RIGHT, tab_perso[i_perso_actuel].id );
+        change_nombre(6, &tab_perso[i_perso_actuel], c);
+      }
+      if (tab_perso[i_perso_actuel].coord[1] < c) {
+        moveSpriteTo(ingame, tMap, DOWN_LEFT, tab_perso[i_perso_actuel].id );
+        change_nombre(6, &tab_perso[i_perso_actuel], c);        
+      }    
     }
+    afficher_map();
   }
 }
 
@@ -96,7 +114,16 @@ pile *getMovePerso(int * PM_tour, int start_r,int start_c){
   afficher_map_accessible(DistancePath, map_shadowcasting, range_max, range_min, 0,0,0); // les trois 0 à la fin sont présent si un jour, un personnage n'est capable de ce déplacer uniquement sur les lignes
   do {
     printf("Choisissez les coordonnées (x y) (-1 -1 pour annuler): ");
-    scanf("%i%i", &coord_r, &coord_c);
+    // scanf("%i%i", &coord_r, &coord_c);
+    for (i = 0; i < i_taille_map; i++) {
+      for (j = 0; j < i_taille_map; j++) {
+        if (DistancePath[i][j] <= range_max && DistancePath[i][j] >= range_min && map_shadowcasting[i][j] == 0) {
+          drawTileplace(ingame, tMap, i* TILE_W, j* TILE_H);
+        }
+      }
+    }
+    SDL_generate(ingame);
+    GetClick(ingame, tMap, &coord_r, &coord_c);
     if (coord_r == -1 || coord_c == -1) {
       return NULL;
     }
@@ -182,11 +209,27 @@ void attaque(int * PA_tour){
   range_min = tmp_att->range_min;
   ligne = tmp_att->only_line;
   afficher_map_accessible(DistancePath, map_shadowcasting, range_max, range_min, ligne , tab_perso[i_perso_actuel].coord[0] , tab_perso[i_perso_actuel].coord[1] );
-
+  
+  for (i = 0; i < i_taille_map; i++) {
+    for (j = 0; j < i_taille_map; j++) {
+      if (DistancePath[i][j] <= range_max && DistancePath[i][j] >= range_min && map_shadowcasting[i][j] == 0) {
+        if (ligne == 1) {
+          if (( tab_perso[i_perso_actuel].coord[0] == i || tab_perso[i_perso_actuel].coord[1] == j)) {
+            // fprintf(stderr, "%i == %i / %i == %i\n",r_start, i , c_start , j );
+            drawTileplace(ingame, tMap, i* TILE_W, j* TILE_H);
+          }
+        }else {
+          drawTileplace(ingame, tMap, i* TILE_W, j* TILE_H);
+        }
+      }
+    }
+  }
+  SDL_generate(ingame);
 
   while(sortie!=0){
     printf("Veuillez rentrer les coordonnées du personnages que vous voulez attaquer (-1 -1 pour annuler) : ");
-    scanf("%i%i", &coord_r, &coord_c);
+    // scanf("%i%i", &coord_r, &coord_c);
+    GetClick(ingame, tMap, &coord_r, &coord_c);
 
     if (coord_r == -1 || coord_c == -1) {
       return;
@@ -225,7 +268,13 @@ void attaque(int * PA_tour){
         return;
       }
       if (dealAttack(tmp_att, coord_r, coord_c)) {
-        delay(2500);
+        SDL_newText(ingame, NULL, "Cible touchee", colorGreenLight, 20,20);
+        SDL_generate(ingame);
+        
+        SDL_Delay(2000);
+        SDL_delText(ingame, ingame->nbText-1 );
+        SDL_generate(ingame);
+        
       }
       sortie = 0;
 
@@ -293,8 +342,6 @@ int  dealAttack(t_attak * tmp_att, int coord_r, int coord_c){
         augmente_nombre(3, &tab_perso[recherche_perso_tab(coord_r, coord_c)], tmp_att->trait.PA );
         augmente_nombre(4, &tab_perso[recherche_perso_tab(coord_r, coord_c)], tmp_att->trait.PM );
 
-        printf("\tCible touchée\n");
-
         shoot=1;
 
         recul_r = tmp_att->trait.coord_r;
@@ -307,6 +354,8 @@ int  dealAttack(t_attak * tmp_att, int coord_r, int coord_c){
             if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_r >= 0 && tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_r < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] - recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] ] != 1) {
               returnValue = 1;
               augmente_nombre( 5 , &tab_perso[recherche_perso_tab(coord_r, coord_c)] , (recul_r * -1) );
+              
+              
               shoot =0;
             }
             recul_r++;
@@ -316,6 +365,8 @@ int  dealAttack(t_attak * tmp_att, int coord_r, int coord_c){
             if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] - recul_c >= 0 && tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] - recul_c < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] ][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] - recul_c] != 1 ) {
               returnValue = 1;
               augmente_nombre( 6 , &tab_perso[recherche_perso_tab(coord_r, coord_c)] , (recul_c * -1) );
+              
+              
               shoot =0;
             }
             recul_c++;
@@ -325,6 +376,8 @@ int  dealAttack(t_attak * tmp_att, int coord_r, int coord_c){
             if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] + recul_r >= 0 && tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] + recul_r < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0] + recul_r][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1]] != 1 ) {
               returnValue = 1;
               augmente_nombre( 5 , &tab_perso[recherche_perso_tab(coord_r, coord_c)] , recul_r );
+              
+              
               shoot =0;
 
             }
@@ -335,6 +388,8 @@ int  dealAttack(t_attak * tmp_att, int coord_r, int coord_c){
             if (tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] + recul_c >= 0 && tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] + recul_c < i_taille_map && map[tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[0]][tab_perso[recherche_perso_tab(coord_r, coord_c)].coord[1] + recul_c] != 1) {
               returnValue = 1;
               augmente_nombre( 6 , &tab_perso[recherche_perso_tab(coord_r, coord_c)] , recul_c );
+              
+              
               shoot =0;
             }
             recul_c++;

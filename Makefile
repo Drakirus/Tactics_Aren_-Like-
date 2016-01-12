@@ -2,7 +2,7 @@ CC=gcc
 LUA_VERSION=lua-5.3.2
 LUA_LIB_DIR = ./lua-5.3.2/install/lib
 LUA_INCLUDE = ./lua-5.3.2/install/include
-CFLAGS=-Wall -lm -L$(LUA_LIB_DIR) -llua -lm -ldl -I$(LUA_INCLUDE)
+CFLAGS=-Wall -lm -lSDL_image `sdl-config --libs --cflags` -lESDL -L$(LUA_LIB_DIR) -llua -lm -ldl -I$(LUA_INCLUDE)
 
 EXEC=bin/out
 SRC= $(wildcard src/*.c)
@@ -27,14 +27,15 @@ $(EXEC): $(OBJ)
 	$(DISPLAY)
 
 src/main.o: $(INC)map.h $(INC)placement.h $(INC)tableau.h $(INC)tour.h
-src/placement.o: $(INC)map.h $(INC)placement.h $(INC)tableau.h
-src/map.o:
+src/plAcement.o: $(INC)map.h $(INC)placement.h $(INC)tableau.h
+src/map.o: $(INC)SDL_isometric.h
 src/tour.o: $(INC)perso.h $(INC)save.h $(INC)map.h $(INC)action.h
 src/tableau.o: $(INC)perso.h
 src/save.o: $(INC)map.h $(INC)placement.h $(INC)tableau.h
 src/action.o: $(INC)action.h
 src/couleur.o: $(INC)couleur.h
 src/lua_ia.o: $(INC)action.h $(INC)lua_ia.h
+src/SDL_isometric.o: $(INC)action.h $(INC)lua_ia.h $(INC)map.h $(INC)placement.h $(INC)tableau.h $(INC)tour.h $(INC)SDL_isometric.h
 
 
 %.o: %.c
@@ -72,4 +73,3 @@ lua-rm:
 require: # if #include <readline/readline.h> is missing
 	apt-get install libreadline-dev $(OUTERROR)
 	$(DISPLAY)
-.PHONY: rien

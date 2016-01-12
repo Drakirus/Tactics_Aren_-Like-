@@ -19,6 +19,10 @@
 #include "../include/action.h"
 #include "../include/tableau.h"
 #include "../include/lua_ia.h"
+#include "../include/SDL_isometric.h"
+
+extern type_Map tMap;
+extern t_context *ingame;
 
 extern int map[i_taille_map][i_taille_map];
 extern t_perso tab_perso[i_taille_tab_perso];
@@ -78,7 +82,8 @@ void actio(t_perso *perso){
 			printf("3 - Passer\n");
 			printf("4 - Sauvegarder\n");
 			printf("5 - Menu Principal\n");
-			scanf("%i", &action);
+			// scanf("%i", &action);
+			action = menuInGame(ingame);
 			switch(action){
 				case 1:	deplacement(&PM_actuel);
 					break;
@@ -131,7 +136,7 @@ void call_IA_play(char src[50]){
 
 		afficher_map();
 		IA_play("main", src);
-		delay(1400);
+		delay(1500);
 	}
 	i_perso_actuel++;
 }
