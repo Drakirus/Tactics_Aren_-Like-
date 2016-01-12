@@ -15,13 +15,7 @@ lien Sprites : http://www.inet2inet.com/InetSoftware/Free_Char_Anims.asp
 EasySDL est nécessaire à la compilation 
 Instruction : https://github.com/DanAurea/EasySDL
 
-Exemple :
-![1 v 1](ressources/game_player.gif)
-
 ### lua est nécessaire à la compilation 
-l'api Lua exemple :
-
-![IA vs IA](ressources/game_ia.gif)
 
 ```
 $ make lua
@@ -66,6 +60,14 @@ Supprime les fichiers de la lib LUA
 $ make mrproper
 ```
 Retour à état du répertoire avant action de l'utilisateur
+
+## Screen
+
+Exemple 1v1 :
+![1 v 1](ressources/game_player.gif)
+
+Exemple IA v IA
+![IA vs IA](ressources/game_ia.gif)
 
 ### Release - 1.0 
 
