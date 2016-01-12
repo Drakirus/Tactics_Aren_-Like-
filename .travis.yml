@@ -21,10 +21,13 @@ install:
 script:
   #- if [ "$TRAVIS_BRANCH" == "IA_lua" ];then
   - make lua
-  - cmake -G "Unix Makefiles" -DForceAMD64=ON
+  - git clone https://github.com/DanAurea/EasySDL
+  - cd EasySDL
+  - cmake -G"Unix Makefiles" -DForceAMD64=ON #for arch AMD64
   - make
   - sudo make install
-  - sudo ldconfig /usr/local/lib
+  - ldconfig /usr/local/lib
+  - cd ..
   #fi
   - make
 
