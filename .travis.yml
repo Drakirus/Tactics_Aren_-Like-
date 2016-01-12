@@ -19,13 +19,13 @@ install:
 
 # Build the module
 script:
-  - if [ "$TRAVIS_BRANCH" == "IA_lua" ];then
-      make lua;
-      cmake -G "Unix Makefiles" -DForceAMD64=ON;
-      make;
-      sudo make install;
-      sudo ldconfig /usr/local/lib;
-  fi
+  #- if [ "$TRAVIS_BRANCH" == "IA_lua" ];then
+  - make lua
+  - cmake -G "Unix Makefiles" -DForceAMD64=ON
+  - make
+  - sudo make install
+  - sudo ldconfig /usr/local/lib
+  #fi
   - make
 
 # Only watch the master branch
