@@ -21,7 +21,7 @@ $ sudo make install
 $ ldconfig /usr/local/lib
 
 # L'API Lua
-$ make lua #**[A faire](####a-faire)**
+$ make lua #for linux more info below
 
 # Le jeux
 $ make
