@@ -18,6 +18,7 @@
 #include "../include/list_attack.h"
 #include "../include/SDL_isometric.h"
 
+
 extern type_Map tMap;
 extern t_context *ingame;
 
@@ -124,6 +125,7 @@ pile *getMovePerso(int * PM_tour, int start_r,int start_c){
     }
     SDL_generate(ingame);
     GetClick(ingame, tMap, &coord_r, &coord_c);
+    printf("%i%i\n", coord_r, coord_c);
     if (coord_r == -1 || coord_c == -1) {
       return NULL;
     }
@@ -184,8 +186,9 @@ void attaque(int * PA_tour){
   do{
     displaylistAttack(tab_perso[i_perso_actuel].att);
     printf("Choisissez une attaque entre (-1 pour annuler) : ");
-    scanf("%i", &attack);
-    if (attack == -1 || getCountAttack(tab_perso[i_perso_actuel].att) == 0) {
+    attack =  choseAttak(ingame, tab_perso[i_perso_actuel].att);
+    // scanf("%i", &attack);
+    if (attack == -1 || attack == 0 ||getCountAttack(tab_perso[i_perso_actuel].att) == 0) {
       return;
     }
   }while( attack<1 || attack>getCountAttack(tab_perso[i_perso_actuel].att));

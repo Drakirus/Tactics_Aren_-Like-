@@ -24,9 +24,9 @@ extern t_context *ingame;
 t_perso ensemble_perso[i_nombre_classe]=
 {// "perso_name" / HP_max / HP / Points d'action / Points de mouvement / ligne / colonnes / team / placé ou pas / LISTE de ses attaques
 	{"Guerrier",50,50,3,3,{0,0},'X', NULL, "Guerrier.png", -1},
-	{"Archer",30,30,3,3,{0,0},'X', NULL, "Guerrier.png", -1},
-	{"Mage",20,20,2,2,{0,0},'X', NULL, "Guerrier.png", -1},
-	{"Voleur",10,10,4,4,{0,0},'X', NULL, "Guerrier.png", -1},
+	{"Archer",30,30,3,3,{0,0},'X', NULL, "Archer.png", -1},
+	{"Mage",20,20,2,2,{0,0},'X', NULL, "Mage.png", -1},
+	{"Voleur",10,10,4,4,{0,0},'X', NULL, "Voleur.png", -1},
 };
 
 /*Sert pour les tests*/
@@ -86,10 +86,10 @@ int init_attack(t_perso *per){
 	per->att = creer_liste_attack(); // creation du conteneur
   // "attack_name" / range_max / range_min / cost_PA / splash_range / only_line / Nb trait / "Nom du trait" / valeur du trait
 	if( strcmp(per->s_classe, "Guerrier" ) == 0){ //guerrier
-		pushAttack(per->att, createAttack("Coup d'épée", 1, 0, 3, 1, 0, 1, "HP", -5));// copie d'une attack par defaut d'un guerrier
+		pushAttack(per->att, createAttack("Coup d'epee", 1, 0, 3, 1, 0, 1, "HP", -5));// copie d'une attack par defaut d'un guerrier
 	}else if(strcmp(per->s_classe, "Archer") == 0 ){ //Archer
 		pushAttack(per->att, createAttack("Pousse toi d'la", 5, 2, 3, 1, 1, 3, "HP", -1,"coord_r", -2,"coord_c", -2));// copie d'une attack par defaut d'un archer
-		pushAttack(per->att, createAttack("Tir à l'arc", 5, 2, 3, 1, 0, 2, "HP", -10, "HP_max", -2));// copie d'une attack par defaut d'un archer
+		pushAttack(per->att, createAttack("Tir a l'arc", 5, 2, 3, 1, 0, 2, "HP", -10, "HP_max", -2));// copie d'une attack par defaut d'un archer
 	}else if(strcmp(per->s_classe, "Mage" ) == 0){ //Mage
 		pushAttack(per->att, createAttack("Boule De Feu", 3, 0, 2, 2, 1, 1, "HP", -3));// copie d'une attack par defaut d'un mage
 		pushAttack(per->att,createAttack("Sort de Soin", 3, 0, 2, 1, 0, 1, "HP", 6));

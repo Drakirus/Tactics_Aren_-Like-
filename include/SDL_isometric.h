@@ -15,6 +15,9 @@
 #define UP_LEFT 3
 #define UP_RIGHT 4
 
+#include "../include/list_attack.h"
+
+
 typedef enum{diamond, staggered, slide}type_Map;
 extern int idCursor;
 void toIso(type_Map tMap, int * x, int * y);
@@ -28,9 +31,11 @@ void showCursor(t_context * context, type_Map tMap, int x, int y);
 void drawMap(t_context * context, type_Map tMap);
 void dragNdrop(t_context * context, type_Map tMap);
 void GetClick(t_context * context, type_Map tMap, int* x, int* y);
+void GetClickPlace(t_context * context, type_Map tMap, int* x, int* y);
 void moveSpriteTo(t_context * context, type_Map tMap, int to, int idSprite );
 int MenuPerso(t_context * context);
 int menuInGame(t_context * context);
 int menuStart(t_context * context);
 void drawTileplaceACC(t_context * context , type_Map tMap, int posX, int posY);
+int choseAttak(t_context * context, list_attack *perso_att);
 #endif

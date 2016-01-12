@@ -8,7 +8,7 @@ end
 
 function main ()
   i , j = getNearestEnemy()
-  useWeaponOnCell("Tir à l'arc",i,j)
+  useWeaponOnCell("Tir a l'arc",i,j)
   moveAway( i , j , 2)
-  useWeaponOnCell("Tir à l'arc",i,j)
+  useWeaponOnCell("Tir a l'arc",i,j)
 end

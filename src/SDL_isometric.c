@@ -1,8 +1,14 @@
 #include "../include/SDL_isometric.h"
 #include "../include/map.h"
 
-extern int map[i_taille_map][i_taille_map];
+#include "../include/tableau.h"
+extern type_Map tMap;
+extern t_context *ingame;
 extern int i_perso_actuel;
+extern t_perso tab_perso[i_taille_tab_perso];
+
+
+extern int map[i_taille_map][i_taille_map];
 /**
  * Convertis les coordonnées cartésiennes en coordonnées isométriques
  * @param tMap Type de la carte
@@ -138,7 +144,7 @@ void drawTileplace(t_context * context , type_Map tMap, int posX, int posY){
 	SDL_setOnLayer(context, IMG, context->nbImg - 1, 1);
 }
 
-void drawTileplaceACC(t_context * context , type_Map tMap, int posX, int posY){
+void drawTileplaceA(t_context * context , type_Map tMap, int posX, int posY){
 	int x = posX / TILE_W, y = posY / TILE_H;
 
 	toIso(tMap, &posX, &posY); // Convertis les coordonnées en coordonnées isométriques
@@ -161,6 +167,34 @@ void drawTileplaceACC(t_context * context , type_Map tMap, int posX, int posY){
 			SDL_newImage(context, NULL, "red_Tile.png", posX, posY);
 		}else{
 			SDL_newImage(context, NULL, "red_Tile.png", posX, posY);
+		}
+	}
+
+	SDL_setOnLayer(context, IMG, context->nbImg - 1, 3);
+}
+void drawTileplaceB(t_context * context , type_Map tMap, int posX, int posY){
+	int x = posX / TILE_W, y = posY / TILE_H;
+
+	toIso(tMap, &posX, &posY); // Convertis les coordonnées en coordonnées isométriques
+
+	posX += offsetX(tMap);
+	posY += offsetY();
+
+	if(y == N-1 || ( x == 0 && (tMap == slide || tMap == staggered) )){
+		SDL_newImage(context, NULL, "pur_Tile.png", posX, posY);
+	}
+
+	if(tMap == diamond){
+			SDL_newImage(context, NULL, "pur_Tile.png", posX, posY);
+	}else if(tMap == slide){
+		if(x != 0){
+			SDL_newImage(context, NULL, "pur_Tile.png", posX, posY);
+		}
+	}else if(tMap == staggered){
+		if((x == N - 1 && y % 2 != 0)){
+			SDL_newImage(context, NULL, "pur_Tile.png", posX, posY);
+		}else{
+			SDL_newImage(context, NULL, "pur_Tile.png", posX, posY);
 		}
 	}
 
@@ -316,7 +350,9 @@ void dragNdrop(t_context * context, type_Map tMap){
 
 }
 
-void GetClick(t_context * context, type_Map tMap, int* x, int* y){
+void GetClickPlace(t_context * context, type_Map tMap, int* x, int* y){
+	// int posW =SCREEN_WIDTH-313;
+	// int posH =SCREEN_HEIGHT-178;
 	int a,b;
 	int mousePressed = SDL_isMousePressed(SDL_BUTTON_LEFT);
 	int overObj = -1;
@@ -330,19 +366,160 @@ void GetClick(t_context * context, type_Map tMap, int* x, int* y){
 		if (SDL_isKeyPressed(SDLK_q)) break;
 		if (SDL_requestExit()) break;
 		
+		
 		mousePressed = SDL_isMousePressed(SDL_BUTTON_LEFT);
 		if(mousePressed){ // Clic sur une zone
+			
+
 				overObj = SDL_ismouseover(context, IMG);
 				if(overObj >= 0){
+										
 					getIndexMap(tMap, SDL_getmousex(), SDL_getmousey(), &a, &b);
 					*x=a;
 					*y=b;
 					// printf("%i %i\n", x,y);
 					return;
 				}
+				
 		}
-		SDL_Delay(50);
+		// SDL_Delay(20);
 	}
+}
+
+void GetClick(t_context * context, type_Map tMap, int* x, int* y){
+	int posW =SCREEN_WIDTH-313;
+	int posH =SCREEN_HEIGHT-178;
+	int a,b;
+	int mousePressed = SDL_isMousePressed(SDL_BUTTON_LEFT);
+	int overObj = -1;
+	SDL_newImage(context, NULL, "menu.png", posW,  posH);
+	SDL_newText(context, NULL, "1 - Annuler", colorBlack, posW + 90, posH + 80);
+	// SDL_setOnLayer(context, TEXT, context->nbText - 1, 100);
+	while (1) {
+		
+		//Display current tile on map
+		if(showMouseCursor(context, tMap)){
+			SDL_generate(context);
+		}
+		// If user request exit, we need to quit while()
+		if (SDL_isKeyPressed(SDLK_q)) break;
+		if (SDL_requestExit()) break;
+		
+		
+		mousePressed = SDL_isMousePressed(SDL_BUTTON_LEFT);
+		if(mousePressed){ // Clic sur une zone
+			
+
+				overObj = SDL_ismouseover(context, IMG);
+				if(overObj >= 0){
+					
+					overObj = SDL_ismouseover(context, TEXT);
+					if(overObj >= 0){
+						*x=-1;
+						*y=-1;
+						// printf("%i %i\n", x,y);
+						SDL_delImage(context, context->nbImg-1 );
+						// SDL_delImage(context, context->nbImg-1 );
+						// SDL_delText(context, context->nbText-1 );
+						SDL_delText(context, context->nbText-1 );
+						
+						return;
+					}
+					
+					getIndexMap(tMap, SDL_getmousex(), SDL_getmousey(), &a, &b);
+					*x=a;
+					*y=b;
+					// printf("%i %i\n", x,y);
+					return;
+				}
+				
+		}
+		// SDL_Delay(20);
+	}
+}
+
+int choseAttak(t_context * context, list_attack *perso_att){
+	int posW =0;
+	int posH =SCREEN_HEIGHT-120;
+	int actual = 1;
+	t_attak * att;
+	list_attack *tmp = perso_att;
+	int NBtext = context->nbText;
+	
+	char Attaque[70];
+	char TmpAttaque[70];
+	while(tmp->current_attack != NULL){
+
+		if(tmp->current_attack != NULL){
+			// printf("\n    %i - ",actual);
+			// displayAttack(tmp->current_attack);
+			att = tmp->current_attack;
+			sprintf(Attaque,"'%s' range : max %i min %i, %i cost",att->attack_name, att->range_max, att->range_min, att->cost_PA);
+			if (att->splash_range > 1){
+				
+				sprintf(TmpAttaque,"\n\tC'est une attaque de zone sur %i case ",att->splash_range);
+				strcat(Attaque, TmpAttaque);
+			}
+			if (att->only_line){
+				
+				sprintf(TmpAttaque,"en Ligne ");
+				strcat(Attaque, TmpAttaque);
+			}
+			if (att->trait.HP < 0){
+				
+				sprintf(TmpAttaque,"\n\tFait %i degats ",att->trait.HP);
+				strcat(Attaque, TmpAttaque);
+			}
+			if (att->trait.HP > 0){
+				
+				sprintf(TmpAttaque,"\n\tSoigne de %i pv",att->trait.HP);
+				strcat(Attaque, TmpAttaque);
+			}
+			if (att->trait.HP_max != 0){
+				
+				sprintf(TmpAttaque,"\n\tChange les pv max a %i ",att->trait.HP_max);
+				strcat(Attaque, TmpAttaque);
+			}
+			if (att->trait.PA != 0){
+				
+				sprintf(TmpAttaque,"\n\tChange les P d'action à %i ",att->trait.PA);
+				strcat(Attaque, TmpAttaque);
+			}
+			if (att->trait.PM != 0){
+				sprintf(TmpAttaque,"\n\tChange les P de mouvement à + %i ",att->trait.PM);
+				strcat(Attaque, TmpAttaque);
+			}
+			if (att->trait.coord_r != 0 || att->trait.coord_c != 0){
+				
+				sprintf(TmpAttaque,"\n\tFait reculer le perso de %ix%i ",att->trait.coord_r, att->trait.coord_c);
+				strcat(Attaque, TmpAttaque);
+			}
+			// printf("\n");
+			// printf("\n");
+		}
+		tmp = tmp->next;
+		actual++;
+		SDL_newText(context, NULL, Attaque, colorGreenLight, posW + 0, posH + actual*30);
+	}
+	SDL_generate(context);
+	int i;
+	int idReturn;
+	while (1) {
+		SDL_Delay(50);
+		if (SDL_isMousePressed(SDL_BUTTON_LEFT)) {
+			
+			
+			idReturn = SDL_ismouseover(context, TEXT)-NBtext;
+			
+			// SDL_delText(context, context->nbText-5 );
+			for (i = 1; i <= actual-1 ; i++) {
+				SDL_delText(context, context->nbText-1);
+			}
+			printf("%i\n",  idReturn+1 );
+			return idReturn+1;
+		}
+	}
+	return -1;
 }
 
 void moveSpriteTo(t_context * context, type_Map tMap, int to, int idSprite ){
@@ -420,7 +597,10 @@ int menuInGame(t_context * context){
 	int posW =SCREEN_WIDTH-313;
 	int posH =SCREEN_HEIGHT-178;
 	SDL_newImage(context, NULL, "menu.png", posW,  posH);
-	
+	int i = i_perso_actuel;
+	char Info[50];
+	sprintf(Info,"%s %i/%iHP [%i,%i] %c\n", tab_perso[i].s_classe, tab_perso[i].i_HP_max, tab_perso[i].i_HP, tab_perso[i].coord[0], tab_perso[i].coord[1], tab_perso[i].c_team);
+	SDL_newText(context, NULL, Info, colorRed, posW + 47, posH + 5);
 	SDL_newText(context, NULL, "5 - Menu Principal", colorBlack, posW + 90, posH + 130);
 	SDL_newText(context, NULL, "4 - Sauvegarder", colorBlack, posW + 90, posH + 105);
 	SDL_newText(context, NULL, "3 - Passer", colorBlack, posW + 90, posH + 80);
@@ -436,6 +616,7 @@ int menuInGame(t_context * context){
 			
 			idReturn = context->nbText-SDL_ismouseover(context, TEXT);
 			
+			SDL_delText(context, context->nbText-6 );
 			SDL_delText(context, context->nbText-5 );
 			SDL_delText(context, context->nbText-4 );
 			SDL_delText(context, context->nbText-3 );

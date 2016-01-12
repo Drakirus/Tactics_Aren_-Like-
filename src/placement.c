@@ -43,7 +43,7 @@ void placement_perso() //Cette fonction place les personnages des différents é
 	t_perso * per;
 	per=malloc(sizeof(t_perso));
 	int i_equipe=0; //0 pour l'équipe A et 1 pour l'équipe B
-	while(i_nb_perso<2) //Ici on veut 10 personnages en tout.
+	while(i_nb_perso<4) //Ici on veut 10 personnages en tout.
 	{
 		while(b_sortie!=0)
 		{
@@ -58,7 +58,7 @@ void placement_perso() //Cette fonction place les personnages des différents é
 					}
 				}
 				SDL_generate(ingame);
-			  GetClick(ingame, tMap, &coord[0], &coord[1]);
+			  GetClickPlace(ingame, tMap, &coord[0], &coord[1]);
 				printf("%i %i\n",coord[0],coord[1]  );
 				if(coord[0]>=0 && coord[0]<3 && coord[1]>=0 && coord[1]<=9 && map[coord[0]][coord[1]]==0 && recherche_perso_tab(coord[0], coord[1])==-1) //On vérifie que les coordonnées sont bonnes
 				{
@@ -80,7 +80,7 @@ void placement_perso() //Cette fonction place les personnages des différents é
 					}
 				}
 				SDL_generate(ingame);
-				GetClick(ingame, tMap, &coord[0], &coord[1]);
+				GetClickPlace(ingame, tMap, &coord[0], &coord[1]);
 				printf("%i %i\n",coord[0],coord[1]  );
 				if(coord[0]>=7 && coord[0]<=9 && coord[1]>=0 && coord[1]<=9 && recherche_perso_tab(coord[0], coord[1])==-1) //On vérifie aussi qu'il n'y ait personne dans cette case
 				{
