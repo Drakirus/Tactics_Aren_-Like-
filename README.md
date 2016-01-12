@@ -11,33 +11,32 @@ lien Sprites : http://www.inet2inet.com/InetSoftware/Free_Char_Anims.asp
 
 ## Instructions de compilation
 
-### EasySDL
-Instruction : https://github.com/DanAurea/EasySDL
-
-### L'API Lua
-
 ```
+# EasySDL
+$ git clone https://github.com/DanAurea/EasySDL
+$ cd EasySDL
+$ cmake -G"Unix Makefiles"
+$ make
+$ sudo make install
+$ ldconfig /usr/local/lib
+
+# L'API Lua
 $ make lua
+
+# compile the game 
+$ make
+
+# play 
+$ ./bin/out
 ```
-pour les plateformes diférentes de linux :
+Pour les plateformes diférentes de linux :
 ```
 $ make lua plat="platforms supported"
 ```
-> **platforms supported** aix bsd c89 freebsd generic linux macosx mingw posix solaris
+> **platforms supported** 
+> aix bsd c89 freebsd generic linux macosx mingw posix solaris
 
-### Jeux
-Pour compiler l'ensemble des sources :
-```
-$ make
-```
- L'exécutable généré peut être retrouvé dans **./bin**
-
-Pour exécuter le programme :
-
-```
-$ ./bin/out
-```
-### Documentation
+## Documentation
 ```
 $ make doc
 ```
@@ -45,21 +44,10 @@ La documentation  générée peut être retrouvée dans **./doc/html/index.html*
 ### Nettoyage
 ```
 $ make clean
-```
-Supprime les fichiers dus à la création de l'exécutable
-```
 $ make rmdoc
-```
-Supprime les fichiers de la documentation
-```
 $ make lua-rm
-```
-Supprime les fichiers de la lib LUA
-```
 $ make mrproper
 ```
-Retour à état du répertoire avant action de l'utilisateur
-
 ## Screen
 
 Exemple 1v1 :
