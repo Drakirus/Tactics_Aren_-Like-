@@ -15,25 +15,24 @@ lien Sprites : http://www.inet2inet.com/InetSoftware/Free_Char_Anims.asp
 # EasySDL
 $ git clone https://github.com/DanAurea/EasySDL
 $ cd EasySDL
-$ cmake -G"Unix Makefiles"
+$ cmake -G"Unix Makefiles" OR $ cmake -G"Unix Makefiles" -DForceAMD64=ON #for arch AMD64
 $ make
 $ sudo make install
 $ ldconfig /usr/local/lib
 
 # L'API Lua
-$ make lua
+$ make lua #**[A faire](####a-faire)**
 
-# compile the game 
+# Le jeux
 $ make
 
-# play 
+# Enjoy
 $ ./bin/out
 ```
-Pour les plateformes diférentes de linux :
+####Pour les plateformes diférentes de linux :
 ```
-$ make lua plat="platforms supported"
+$ make lua plat=
 ```
-> **platforms supported** 
 > aix bsd c89 freebsd generic linux macosx mingw posix solaris
 
 ## Documentation
