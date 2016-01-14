@@ -32,7 +32,7 @@ $ ./bin/out
 ```
 ####Pour les plateformes diférentes de linux :
 ```
-$ make lua plat=
+$ make lua plat= ↓
 ```
 > aix bsd c89 freebsd generic linux macosx mingw posix solaris
 
