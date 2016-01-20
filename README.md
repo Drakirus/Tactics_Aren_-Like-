@@ -15,10 +15,10 @@ lien Sprites : http://www.inet2inet.com/InetSoftware/Free_Char_Anims.asp
 ```
 $ git clone https://github.com/DanAurea/EasySDL
 $ cd EasySDL
-$ git checkout 142f60c #Project still in development
+$ git checkout 142f60c          #Project still in development
 
 $ cmake -G"Unix Makefiles"
-OR $ cmake -G"Unix Makefiles" -DForceAMD64=ON     # For arch AMD64
+OR $ cmake -G"Unix Makefiles" -DForceAMD64=ON          # For arch AMD64
 
 $ make
 $ sudo make install
@@ -30,7 +30,7 @@ $ git clone https://github.com/Drakirus/Tactics_Arena_Like.git
 $ cd Tactics_Arena_Like
 
 # L'API Lua
-$ make lua      # More info below
+$ make lua           # More info below
 
 # Le jeux
 $ make
