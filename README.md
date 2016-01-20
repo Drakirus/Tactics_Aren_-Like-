@@ -15,6 +15,7 @@ lien Sprites : http://www.inet2inet.com/InetSoftware/Free_Char_Anims.asp
 ```
 $ git clone https://github.com/DanAurea/EasySDL
 $ cd EasySDL
+$ git checkout 142f60c #Project still in development
 
 $ cmake -G"Unix Makefiles"
 OR $ cmake -G"Unix Makefiles" -DForceAMD64=ON     # For arch AMD64
