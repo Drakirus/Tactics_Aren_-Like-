@@ -11,15 +11,22 @@ lien Sprites : http://www.inet2inet.com/InetSoftware/Free_Char_Anims.asp
 
 ## Instructions de compilation
 
+### EasySDL
 ```
-# EasySDL
 $ git clone https://github.com/DanAurea/EasySDL
 $ cd EasySDL
+
 $ cmake -G"Unix Makefiles"
 OR $ cmake -G"Unix Makefiles" -DForceAMD64=ON     # For arch AMD64
+
 $ make
 $ sudo make install
 $ ldconfig /usr/local/lib
+```
+### The Game
+```
+$ git clone https://github.com/Drakirus/Tactics_Arena_Like.git
+$ cd Tactics_Arena_Like
 
 # L'API Lua
 $ make lua      # More info below
